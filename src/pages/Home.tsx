@@ -1,16 +1,24 @@
-import { Typography, Stack, Box, TextField, Fab } from "@mui/material";
+import {
+  Typography,
+  Stack,
+  Box,
+  TextField,
+  Fab,
+  Button,
+  IconButton,
+} from "@mui/material";
 import React, { Fragment } from "react";
 import CreatePostButton from "../components/home/CreatePostButton";
+import PostsCard from "../components/home/PostsCard";
 
 function Home() {
   return (
     <Fragment>
-      <Stack direction="column" alignItems="center">
-        {/* <Box sx={{ display: "flex", flexDirection: "column", width: "50%" }}>
-          <Typography variant="h5">Create a new post</Typography>
-          <TextField placeholder="Title" />
-          <TextField placeholder="Description" />
-        </Box> */}
+      <Stack direction="column" alignItems="center" spacing="30px">
+        <PostsCard />
+        <PostsCard />
+        <PostsCard />
+        <PostsCard />
       </Stack>
       <CreatePostButton />
     </Fragment>

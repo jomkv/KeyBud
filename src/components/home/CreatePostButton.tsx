@@ -7,7 +7,7 @@ function CreatePostButton() {
     <Fab
       size="large"
       variant="extended"
-      sx={{ position: "absolute", bottom: 30, right: 30 }}
+      sx={{ position: "sticky", float: "right", bottom: 30 }}
     >
       <PostAddIcon />
       <Typography variant="subtitle1" fontWeight="bold" ml={1}>
