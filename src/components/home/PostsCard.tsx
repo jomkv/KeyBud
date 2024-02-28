@@ -19,9 +19,18 @@ import CreatePostButton from "./CreatePostButton";
 import ThumbUpOffAltIcon from "@mui/icons-material/ThumbUpOffAlt";
 import ThumbUpAltIcon from "@mui/icons-material/ThumbUpAlt";
 import ChatBubbleOutlineIcon from "@mui/icons-material/ChatBubbleOutline";
+import MoreVertIcon from "@mui/icons-material/MoreVert";
 import styled from "@emotion/styled";
 
 const KeybudButton = styled(Button)({
+  color: "#8C52FF",
+  borderColor: "#8C52FF",
+  ":hover": {
+    borderColor: "#8C52FF",
+  },
+});
+
+const KeybudIconButton = styled(IconButton)({
   color: "#8C52FF",
   borderColor: "#8C52FF",
   ":hover": {
@@ -56,6 +65,11 @@ function PostsCard({}) {
           title="Post title"
           subheader="Username"
           subheaderTypographyProps={{ sx: { color: "white" } }}
+          action={
+            <KeybudIconButton>
+              <MoreVertIcon fontSize="large" />
+            </KeybudIconButton>
+          }
         />
         <CardMedia
           component="img"
