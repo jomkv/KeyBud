@@ -12,6 +12,7 @@ import {
   Avatar,
   Menu,
   MenuItem,
+  SvgIcon,
 } from "@mui/material";
 
 import HomeIcon from "@mui/icons-material/Home";
@@ -48,14 +49,17 @@ function Navbar() {
           sx={{ display: { xs: "none", sm: "flex" } }}
           alignItems="center"
         >
-          <IconButton edge="start" color="inherit" aria-label="logo">
+          <IconButton
+            edge="start"
+            color="inherit"
+            aria-label="logo"
+            disableRipple
+          >
             <img
-              src="/images/keyBud_Logo.png"
-              style={{ width: 50, height: 50 }}
-              alt="KeyBud Logo"
+              src="/images/KeyBay Logo .svg"
+              style={{ width: "auto", height: 70 }}
             />
           </IconButton>
-          <Typography variant="h6">KeyBud</Typography>
         </Stack>
 
         <Stack
@@ -65,11 +69,11 @@ function Navbar() {
         >
           <IconButton title="Messages">
             <Badge badgeContent={newMessages} color="error">
-              <TextsmsIcon fontSize="large" sx={{ color: "#8C52FF" }} />
+              <TextsmsIcon sx={{ color: "#8C52FF", height: 40, width: 40 }} />
             </Badge>
           </IconButton>
           <IconButton title="Home">
-            <HomeIcon fontSize="large" sx={{ color: "#8C52FF" }} />
+            <HomeIcon sx={{ color: "#8C52FF", height: 50, width: 50 }} />
           </IconButton>
           <IconButton title="Profile">
             <Avatar src="/images/user_icon.png" />
