@@ -13,7 +13,7 @@ function App() {
       {/* <Container sx={{ flexGrow: 1, paddingTop: "25px" }}>
       </Container> */}
 
-      <Login />
+      <Register />
     </div>
   );
 }
