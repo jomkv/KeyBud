@@ -26,3 +26,9 @@ body {
 .classes.pageContainer {
   background-color: red;
 }
+
+/* Override MUI Textfield Style */
+.keybud__textfield {
+  border-color: white !important;
+}
+/* Override MUI Textfield Style */
