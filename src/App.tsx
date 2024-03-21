@@ -9,11 +9,7 @@ import Register from "./pages/Register";
 function App() {
   return (
     <div style={{ height: "100vh", width: "100vw" }}>
-      {/* <Navbar /> */}
-      {/* <Container sx={{ flexGrow: 1, paddingTop: "25px" }}>
-      </Container> */}
-
-      <Register />
+      <Post />
     </div>
   );
 }

@@ -62,14 +62,6 @@ const KeybudOutlinedTextbox = styled(OutlinedInput)({
 });
 
 function Login() {
-  const [likeCount, setLikeCount] = useState<number>(0);
-  const [commentCount, setCommentCount] = useState<number>(2);
-  const [isLiked, setIsLiked] = useState<boolean>(false);
-
-  const handleLikeClick = () => {
-    setIsLiked(!isLiked);
-  };
-
   const {
     control,
     setError,
@@ -81,6 +73,10 @@ function Login() {
       password: "",
     },
   });
+
+  const onSubmit = async () => {
+    // todo
+  };
 
   return (
     <Box
@@ -98,8 +94,7 @@ function Login() {
         sx={{
           backgroundColor: "rgba(31, 31, 31, 0.97)",
           color: "white",
-          padding: "80px",
-          marginBottom: "25px",
+          padding: "50px",
           borderRadius: "15px",
           display: "flex",
           alignItems: "center",
@@ -108,10 +103,10 @@ function Login() {
       >
         <img
           src="/images/KeyBay Logo .svg"
-          style={{ maxWidth: "auto", maxHeight: 150 }}
+          style={{ maxWidth: "auto", maxHeight: 100 }}
           alt="KeyBud Logo"
         />
-        <Typography variant="h3" fontWeight="bold">
+        <Typography variant="h4" fontWeight="bold">
           Welcome!
         </Typography>
         <FormControl>
@@ -122,26 +117,22 @@ function Login() {
               rules={{ required: true }}
               render={({ field: { value, onChange } }) => (
                 <KeybudOutlinedTextbox
-                  autoFocus
                   value={value}
                   onChange={onChange}
                   error={Boolean(errors.username)}
-                  inputProps={{ className: "keybud__textfield" }}
                   placeholder="Username or Email"
                 />
               )}
             />
             <Controller
-              name="username"
+              name="password"
               control={control}
               rules={{ required: true }}
               render={({ field: { value, onChange } }) => (
                 <KeybudOutlinedTextbox
-                  autoFocus
                   value={value}
                   onChange={onChange}
-                  error={Boolean(errors.username)}
-                  inputProps={{ className: "keybud__textfield" }}
+                  error={Boolean(errors.password)}
                   placeholder="Password"
                 />
               )}

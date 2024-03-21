@@ -57,7 +57,7 @@ const KeybudTextbox = styled(TextField)`
 
 const KeybudOutlinedTextbox = styled(OutlinedInput)({
   color: "white",
-  fontSize: "25px",
+  fontSize: "20px",
   border: "2px solid white",
 });
 
@@ -97,28 +97,32 @@ function Register() {
     >
       <Stack
         component="div"
-        spacing={2}
+        spacing={3}
+        direction="row"
         sx={{
           backgroundColor: "rgba(31, 31, 31, 0.97)",
           color: "white",
-          padding: "80px",
-          marginBottom: "25px",
+          padding: "20px",
           borderRadius: "15px",
-          display: "flex",
-          alignItems: "center",
           maxWidth: "100vh",
+          maxHeight: "90vh",
         }}
       >
         <img
           src="/images/KeyBay Logo .svg"
-          style={{ maxWidth: "auto", maxHeight: 150 }}
+          style={{
+            maxWidth: "auto",
+            maxHeight: 100,
+            justifySelf: "center",
+            alignSelf: "center",
+          }}
           alt="KeyBud Logo"
         />
-        <Typography variant="h3" fontWeight="bold">
-          Create an Account
-        </Typography>
         <FormControl>
           <Stack spacing={3} mt={2}>
+            <Typography variant="h5" fontWeight="bold">
+              Create an Account
+            </Typography>
             <Controller
               name="username"
               control={control}
@@ -130,7 +134,7 @@ function Register() {
                   onChange={onChange}
                   error={Boolean(errors.username)}
                   inputProps={{ className: "keybud__textfield" }}
-                  placeholder="Username or Email"
+                  placeholder="Username"
                 />
               )}
             />

@@ -14,6 +14,7 @@
     "@types/node": "^16.18.82",
     "@types/react": "^18.2.56",
     "@types/react-dom": "^18.2.19",
+    "axios": "^1.6.8",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-hook-form": "^7.50.1",
@@ -44,5 +45,8 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "dotenv": "^16.4.5"
   }
 }
