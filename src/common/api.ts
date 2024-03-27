@@ -7,7 +7,7 @@ class Api {
 
   async getPosts() {
     try {
-      const response = await axios.get("/posts/");
+      const response = await axios.get("/posts");
       if (response.status === 200) {
         return response;
       } else {

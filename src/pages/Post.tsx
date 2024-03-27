@@ -4,19 +4,13 @@ import {
   Box,
   TextField,
   Button,
-  IconButton,
-  Card,
-  CardContent,
-  CardHeader,
   Avatar,
-  CardActions,
   Container,
 } from "@mui/material";
-import React, { Fragment, useEffect, useState } from "react";
+import { Fragment, useEffect, useState } from "react";
 import ThumbUpOffAltIcon from "@mui/icons-material/ThumbUpOffAlt";
 import ThumbUpAltIcon from "@mui/icons-material/ThumbUpAlt";
 import ChatBubbleOutlineIcon from "@mui/icons-material/ChatBubbleOutline";
-import MoreVertIcon from "@mui/icons-material/MoreVert";
 import styled from "@emotion/styled";
 import PostsCard from "../components/home/PostsCard";
 import CommentCard from "../components/post/CommentCard";
@@ -26,14 +20,6 @@ import Api from "../common/Api";
 import Navbar from "../components/Navbar";
 
 const KeybudButton = styled(Button)({
-  color: "#8C52FF",
-  borderColor: "#8C52FF",
-  ":hover": {
-    borderColor: "#8C52FF",
-  },
-});
-
-const KeybudIconButton = styled(IconButton)({
   color: "#8C52FF",
   borderColor: "#8C52FF",
   ":hover": {
@@ -151,7 +137,6 @@ function Post() {
           <CommentCard />
           <CommentCard />
         </Stack>
-        <PostsCard />
       </Container>
     </Fragment>
   );

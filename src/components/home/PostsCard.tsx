@@ -15,12 +15,13 @@ import {
   CardActions,
 } from "@mui/material";
 import React, { Fragment, useEffect, useState } from "react";
-import CreatePostButton from "./CreatePostButton";
 import ThumbUpOffAltIcon from "@mui/icons-material/ThumbUpOffAlt";
 import ThumbUpAltIcon from "@mui/icons-material/ThumbUpAlt";
 import ChatBubbleOutlineIcon from "@mui/icons-material/ChatBubbleOutline";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 import styled from "@emotion/styled";
+
+import { IPosts } from "../../types/post";
 
 const KeybudButton = styled(Button)({
   color: "#8C52FF",
@@ -38,7 +39,11 @@ const KeybudIconButton = styled(IconButton)({
   },
 });
 
-function PostsCard({}) {
+interface PostProps {
+  post: IPosts;
+}
+
+const PostsCard: React.FC<PostProps> = ({ post }) => {
   const [likeCount, setLikeCount] = useState<number>(0);
   const [commentCount, setCommentCount] = useState<number>(2);
   const [isLiked, setIsLiked] = useState<boolean>(false);
@@ -77,12 +82,7 @@ function PostsCard({}) {
           height="250"
           width="250"
         />
-        <CardContent>
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Tenetur
-          aliquam dolorem quas mollitia? Sit blanditiis, voluptatum, labore eos
-          at eveniet tenetur dolor sint libero obcaecati, molestiae in ad fuga
-          itaque.
-        </CardContent>
+        <CardContent>{post.description}</CardContent>
       </CardActionArea>
       <CardActions>
         <KeybudButton
@@ -174,6 +174,6 @@ function PostsCard({}) {
     //   </Stack>
     // </Box>
   );
-}
+};
 
 export default PostsCard;
