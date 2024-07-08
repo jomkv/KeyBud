@@ -14,6 +14,7 @@ import ChatBubbleOutlineIcon from "@mui/icons-material/ChatBubbleOutline";
 import styled from "@emotion/styled";
 import PostsCard from "../components/home/PostsCard";
 import CommentCard from "../components/post/CommentCard";
+import { IPosts } from "../types/post";
 
 import Api from "../common/Api";
 

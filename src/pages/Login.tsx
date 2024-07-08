@@ -15,14 +15,9 @@ import {
   OutlinedInput,
 } from "@mui/material";
 import { Controller, useForm } from "react-hook-form";
-import React, { Fragment, useEffect, useState } from "react";
-import ThumbUpOffAltIcon from "@mui/icons-material/ThumbUpOffAlt";
-import ThumbUpAltIcon from "@mui/icons-material/ThumbUpAlt";
-import ChatBubbleOutlineIcon from "@mui/icons-material/ChatBubbleOutline";
-import MoreVertIcon from "@mui/icons-material/MoreVert";
 import styled from "@emotion/styled";
-import PostsCard from "../components/home/PostsCard";
-import CommentCard from "../components/post/CommentCard";
+
+import Api from "../common/Api";
 
 const KeybudButton = styled(Button)({
   color: "white",
@@ -65,7 +60,6 @@ function Login() {
   const {
     control,
     setError,
-    handleSubmit,
     formState: { errors },
   } = useForm({
     defaultValues: {
@@ -74,8 +68,8 @@ function Login() {
     },
   });
 
-  const onSubmit = async () => {
-    // todo
+  const handleSubmit = async () => {
+    const userData = {};
   };
 
   return (
@@ -142,6 +136,7 @@ function Login() {
               sx={{
                 fontSize: "20px",
               }}
+              onClick={handleSubmit}
             >
               Login
             </KeybudButton>
