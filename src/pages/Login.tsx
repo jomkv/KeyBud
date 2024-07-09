@@ -11,7 +11,7 @@ function Login() {
       <img
         className="d-none d-md-block"
         alt="logo"
-        src="/images/Final Logo.svg"
+        src="/images/Logo with Phrase.svg"
       />
       <div
         className="p-5 rounded"
@@ -21,10 +21,10 @@ function Login() {
           width: "390px",
         }}
       >
-        <p className="fs-2 fw-bold">Login</p>
+        <p className="fs-1 fw-bold">Login</p>
         <div className="mb-3">
           <label htmlFor="email" className="form-label">
-            Email
+            Username / Email
           </label>
           <input type="email" className="form-control" id="email" />
         </div>

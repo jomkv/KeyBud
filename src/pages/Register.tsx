@@ -9,7 +9,7 @@ function Register() {
       <img
         className="d-none d-md-block"
         alt="logo"
-        src="/images/Final Logo.svg"
+        src="/images/Logo with Phrase.svg"
       />
       <div
         className="p-5 rounded"
