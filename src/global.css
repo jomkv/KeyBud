@@ -1,3 +1,18 @@
+@import url("https://fonts.cdnfonts.com/css/minecraft-3");
+
+* {
+  font-family: "Minecraft", sans-serif !important;
+  font-style: normal;
+}
+
+.keybud-primary {
+  background-color: #8c52ff;
+}
+
+.keybud-secondary {
+  background-color: #1f1f1f;
+}
+
 /* Scroll bar */
 ::-webkit-scrollbar {
   width: 10px;
