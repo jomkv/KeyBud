@@ -1,215 +1,64 @@
-import {
-  Typography,
-  Stack,
-  Box,
-  TextField,
-  Button,
-  IconButton,
-  Card,
-  CardContent,
-  CardHeader,
-  Avatar,
-  CardActions,
-  FormControl,
-  InputLabel,
-  OutlinedInput,
-} from "@mui/material";
-import { Controller, useForm } from "react-hook-form";
-import React, { Fragment, useEffect, useState } from "react";
-import ThumbUpOffAltIcon from "@mui/icons-material/ThumbUpOffAlt";
-import ThumbUpAltIcon from "@mui/icons-material/ThumbUpAlt";
-import ChatBubbleOutlineIcon from "@mui/icons-material/ChatBubbleOutline";
-import MoreVertIcon from "@mui/icons-material/MoreVert";
-import styled from "@emotion/styled";
-import PostsCard from "../components/home/PostsCard";
-import CommentCard from "../components/post/CommentCard";
-
-const KeybudButton = styled(Button)({
-  color: "white",
-  background: "#8C52FF",
-  borderColor: "#8C52FF",
-  ":hover": {
-    borderColor: "#8C52FF",
-  },
-  fontWeight: "bold",
-  height: "70px",
-  borderRadius: "8px",
-});
-
-const KeybudIconButton = styled(IconButton)({
-  color: "#8C52FF",
-  borderColor: "#8C52FF",
-  ":hover": {
-    borderColor: "#8C52FF",
-  },
-});
-
-const KeybudTextbox = styled(TextField)`
-  &label.Mui-focused {
-    color: white;
-  }
-  &.MuiOutlinedInput-root {
-    &.Mui-focused fieldset {
-      border-color: white;
-    }
-  }
-`;
-
-const KeybudOutlinedTextbox = styled(OutlinedInput)({
-  color: "white",
-  fontSize: "20px",
-  border: "2px solid white",
-});
-
 function Register() {
-  const [likeCount, setLikeCount] = useState<number>(0);
-  const [commentCount, setCommentCount] = useState<number>(2);
-  const [isLiked, setIsLiked] = useState<boolean>(false);
-
-  const handleLikeClick = () => {
-    setIsLiked(!isLiked);
-  };
-
-  const {
-    control,
-    setError,
-    handleSubmit,
-    formState: { errors },
-  } = useForm({
-    defaultValues: {
-      username: "",
-      email: "",
-      switchType: "",
-      password: "",
-      confirmPassword: "",
-    },
-  });
-
   return (
-    <Box
-      sx={{
-        height: "100%",
-        width: "100%",
-        display: "flex",
-        justifyContent: "center",
-        alignItems: "center",
+    <div
+      className="w-100 h-100 d-flex justify-content-evenly align-items-center "
+      style={{
+        backgroundColor: "#1F1F1F",
       }}
     >
-      <Stack
-        component="div"
-        spacing={3}
-        direction="row"
-        sx={{
-          backgroundColor: "rgba(31, 31, 31, 0.97)",
-          color: "white",
-          padding: "20px",
-          borderRadius: "15px",
-          maxWidth: "100vh",
-          maxHeight: "90vh",
+      <img
+        className="d-none d-md-block"
+        alt="logo"
+        src="/images/Final Logo.svg"
+      />
+      <div
+        className="p-5 rounded"
+        style={{
+          backgroundColor: "#d1cdc4",
+          color: "#1f1f1f",
+          width: "470px",
         }}
       >
-        <img
-          src="/images/KeyBay Logo .svg"
-          style={{
-            maxWidth: "auto",
-            maxHeight: 100,
-            justifySelf: "center",
-            alignSelf: "center",
-          }}
-          alt="KeyBud Logo"
-        />
-        <FormControl>
-          <Stack spacing={3} mt={2}>
-            <Typography variant="h5" fontWeight="bold">
-              Create an Account
-            </Typography>
-            <Controller
-              name="username"
-              control={control}
-              rules={{ required: true }}
-              render={({ field: { value, onChange } }) => (
-                <KeybudOutlinedTextbox
-                  autoFocus
-                  value={value}
-                  onChange={onChange}
-                  error={Boolean(errors.username)}
-                  inputProps={{ className: "keybud__textfield" }}
-                  placeholder="Username"
-                />
-              )}
-            />
-            <Controller
-              name="email"
-              control={control}
-              rules={{ required: true }}
-              render={({ field: { value, onChange } }) => (
-                <KeybudOutlinedTextbox
-                  autoFocus
-                  value={value}
-                  onChange={onChange}
-                  error={Boolean(errors.username)}
-                  inputProps={{ className: "keybud__textfield" }}
-                  placeholder="Email Address"
-                />
-              )}
-            />
-            <Controller
-              name="switchType"
-              control={control}
-              rules={{ required: true }}
-              render={({ field: { value, onChange } }) => (
-                <KeybudOutlinedTextbox
-                  autoFocus
-                  value={value}
-                  onChange={onChange}
-                  error={Boolean(errors.username)}
-                  inputProps={{ className: "keybud__textfield" }}
-                  placeholder="Switch Type"
-                />
-              )}
-            />
-            <Controller
-              name="password"
-              control={control}
-              rules={{ required: true }}
-              render={({ field: { value, onChange } }) => (
-                <KeybudOutlinedTextbox
-                  autoFocus
-                  value={value}
-                  onChange={onChange}
-                  error={Boolean(errors.username)}
-                  inputProps={{ className: "keybud__textfield" }}
-                  placeholder="Password"
-                />
-              )}
-            />
-            <Controller
-              name="confirmPassword"
-              control={control}
-              rules={{ required: true }}
-              render={({ field: { value, onChange } }) => (
-                <KeybudOutlinedTextbox
-                  autoFocus
-                  value={value}
-                  onChange={onChange}
-                  error={Boolean(errors.username)}
-                  inputProps={{ className: "keybud__textfield" }}
-                  placeholder="Confirm Password"
-                />
-              )}
-            />
-            <KeybudButton
-              variant="contained"
-              sx={{
-                fontSize: "20px",
-              }}
-            >
-              Register
-            </KeybudButton>
-          </Stack>
-        </FormControl>
-      </Stack>
-    </Box>
+        <p className="fs-1 fw-bold">Signup</p>
+        <div className="mb-3">
+          <label htmlFor="username" className="form-label">
+            Username
+          </label>
+          <input type="text" className="form-control" id="username" />
+        </div>
+        <div className="mb-3">
+          <label htmlFor="email" className="form-label">
+            Email
+          </label>
+          <input type="email" className="form-control" id="email" />
+        </div>
+        <div className="mb-3">
+          <label htmlFor="password" className="form-label">
+            Password
+          </label>
+          <input type="password" className="form-control" id="password" />
+        </div>
+        <div className="mb-3">
+          <label htmlFor="confirmPass" className="form-label">
+            Confirm Password
+          </label>
+          <input type="password" className="form-control" id="confirmPass" />
+        </div>
+        <div className="mb-3">
+          <button
+            className="btn btn-primary w-100 p-3 fw-bold"
+            style={{ backgroundColor: "#8c52ff", borderColor: "#8c52ff" }}
+          >
+            SIGNUP
+          </button>
+        </div>
+        <div className="text-center w-100">
+          <p className="fs-6 fw-light">
+            Already have an account? <a href="/login">Login</a>
+          </p>
+        </div>
+      </div>
+    </div>
   );
 }
 
