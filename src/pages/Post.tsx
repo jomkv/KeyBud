@@ -18,7 +18,7 @@ import { IPosts } from "../types/post";
 
 import Api from "../common/Api";
 
-import Navbar from "../components/Navbar";
+import Navbar from "../components/NavbarComponent";
 
 const KeybudButton = styled(Button)({
   color: "#8C52FF",

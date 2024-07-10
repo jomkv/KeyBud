@@ -1,21 +1,11 @@
-import {
-  Typography,
-  Stack,
-  Box,
-  TextField,
-  Fab,
-  Button,
-  IconButton,
-  Container,
-} from "@mui/material";
-import React, { Fragment, useEffect, useState } from "react";
+import NavbarComponent from "../components/NavbarComponent";
 
-import CreatePostButton from "../components/home/CreatePostButton";
-import PostsCard from "../components/home/PostsCard";
-import CreatePostCard from "../components/home/CreatePostCard";
-import Navbar from "../components/Navbar";
-
-import Api from "../common/Api";
+import Container from "react-bootstrap/Container";
+import Row from "react-bootstrap/Row";
+import Col from "react-bootstrap/Col";
+import Button from "react-bootstrap/Button";
+import Card from "react-bootstrap/Card";
+import { Fragment } from "react";
 
 interface IPosts {
   _id: string;
@@ -31,29 +21,38 @@ interface IPosts {
 }
 
 function Home() {
-  const [posts, setPosts] = useState<IPosts[]>();
-
-  useEffect(() => {
-    const fetchPosts = async () => {
-      const res: any = await Api.getPosts();
-      setPosts(res.data.posts as IPosts[]);
-    };
-
-    fetchPosts();
-  }, []);
-
   return (
-    <Fragment>
-      <Navbar />
-      <Container sx={{ flexGrow: 1, paddingTop: "25px" }}>
-        <Stack direction="column" alignItems="center" spacing="30px">
-          <CreatePostCard />
-          {posts?.map((post) => (
-            <PostsCard post={post} />
-          ))}
-        </Stack>
+    <div className="bg-light w-100 h-100">
+      <NavbarComponent />
+      <Container
+        className="mt-5"
+        style={{
+          backgroundColor: "aqua",
+        }}
+      >
+        <Row>
+          <Col lg={12}>
+            <Card
+              className="bg-secondary"
+              style={{
+                color: "white",
+              }}
+            >
+              <Card.Header>Featured</Card.Header>
+              <Card.Body className="text-center">
+                <Card.Title>Special title treatment</Card.Title>
+                <Card.Text>
+                  With supporting text below as a natural lead-in to additional
+                  content.
+                </Card.Text>
+                <Button variant="primary">Go somewhere</Button>
+              </Card.Body>
+              <Card.Footer>2 days ago</Card.Footer>
+            </Card>
+          </Col>
+        </Row>
       </Container>
-    </Fragment>
+    </div>
   );
 }
 

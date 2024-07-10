@@ -1,4 +1,4 @@
-import { Controller, useForm } from "react-hook-form";
+import LoginForm from "../components/login/LoginForm";
 
 function Login() {
   return (
@@ -13,7 +13,8 @@ function Login() {
         alt="logo"
         src="/images/Logo with Phrase.svg"
       />
-      <div
+      <LoginForm />
+      {/* <div
         className="p-5 rounded"
         style={{
           backgroundColor: "#d1cdc4",
@@ -35,19 +36,16 @@ function Login() {
           <input type="password" className="form-control" id="email" />
         </div>
         <div className="mb-3">
-          <button
-            className="btn btn-primary w-100 p-3 fw-bold"
-            style={{ backgroundColor: "#8c52ff", borderColor: "#8c52ff" }}
-          >
-            LOGIN
-          </button>
+          <Button className="w-100 p-3 fw-bold" variant="primary">
+            asdasd
+          </Button>
         </div>
         <div className="text-center w-100">
           <p className="fs-6 fw-light">
             Don't have an account? <a href="/signup">Signup</a>
           </p>
         </div>
-      </div>
+      </div> */}
     </div>
   );
 }
