@@ -12,7 +12,7 @@ import ThumbUpOffAltIcon from "@mui/icons-material/ThumbUpOffAlt";
 import ThumbUpAltIcon from "@mui/icons-material/ThumbUpAlt";
 import ChatBubbleOutlineIcon from "@mui/icons-material/ChatBubbleOutline";
 import styled from "@emotion/styled";
-import PostsCard from "../components/home/PostsCard";
+import PostCard from "../components/home/PostCard";
 import CommentCard from "../components/post/CommentCard";
 import { IPosts } from "../types/post";
 
