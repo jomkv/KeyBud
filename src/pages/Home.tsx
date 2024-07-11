@@ -22,32 +22,86 @@ interface IPosts {
 
 function Home() {
   return (
-    <div className="bg-light w-100 h-100">
+    <div className="bg-light">
       <NavbarComponent />
-      <Container
-        className="mt-5"
-        style={{
-          backgroundColor: "aqua",
-        }}
-      >
-        <Row>
-          <Col lg={12}>
+      <Container className="mb-3">
+        <Row className="justify-content-center gy-4 mt-2">
+          <Col lg={6} md={9} sm={11}>
             <Card
               className="bg-secondary"
               style={{
                 color: "white",
               }}
             >
-              <Card.Header>Featured</Card.Header>
-              <Card.Body className="text-center">
-                <Card.Title>Special title treatment</Card.Title>
+              <Card.Header className="pt-3">
+                <div className="d-flex align-items-center justify-content-between">
+                  <div className="d-flex align-items-center">
+                    <img
+                      src="images/user_icon.png"
+                      alt="icon"
+                      className="rounded-circle me-2"
+                      style={{
+                        height: "25px",
+                      }}
+                    />
+                    <p className="m-0 p-0 fs-5">Username</p>
+                  </div>
+                  <p className="m-0 p-0 fs-6">2 days ago</p>
+                </div>
+                <Card.Title className="text-center">
+                  Special title treatment
+                </Card.Title>
+              </Card.Header>
+              <Card.Body className="pt-0 pb-0">
                 <Card.Text>
-                  With supporting text below as a natural lead-in to additional
-                  content.
+                  <img
+                    src="images/keyboard_sample_pic.jpg"
+                    alt="content"
+                    className="img-fluid m-0 p-0"
+                  />
                 </Card.Text>
-                <Button variant="primary">Go somewhere</Button>
               </Card.Body>
-              <Card.Footer>2 days ago</Card.Footer>
+              <Card.Footer className="d-flex">
+                <Button
+                  style={{
+                    backgroundColor: "transparent",
+                    borderColor: "transparent",
+                  }}
+                >
+                  <i
+                    className="bi bi-star h2"
+                    style={{
+                      color: "#8c52ff",
+                    }}
+                  ></i>
+                </Button>
+                <Button
+                  style={{
+                    backgroundColor: "transparent",
+                    borderColor: "transparent",
+                  }}
+                >
+                  <i
+                    className="bi bi-chat h2"
+                    style={{
+                      color: "#8c52ff",
+                    }}
+                  ></i>
+                </Button>
+                <Button
+                  style={{
+                    backgroundColor: "transparent",
+                    borderColor: "transparent",
+                  }}
+                >
+                  <i
+                    className="bi bi-share h2"
+                    style={{
+                      color: "#8c52ff",
+                    }}
+                  ></i>
+                </Button>
+              </Card.Footer>
             </Card>
           </Col>
         </Row>

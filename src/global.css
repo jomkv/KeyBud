@@ -38,6 +38,10 @@ body {
   padding: 0;
 }
 
+#root {
+  background-color: #d1cdc4;
+}
+
 .classes.pageContainer {
   background-color: red;
 }
