@@ -1,145 +1,114 @@
-import {
-  Typography,
-  Stack,
-  Box,
-  TextField,
-  Button,
-  Avatar,
-  Container,
-} from "@mui/material";
-import { Fragment, useEffect, useState } from "react";
-import ThumbUpOffAltIcon from "@mui/icons-material/ThumbUpOffAlt";
-import ThumbUpAltIcon from "@mui/icons-material/ThumbUpAlt";
-import ChatBubbleOutlineIcon from "@mui/icons-material/ChatBubbleOutline";
-import styled from "@emotion/styled";
-import PostCard from "../components/home/PostCard";
+import React, { Fragment, useEffect, useState } from "react";
+import Row from "react-bootstrap/Row";
+import Col from "react-bootstrap/Col";
+import Button from "react-bootstrap/Button";
+import Card from "react-bootstrap/Card";
+import Container from "react-bootstrap/Container";
+import ListGroup from "react-bootstrap/ListGroup";
+import Form from "react-bootstrap/Form";
+
+import NavbarComponent from "../components/NavbarComponent";
 import CommentCard from "../components/post/CommentCard";
-import { IPosts } from "../types/post";
-
-import Api from "../common/Api";
-
-import Navbar from "../components/NavbarComponent";
-
-const KeybudButton = styled(Button)({
-  color: "#8C52FF",
-  borderColor: "#8C52FF",
-  ":hover": {
-    borderColor: "#8C52FF",
-  },
-});
-
-const KeybudTextbox = styled(TextField)`
-  &label.Mui-focused {
-    color: white;
-  }
-  &.MuiOutlinedInput-root {
-    &.Mui-focused fieldset {
-      border-color: white;
-    }
-  }
-`;
 
 function Post() {
-  const [likeCount, setLikeCount] = useState<number>(0);
-  const [commentCount, setCommentCount] = useState<number>(2);
-  const [isLiked, setIsLiked] = useState<boolean>(false);
-
-  const fetchPosts = async () => {
-    const res = await Api.getPosts();
-    console.log(res?.data);
-  };
-
-  useEffect(() => {
-    fetchPosts();
-  }, []);
-
-  const handleLikeClick = () => {
-    setIsLiked(!isLiked);
-  };
-
   return (
-    <Fragment>
-      <Navbar />
-      <Container sx={{ flexGrow: 1, paddingTop: "25px" }}>
-        <Stack
-          spacing={2}
-          sx={{
-            backgroundColor: "rgba(31, 31, 31, 0.97)",
-            color: "white",
-            padding: "25px",
-            marginBottom: "25px",
-            borderRadius: "15px",
-          }}
-        >
-          <Stack direction="row" display="flex" alignItems="center" spacing={1}>
-            <Avatar
-              src="/images/user_icon.png"
-              sx={{
-                width: 45,
-                height: 45,
-              }}
-            />
-            <Typography variant="h6">Username</Typography>
-          </Stack>
-          <Typography variant="h4" fontWeight="bold">
-            Title
-          </Typography>
-          <Box>
-            <img
-              src="/images/keyboard_sample_pic.jpg"
-              style={{ maxWidth: "100%", height: "auto" }}
-            />
-          </Box>
-          <Typography variant="body1">
-            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Soluta
-            totam provident, tempora blanditiis accusantium minus dicta autem
-            quas, debitis dignissimos dolorum id numquam dolores asperiores
-            assumenda omnis repellat tenetur. Provident?
-          </Typography>
-          <Stack direction="row">
-            <KeybudButton
-              size="large"
-              sx={{ color: "#8C52FF" }}
-              onClick={handleLikeClick}
-            >
-              {isLiked ? (
-                <ThumbUpAltIcon fontSize="large" />
-              ) : (
-                <ThumbUpOffAltIcon fontSize="large" />
-              )}
-              {likeCount > 0 && (
-                <Typography variant="h6" fontWeight={550} ml={1}>
-                  {likeCount}
-                </Typography>
-              )}
-            </KeybudButton>
-            <KeybudButton size="large" sx={{ color: "#8C52FF" }}>
-              <ChatBubbleOutlineIcon fontSize="large" />
-              {commentCount > 0 && (
-                <Typography variant="h6" fontWeight={550} ml={1}>
-                  {commentCount}
-                </Typography>
-              )}
-            </KeybudButton>
-          </Stack>
-          <KeybudTextbox
-            placeholder="Add a comment"
-            InputProps={{
-              sx: {
+    <div className="bg-light">
+      <NavbarComponent />
+
+      <Container className="mb-3">
+        <Row className="justify-content-center gy-4 mt-2">
+          <Col md={11} sm={11}>
+            <Card
+              className="bg-secondary"
+              style={{
                 color: "white",
-                fontSize: 24,
-              },
-            }}
-            fullWidth
-            variant="filled"
-          />
-          <CommentCard />
-          <CommentCard />
-          <CommentCard />
-          <CommentCard />
-        </Stack>
+              }}
+            >
+              <Card.Header className="pt-3">
+                <div className="d-flex align-items-center justify-content-between">
+                  <div className="d-flex align-items-center">
+                    <img
+                      src="images/user_icon.png"
+                      alt="icon"
+                      className="rounded-circle me-2"
+                      style={{
+                        height: "25px",
+                      }}
+                    />
+                    <p className="m-0 p-0 fs-5">Username • 2 days ago</p>
+                  </div>
+                </div>
+                <Card.Title className="fs-2 mt-3 p-2 pb-0">
+                  Special title treatment
+                </Card.Title>
+              </Card.Header>
+
+              <Card.Body className="pt-0 pb-0">
+                <Card.Text className="p-2 pt-0">
+                  Lorem ipsum, dolor sit amet consectetur adipisicing elit.
+                  Veniam omnis corporis ab, dolor maiores soluta dolorem,
+                  nesciunt perferendis exercitationem ad nisi, molestias vitae
+                  tenetur sint sequi natus. Sed, natus asperiores.
+                </Card.Text>
+                <div className="d-flex justify-content-center">
+                  <div className="w-50">
+                    <img
+                      src="images/keyboard_sample_pic.jpg"
+                      alt="content"
+                      className="img-fluid m-0 p-0"
+                    />
+                  </div>
+                </div>
+              </Card.Body>
+              <Card.Footer className="d-flex">
+                <Button
+                  style={{
+                    backgroundColor: "transparent",
+                    borderColor: "transparent",
+                  }}
+                >
+                  <i
+                    className="bi bi-star h2"
+                    style={{
+                      color: "#8c52ff",
+                    }}
+                  ></i>
+                </Button>
+                <Button
+                  style={{
+                    backgroundColor: "transparent",
+                    borderColor: "transparent",
+                  }}
+                >
+                  <i
+                    className="bi bi-share h2"
+                    style={{
+                      color: "#8c52ff",
+                    }}
+                  ></i>
+                </Button>
+              </Card.Footer>
+              <ListGroup className="list-group-flush">
+                <ListGroup.Item className="bg-secondary pb-4">
+                  <Form.Control
+                    size="lg"
+                    type="text"
+                    placeholder="Add a comment"
+                    style={{
+                      borderRadius: "25px",
+                    }}
+                  />
+                </ListGroup.Item>
+                <CommentCard />
+                <CommentCard />
+                <CommentCard />
+                <CommentCard />
+              </ListGroup>
+            </Card>
+          </Col>
+        </Row>
       </Container>
-    </Fragment>
+    </div>
   );
 }
 

@@ -1,35 +1,8 @@
-import {
-  Typography,
-  Button,
-  IconButton,
-  Card,
-  CardContent,
-  CardHeader,
-  Avatar,
-  CardActions,
-} from "@mui/material";
 import React, { Fragment, useEffect, useState } from "react";
-import ThumbUpOffAltIcon from "@mui/icons-material/ThumbUpOffAlt";
-import ThumbUpAltIcon from "@mui/icons-material/ThumbUpAlt";
-import ChatBubbleOutlineIcon from "@mui/icons-material/ChatBubbleOutline";
-import MoreVertIcon from "@mui/icons-material/MoreVert";
-import styled from "@emotion/styled";
-
-const KeybudButton = styled(Button)({
-  color: "#8C52FF",
-  borderColor: "#8C52FF",
-  ":hover": {
-    borderColor: "#8C52FF",
-  },
-});
-
-const KeybudIconButton = styled(IconButton)({
-  color: "#8C52FF",
-  borderColor: "#8C52FF",
-  ":hover": {
-    borderColor: "#8C52FF",
-  },
-});
+import Col from "react-bootstrap/Col";
+import Row from "react-bootstrap/Row";
+import Card from "react-bootstrap/Card";
+import ListGroup from "react-bootstrap/ListGroup";
 
 function CommentCard() {
   const [likeCount, setLikeCount] = useState<number>(0);
@@ -41,59 +14,38 @@ function CommentCard() {
   };
 
   return (
-    <Card
-      sx={{
-        backgroundColor: "rgba(31, 31, 31, 0.97)",
-        borderRadius: "15px",
-        color: "White",
-        ":hover": {
-          backgroundColor: "rgba(31, 31, 31, 1)",
-        },
-        transition: "0.15s",
-      }}
-    >
-      <CardHeader
-        avatar={<Avatar src="/images/user_icon.png" />}
-        title="Comment from Username"
-        subheaderTypographyProps={{ sx: { color: "white" } }}
-        action={
-          <KeybudIconButton>
-            <MoreVertIcon fontSize="large" />
-          </KeybudIconButton>
-        }
-      />
-      <CardContent>
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Tenetur aliquam
-        dolorem quas mollitia? Sit blanditiis, voluptatum, labore eos at eveniet
-        tenetur dolor sint libero obcaecati, molestiae in ad fuga itaque.
-      </CardContent>
-      <CardActions>
-        <KeybudButton
-          size="large"
-          sx={{ color: "#8C52FF" }}
-          onClick={handleLikeClick}
-        >
-          {isLiked ? (
-            <ThumbUpAltIcon fontSize="large" />
-          ) : (
-            <ThumbUpOffAltIcon fontSize="large" />
-          )}
-          {likeCount > 0 && (
-            <Typography variant="h6" fontWeight={550} ml={1}>
-              {likeCount}
-            </Typography>
-          )}
-        </KeybudButton>
-        <KeybudButton size="large" sx={{ color: "#8C52FF" }}>
-          <ChatBubbleOutlineIcon fontSize="large" />
-          {commentCount > 0 && (
-            <Typography variant="h6" fontWeight={550} ml={1}>
-              {commentCount}
-            </Typography>
-          )}
-        </KeybudButton>
-      </CardActions>
-    </Card>
+    <ListGroup.Item className="bg-secondary">
+      <Row
+        sm={1}
+        md={1}
+        style={{
+          color: "white",
+        }}
+        className="p-3 gy-3"
+      >
+        <Col className="d-flex align-items-center justify-content-between">
+          <div className="d-flex align-items-center">
+            <img
+              src="images/user_icon.png"
+              alt="icon"
+              className="rounded-circle me-2"
+              style={{
+                height: "25px",
+              }}
+            />
+            <p className="m-0 p-0 fs-5">Username • 2 days ago</p>
+          </div>
+        </Col>
+        <Col>
+          <p>
+            Lorem ipsum, dolor sit amet consectetur adipisicing elit. Veniam
+            omnis corporis ab, dolor maiores soluta dolorem, nesciunt
+            perferendis exercitationem ad nisi, molestias vitae tenetur sint
+            sequi natus. Sed, natus asperiores.
+          </p>
+        </Col>
+      </Row>
+    </ListGroup.Item>
   );
 }
 

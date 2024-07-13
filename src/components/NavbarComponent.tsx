@@ -17,7 +17,7 @@ function NavbarComponent() {
   return (
     <Navbar sticky="top" expand="lg" className="bg-secondary">
       <Container fluid>
-        <Navbar.Brand href="#">
+        <Navbar.Brand href="/">
           <img alt="logo" src="/images/Final Logo.svg" height={60} />
         </Navbar.Brand>
         <Navbar.Toggle aria-controls="navbarScroll" />
@@ -28,7 +28,7 @@ function NavbarComponent() {
             navbarScroll
           >
             <Nav.Link
-              href="#action1"
+              href="/"
               style={{
                 color: "white",
               }}

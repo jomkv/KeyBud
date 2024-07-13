@@ -27,7 +27,7 @@ const PostCard: React.FC<PostProps> = () => {
   }, []);
 
   return (
-    <Row className="justify-content-center gy-4 mt-2">
+    <Row className="justify-content-center gy-4 mt-1">
       <Col lg={6} md={9} sm={11}>
         <Card
           className="bg-secondary"
@@ -50,19 +50,26 @@ const PostCard: React.FC<PostProps> = () => {
               </div>
               <p className="m-0 p-0 fs-6">2 days ago</p>
             </div>
-            <Card.Title className="text-center">
+            <Card.Title className="fs-2 mt-2">
               Special title treatment
             </Card.Title>
           </Card.Header>
-          <Card.Body className="pt-0 pb-0">
-            <Card.Text>
-              <img
-                src="images/keyboard_sample_pic.jpg"
-                alt="content"
-                className="img-fluid m-0 p-0"
-              />
-            </Card.Text>
-          </Card.Body>
+          <a
+            href="/post"
+            style={{
+              textDecoration: "none",
+            }}
+          >
+            <Card.Body className="pt-0 pb-0">
+              <Card.Text>
+                <img
+                  src="images/keyboard_sample_pic.jpg"
+                  alt="content"
+                  className="img-fluid m-0 p-0"
+                />
+              </Card.Text>
+            </Card.Body>
+          </a>
           <Card.Footer className="d-flex">
             <Button
               style={{
