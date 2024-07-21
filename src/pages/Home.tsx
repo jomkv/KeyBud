@@ -1,4 +1,5 @@
 import NavbarComponent from "../components/NavbarComponent";
+import ChatWidget from "../components/ChatWidget";
 import PostCard from "../components/home/PostCard";
 
 import Container from "react-bootstrap/Container";
@@ -24,6 +25,7 @@ function Home() {
         <PostCard />
         <PostCard />
       </Container>
+      <ChatWidget />
     </div>
   );
 }

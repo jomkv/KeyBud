@@ -4,4 +4,6 @@ $theme-colors: (
   "light": #d1cdc4,
 );
 
+$box-shadow-lg: 0 1rem 3rem rgba(white, 0.175);
+
 @import "~bootstrap/scss/bootstrap";

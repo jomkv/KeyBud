@@ -11,6 +11,7 @@ import NavbarComponent from "../components/NavbarComponent";
 import Build from "../components/profile/Build";
 import Posts from "../components/profile/Posts";
 import Likes from "../components/profile/Likes";
+import ChatWidget from "../components/ChatWidget";
 
 function Profile() {
   const [tab, setTab] = useState("build");
@@ -152,6 +153,8 @@ function Profile() {
           {tab === "likes" && <Likes />}
         </Row>
       </Container>
+
+      <ChatWidget />
     </div>
   );
 }

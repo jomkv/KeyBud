@@ -1,4 +1,4 @@
-import React, { Fragment, useEffect, useState } from "react";
+// * Third Party Imports
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import Button from "react-bootstrap/Button";
@@ -7,8 +7,10 @@ import Container from "react-bootstrap/Container";
 import ListGroup from "react-bootstrap/ListGroup";
 import Form from "react-bootstrap/Form";
 
+// * Local Imports
 import NavbarComponent from "../components/NavbarComponent";
 import CommentCard from "../components/post/CommentCard";
+import ChatWidget from "../components/ChatWidget";
 
 function Post() {
   return (
@@ -108,6 +110,8 @@ function Post() {
           </Col>
         </Row>
       </Container>
+
+      <ChatWidget />
     </div>
   );
 }
