@@ -36,15 +36,7 @@ function NavbarComponent() {
               Home
             </Nav.Link>
             <Nav.Link
-              href="#action1"
-              style={{
-                color: "white",
-              }}
-            >
-              Messages
-            </Nav.Link>
-            <Nav.Link
-              href="#action1"
+              href="/profile"
               style={{
                 color: "white",
               }}
