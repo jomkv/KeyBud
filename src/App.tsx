@@ -7,7 +7,7 @@ import Post from "./pages/Post";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
 import Profile from "./pages/Profile";
-
+import CreatePost from "./pages/CreatePost";
 
 function App() {
   return (
@@ -22,6 +22,7 @@ function App() {
           <Route path="/signup" element={<Register />} />
           <Route path="/post" element={<Post />} />
           <Route path="/profile" element={<Profile />} />
+          <Route path="/create-post" element={<CreatePost />} />
         </Routes>
       </div>
     </Router>

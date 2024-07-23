@@ -1,19 +1,22 @@
-import React from "react";
-import { Typography, Stack, Box, TextField, Fab } from "@mui/material";
-import PostAddIcon from "@mui/icons-material/PostAdd";
+import Button from "react-bootstrap/Button";
+import Row from "react-bootstrap/Row";
+import Col from "react-bootstrap/Col";
 
 function CreatePostButton() {
   return (
-    <Fab
-      size="large"
-      variant="extended"
-      sx={{ position: "sticky", float: "right", bottom: 30 }}
-    >
-      <PostAddIcon />
-      <Typography variant="subtitle1" fontWeight="bold" ml={1}>
-        Post
-      </Typography>
-    </Fab>
+    <Row className="justify-content-center mt-4">
+      <Col lg={6} md={9} sm={11}>
+        <a
+          className="btn btn-primary fs-3 w-100 fw-bold"
+          href="/create-post"
+          style={{
+            color: "white",
+          }}
+        >
+          Post
+        </a>
+      </Col>
+    </Row>
   );
 }
 

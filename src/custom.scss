@@ -6,4 +6,33 @@ $theme-colors: (
 
 $box-shadow-lg: 0 1rem 3rem rgba(white, 0.175);
 
+.quill {
+  .ql-toolbar {
+    border: 2px solid #3d3d3d;
+    background-color: #3d3d3d;
+    color: white;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+  }
+  svg {
+    filter: invert(100%) sepia(0%) saturate(0%) hue-rotate(24deg)
+      brightness(107%) contrast(101%);
+  }
+  span.ql-picker-label {
+    color: white;
+  }
+  .ql-container {
+    border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 5px;
+  }
+}
+
+.ql-editor {
+  height: 200px;
+  background-color: white;
+  color: black;
+  font-size: 1.3rem;
+  resize: vertical;
+}
+
 @import "~bootstrap/scss/bootstrap";

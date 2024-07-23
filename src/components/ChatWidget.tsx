@@ -5,7 +5,7 @@ function ChatWidget() {
   return (
     <Navbar
       sticky="bottom"
-      className="bg-secondary pb-2 p-3 rounded-top-4 shadow-lg"
+      className="bg-secondary pb-2 p-3 rounded-top-4 shadow-lg position-absolute bottom-0 end-30"
       style={{
         color: "white",
         width: "16rem",

@@ -1,6 +1,7 @@
 import NavbarComponent from "../components/NavbarComponent";
 import ChatWidget from "../components/ChatWidget";
 import PostCard from "../components/home/PostCard";
+import CreatePostButton from "../components/home/CreatePostButton";
 
 import Container from "react-bootstrap/Container";
 
@@ -21,7 +22,8 @@ function Home() {
   return (
     <div className="bg-light">
       <NavbarComponent />
-      <Container className="mb-3">
+      <Container className="mb-3 d-flex flex-column">
+        <CreatePostButton />
         <PostCard />
         <PostCard />
       </Container>
