@@ -7,9 +7,9 @@ import "react-quill/dist/quill.snow.css";
 import { useState, useEffect } from "react";
 
 function CreatePost() {
-  const [title, setTitle] = useState("");
-  const [titleChars, setTitleChars] = useState(0);
-  const [body, setBody] = useState("");
+  const [title, setTitle] = useState<string>("");
+  const [titleChars, setTitleChars] = useState<number>(0);
+  const [body, setBody] = useState<string>("");
 
   const titleHandleChange = (e: any) => {
     const val = e.target.value;
