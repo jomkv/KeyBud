@@ -14,38 +14,6 @@ function Login() {
         src="/images/Logo with Phrase.svg"
       />
       <LoginForm />
-      {/* <div
-        className="p-5 rounded"
-        style={{
-          backgroundColor: "#d1cdc4",
-          color: "#1f1f1f",
-          width: "390px",
-        }}
-      >
-        <p className="fs-1 fw-bold">Login</p>
-        <div className="mb-3">
-          <label htmlFor="email" className="form-label">
-            Username / Email
-          </label>
-          <input type="email" className="form-control" id="email" />
-        </div>
-        <div className="mb-3">
-          <label htmlFor="email" className="form-label">
-            Password
-          </label>
-          <input type="password" className="form-control" id="email" />
-        </div>
-        <div className="mb-3">
-          <Button className="w-100 p-3 fw-bold" variant="primary">
-            asdasd
-          </Button>
-        </div>
-        <div className="text-center w-100">
-          <p className="fs-6 fw-light">
-            Don't have an account? <a href="/signup">Signup</a>
-          </p>
-        </div>
-      </div> */}
     </div>
   );
 }

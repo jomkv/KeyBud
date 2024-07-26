@@ -26,9 +26,6 @@ function App() {
         </Routes>
       </div>
     </Router>
-    // <div style={{ height: "100vh", width: "100vw" }}>
-    //   <Home />
-    // </div>
   );
 }
 
