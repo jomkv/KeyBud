@@ -1,6 +1,29 @@
 import { Button, Form } from "react-bootstrap";
 import { useForm } from "react-hook-form";
-import { DevTool } from "@hookform/devtools";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { z } from "zod";
+
+const schema = z
+  .object({
+    username: z
+      .string()
+      .nonempty("Username is required")
+      .min(5, "Username is too short")
+      .max(50, "Username is too long"),
+    email: z
+      .string()
+      .nonempty("Email is required")
+      .email("Please provide a valid email"),
+    password: z
+      .string()
+      .nonempty("Password is required")
+      .min(8, "Password is too short"),
+    confirm: z.string(),
+  })
+  .refine((data) => data.password === data.confirm, {
+    message: "Passwords must match",
+    path: ["confirm"], // path of error
+  });
 
 interface IForm {
   username: string;
@@ -10,8 +33,16 @@ interface IForm {
 }
 
 function SignupForm() {
-  const form = useForm<IForm>();
-  const { register, control, handleSubmit, formState } = form;
+  const form = useForm<IForm>({
+    defaultValues: {
+      username: "",
+      email: "",
+      password: "",
+      confirm: "",
+    },
+    resolver: zodResolver(schema),
+  });
+  const { register, handleSubmit, formState } = form;
   const { errors } = formState;
 
   const onSubmit = (data: IForm) => {
@@ -32,22 +63,12 @@ function SignupForm() {
         <p className="fs-1 fw-bold">Signup</p>
 
         <Form.Group className="mb-3">
-          <Form.Label>Username</Form.Label>
+          <Form.Label>Username *</Form.Label>
           <Form.Control
             type="text"
             id="username"
             isInvalid={errors.username?.message ? true : false}
-            {...register("username", {
-              required: { value: true, message: "Username is required" },
-              minLength: {
-                value: 5,
-                message: "Username too short",
-              },
-              maxLength: {
-                value: 50,
-                message: "Username too long",
-              },
-            })}
+            {...register("username")}
           />
           <Form.Control.Feedback type="invalid">
             {errors.username?.message}
@@ -55,21 +76,12 @@ function SignupForm() {
         </Form.Group>
 
         <Form.Group className="mb-3">
-          <Form.Label>Email</Form.Label>
+          <Form.Label>Email *</Form.Label>
           <Form.Control
             type="email"
             id="email"
             isInvalid={errors.email?.message ? true : false}
-            {...register("email", {
-              pattern: {
-                value: /^([a-zA-Z0-9._%-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,})$/,
-                message: "Please provide a valid email",
-              },
-              required: {
-                value: true,
-                message: "Email is required",
-              },
-            })}
+            {...register("email")}
           />
           <Form.Control.Feedback type="invalid">
             {errors.email?.message}
@@ -77,18 +89,12 @@ function SignupForm() {
         </Form.Group>
 
         <Form.Group className="mb-3">
-          <Form.Label>Password</Form.Label>
+          <Form.Label>Password *</Form.Label>
           <Form.Control
             type="password"
             id="password"
             isInvalid={errors.password?.message ? true : false}
-            {...register("password", {
-              required: { value: true, message: "Password is required" },
-              minLength: {
-                value: 8,
-                message: "Password too short",
-              },
-            })}
+            {...register("password")}
           />
           <Form.Control.Feedback type="invalid">
             {errors.password?.message}
@@ -96,19 +102,12 @@ function SignupForm() {
         </Form.Group>
 
         <Form.Group className="mb-3">
-          <Form.Label>Confirm Password</Form.Label>
+          <Form.Label>Confirm Password *</Form.Label>
           <Form.Control
             type="password"
             id="confirm"
             isInvalid={errors.confirm?.message ? true : false}
-            {...register("confirm", {
-              validate: (fieldValue) => {
-                return (
-                  fieldValue === form.getValues().password ||
-                  "Passwords do not match"
-                );
-              },
-            })}
+            {...register("confirm")}
           />
           <Form.Control.Feedback type="invalid">
             {errors.confirm?.message}
@@ -132,7 +131,6 @@ function SignupForm() {
           </p>
         </div>
       </Form>
-      <DevTool control={control} />
     </>
   );
 }
