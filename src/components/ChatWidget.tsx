@@ -31,7 +31,11 @@ function ChatWidget() {
     >
       <div role="button" onClick={handleClick} className={widgetClass}>
         <p className="fs-5 mb-0">Messages</p>
-        <i className="bi bi-chevron-double-up fs-5"></i>
+        {show ? (
+          <i className="bi bi-chevron-double-down fs-5"></i>
+        ) : (
+          <i className="bi bi-chevron-double-up fs-5"></i>
+        )}
       </div>
       {show && (
         <>
