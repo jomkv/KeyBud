@@ -114,6 +114,12 @@ function CreatePost() {
               {errors.body?.message}
             </Form.Control.Feedback>
           </Form.Group>
+          <Form.Group className="mb-3">
+            <Form.Label className="fs-5 fw-medium">
+              Multiple files input example
+            </Form.Label>
+            <Form.Control type="file" multiple />
+          </Form.Group>
           <div className="w-100 d-flex justify-content-end pe-1">
             <Button
               variant="primary"
