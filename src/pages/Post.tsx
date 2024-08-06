@@ -6,6 +6,7 @@ import Card from "react-bootstrap/Card";
 import Container from "react-bootstrap/Container";
 import ListGroup from "react-bootstrap/ListGroup";
 import Form from "react-bootstrap/Form";
+import { useState } from "react";
 
 // * Local Imports
 import NavbarComponent from "../components/NavbarComponent";
@@ -13,6 +14,8 @@ import CommentCard from "../components/post/CommentCard";
 import ChatWidget from "../components/ChatWidget";
 
 function Post() {
+  const [isComment, setIsComment] = useState<boolean>(false);
+
   return (
     <div className="bg-light">
       <NavbarComponent />
@@ -92,14 +95,36 @@ function Post() {
               </Card.Footer>
               <ListGroup className="list-group-flush">
                 <ListGroup.Item className="bg-secondary pb-4">
-                  <Form.Control
-                    size="lg"
-                    type="text"
-                    placeholder="Add a comment"
-                    style={{
-                      borderRadius: "25px",
-                    }}
-                  />
+                  {isComment ? (
+                    <>
+                      <Form.Control
+                        size="lg"
+                        as="textarea"
+                        rows={2}
+                        placeholder="Write your comment"
+                      />
+                      <div className="w-100 d-flex justify-content-end">
+                        <Button
+                          className="mt-3 ml-auto fs-6 fw-semibold"
+                          style={{ color: "white" }}
+                        >
+                          Comment
+                        </Button>
+                      </div>
+                    </>
+                  ) : (
+                    <Form.Control
+                      size="lg"
+                      type="text"
+                      placeholder="Add a comment"
+                      style={{
+                        borderRadius: "25px",
+                      }}
+                      onFocus={() => {
+                        setIsComment(true);
+                      }}
+                    />
+                  )}
                 </ListGroup.Item>
                 <CommentCard />
                 <CommentCard />

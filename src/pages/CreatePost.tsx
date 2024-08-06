@@ -7,7 +7,6 @@ import { useEffect } from "react";
 
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { DevTool } from "@hookform/devtools";
 import { z } from "zod";
 
 const schema = z.object({
@@ -129,7 +128,6 @@ function CreatePost() {
         </Form>
       </Container>
       <ChatWidget />
-      <DevTool control={control} />
     </div>
   );
 }
