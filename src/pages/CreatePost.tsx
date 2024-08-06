@@ -1,10 +1,9 @@
 import NavbarComponent from "../components/NavbarComponent";
 import ChatWidget from "../components/ChatWidget";
 
-import { Container, Button, Row, Col, Form } from "react-bootstrap";
-import ReactQuill from "react-quill";
+import { Container, Button, Form } from "react-bootstrap";
 import "react-quill/dist/quill.snow.css";
-import { useState, useEffect } from "react";
+import { useEffect } from "react";
 
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -12,18 +11,18 @@ import { DevTool } from "@hookform/devtools";
 import { z } from "zod";
 
 const schema = z.object({
-  title: z.string().nonempty("Title is required"),
+  title: z.string().nonempty("Title is required").max(150, "Title is too long"),
   body: z.string().nonempty("Body is required"),
+  // images: z.object().nonempty({ message: "At least one image is required." })
 });
 
 interface IForm {
   title: string;
   body: string;
+  images: {};
 }
 
 function CreatePost() {
-  const [titleChars, setTitleChars] = useState<number>(0);
-
   const form = useForm<IForm>({
     defaultValues: {
       title: "",
@@ -31,33 +30,16 @@ function CreatePost() {
     },
     resolver: zodResolver(schema),
   });
-  const { register, handleSubmit, formState, control, setValue, watch } = form;
+  const { register, handleSubmit, formState, control } = form;
   const { errors } = formState;
 
   useEffect(() => {
     register("body", { required: true, minLength: 15 });
   }, [register]);
 
-  const onEditorStateChange = (editorState: any) => {
-    setValue("body", editorState);
-  };
-
-  const editorContent = watch("body");
-
   const onSubmit = (data: IForm) => {
     console.log(data);
   };
-
-  // const titleHandleChange = (e: any) => {
-  //   const val = e.target.value;
-
-  //   if (val.length > 150) {
-  //     return;
-  //   }
-
-  //   setTitle(val);
-  //   setTitleChars(val.length);
-  // };
 
   return (
     <div className="bg-light">
@@ -82,22 +64,26 @@ function CreatePost() {
               type="text"
               // onChange={titleHandleChange}
               {...register("title")}
+              isInvalid={errors.title?.message ? true : false}
             />
-            <div className="w-100 d-flex justify-content-end pe-1">
-              <Form.Text
-                className="fs-6"
-                style={{
-                  color: "white",
-                }}
-              >
-                {titleChars}/150
-              </Form.Text>
-            </div>
             <Form.Control.Feedback type="invalid">
               {errors.title?.message}
             </Form.Control.Feedback>
           </Form.Group>
           <Form.Group className="mb-3">
+            <Form.Label className="fs-5 fw-medium">Body *</Form.Label>
+            <Form.Control
+              className="fs-5"
+              as="textarea"
+              rows={5}
+              {...register("body")}
+              isInvalid={errors.body?.message ? true : false}
+            />
+            <Form.Control.Feedback type="invalid">
+              {errors.body?.message}
+            </Form.Control.Feedback>
+          </Form.Group>
+          {/* <Form.Group className="mb-3">
             <Form.Label className="fs-5 fw-medium">Body *</Form.Label>
             <ReactQuill
               modules={{
@@ -113,12 +99,19 @@ function CreatePost() {
             <Form.Control.Feedback type="invalid">
               {errors.body?.message}
             </Form.Control.Feedback>
-          </Form.Group>
+          </Form.Group> */}
           <Form.Group className="mb-3">
-            <Form.Label className="fs-5 fw-medium">
-              Multiple files input example
-            </Form.Label>
-            <Form.Control type="file" multiple />
+            <Form.Label className="fs-5 fw-medium">Keyboard Images</Form.Label>
+            <Form.Control
+              type="file"
+              {...register("images")}
+              isInvalid={errors.images?.message ? true : false}
+              multiple
+              size="lg"
+            />
+            <Form.Control.Feedback type="invalid">
+              {errors.images?.message}
+            </Form.Control.Feedback>
           </Form.Group>
           <div className="w-100 d-flex justify-content-end pe-1">
             <Button
