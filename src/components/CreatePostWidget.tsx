@@ -10,15 +10,15 @@ function CreatePostWidget() {
 
   return (
     <Button
-      className="position-absolute bottom-0 ms-3 mb-2 rounded-circle"
+      className="position-absolute bottom-0 p-0 ms-3 mb-2 rounded-circle"
       style={{
         color: "white",
-        width: "70px",
-        height: "70px",
+        height: "80px",
+        width: "80px",
       }}
       onClick={handleClick}
     >
-      <i className="bi bi-plus fs-1 fw-bold"></i>
+      <i className="bi bi-plus fs-1"></i>
     </Button>
   );
 }

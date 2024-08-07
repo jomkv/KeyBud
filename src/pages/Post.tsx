@@ -7,14 +7,39 @@ import Container from "react-bootstrap/Container";
 import ListGroup from "react-bootstrap/ListGroup";
 import Form from "react-bootstrap/Form";
 import { useState } from "react";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { z } from "zod";
 
 // * Local Imports
 import NavbarComponent from "../components/NavbarComponent";
 import CommentCard from "../components/post/CommentCard";
 import ChatWidget from "../components/ChatWidget";
 
+const schema = z.object({
+  comment: z.string().nonempty("Comment cannot be empty"),
+});
+
+interface IForm {
+  comment: string;
+}
+
 function Post() {
   const [isComment, setIsComment] = useState<boolean>(false);
+
+  const form = useForm<IForm>({
+    defaultValues: {
+      comment: "",
+    },
+    resolver: zodResolver(schema),
+  });
+
+  const { register, handleSubmit, formState } = form;
+  const { errors } = formState;
+
+  const onSubmit = (data: IForm) => {
+    console.log(data);
+  };
 
   return (
     <div className="bg-light">
@@ -96,22 +121,31 @@ function Post() {
               <ListGroup className="list-group-flush">
                 <ListGroup.Item className="bg-secondary pb-4">
                   {isComment ? (
-                    <>
-                      <Form.Control
-                        size="lg"
-                        as="textarea"
-                        rows={2}
-                        placeholder="Write your comment"
-                      />
+                    <Form onSubmit={handleSubmit(onSubmit)} noValidate>
+                      <Form.Group className="mb-3">
+                        <Form.Control
+                          size="lg"
+                          as="textarea"
+                          rows={2}
+                          placeholder="Write your comment"
+                          id="comment"
+                          {...register("comment")}
+                          isInvalid={errors.comment?.message ? true : false}
+                        />
+                        <Form.Control.Feedback type="invalid">
+                          {errors.comment?.message}
+                        </Form.Control.Feedback>
+                      </Form.Group>
                       <div className="w-100 d-flex justify-content-end">
                         <Button
                           className="mt-3 ml-auto fs-6 fw-semibold"
                           style={{ color: "white" }}
+                          type="submit"
                         >
                           Comment
                         </Button>
                       </div>
-                    </>
+                    </Form>
                   ) : (
                     <Form.Control
                       size="lg"
