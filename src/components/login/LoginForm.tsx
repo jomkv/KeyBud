@@ -3,6 +3,8 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 
+import GoogleSigninButton from "./GoogleSigninButton";
+
 const schema = z.object({
   usernameOrEmail: z.string().nonempty("This field is required"),
   password: z.string().nonempty("Password is required"),
@@ -85,6 +87,8 @@ function LoginForm() {
           Don't have an account? <a href="/signup">Signup</a>
         </p>
       </div>
+
+      <GoogleSigninButton />
     </Form>
   );
 }

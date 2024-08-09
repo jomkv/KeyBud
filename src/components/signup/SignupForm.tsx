@@ -3,6 +3,8 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 
+import GoogleSignupButton from "./GoogleSignupButton";
+
 const schema = z
   .object({
     username: z
@@ -130,6 +132,8 @@ function SignupForm() {
             Already have an account? <a href="/login">Login</a>
           </p>
         </div>
+
+        <GoogleSignupButton />
       </Form>
     </>
   );
