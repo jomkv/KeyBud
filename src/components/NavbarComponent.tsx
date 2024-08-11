@@ -20,7 +20,12 @@ function NavbarComponent() {
         <Navbar.Brand href="/">
           <img alt="logo" src="/images/Final Logo.svg" height={60} />
         </Navbar.Brand>
-        <Navbar.Toggle aria-controls="navbarScroll" />
+        <Navbar.Toggle
+          aria-controls="navbarScroll"
+          style={{
+            color: "white",
+          }}
+        />
         <Navbar.Collapse id="navbarScroll">
           <Nav
             className="me-auto my-2 my-lg-0"
@@ -34,6 +39,14 @@ function NavbarComponent() {
               }}
             >
               Home
+            </Nav.Link>
+            <Nav.Link
+              href="/messages"
+              style={{
+                color: "white",
+              }}
+            >
+              Messages
             </Nav.Link>
             <Nav.Link
               href="/profile"
