@@ -21,8 +21,10 @@ interface IUserCredentials {
 
 interface IUserState {
   user: IUser | null;
-  loading: boolean;
-  error: string | null;
+  isLoading: boolean;
+  isError: boolean;
+  isSuccess: boolean;
+  message: string | null;
 }
 
 export type { IUser, IUserPayload, IUserCredentials, IUserState };

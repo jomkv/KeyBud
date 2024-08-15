@@ -2,7 +2,6 @@ import {
   ActionReducerMapBuilder,
   createAsyncThunk,
   createSlice,
-  GetThunkAPI,
   PayloadAction,
   Slice,
 } from "@reduxjs/toolkit";
@@ -13,12 +12,14 @@ import {
   IUserState,
 } from "../../@types/userType";
 import IThunkError from "../../@types/thunkErrorType";
-import axios, { AxiosError } from "axios";
+import axios from "axios";
 
 const initialState: IUserState = {
   user: null,
-  loading: false,
-  error: null,
+  isLoading: false,
+  isError: false,
+  isSuccess: false,
+  message: null,
 };
 
 export const loginAsync = createAsyncThunk<
@@ -50,8 +51,6 @@ export const registerAsync = createAsyncThunk<
       "http://localhost:4000/api/user/register",
       userCredentials
     );
-
-    console.log(res);
   } catch (error: any) {
     return thunkAPI.rejectWithValue(
       { message: error.response?.data?.message } || "Register failed"
@@ -63,46 +62,72 @@ const userSlice: Slice = createSlice({
   name: "user",
   initialState,
   reducers: {
+    reset: (state: IUserState) => {
+      state.user = null;
+      state.isLoading = false;
+      state.isError = false;
+      state.isSuccess = false;
+      state.message = null;
+    },
+    resetToast: (state) => {
+      state.isError = false;
+      state.isSuccess = false;
+      state.message = null;
+    },
     logout: (state: IUserState) => {
       state.user = null;
-      state.error = null;
+      state.isLoading = false;
+      state.isError = false;
+      state.isSuccess = false;
+      state.message = null;
     },
   },
   extraReducers: (builder: ActionReducerMapBuilder<IUserState>) => {
     // Login
     builder
       .addCase(loginAsync.pending, (state) => {
-        state.loading = true;
-        state.error = null;
+        state.user = null;
+        state.isError = false;
+        state.isSuccess = false;
+        state.message = null;
+        state.isLoading = true;
       })
       .addCase(loginAsync.fulfilled, (state, action: PayloadAction<IUser>) => {
         state.user = action.payload;
-        state.loading = false;
-        state.error = null;
+        state.isLoading = false;
+        state.isSuccess = true;
+        state.message = "User logged in";
       })
       .addCase(loginAsync.rejected, (state, action) => {
-        state.loading = false;
-        state.error = action.payload?.message || "An unexpected error occured";
+        state.isLoading = false;
+        state.isError = true;
+        state.message =
+          action.payload?.message || "An unexpected error occured";
       });
 
     // Register
     builder
       .addCase(registerAsync.pending, (state) => {
-        state.error = null;
         state.user = null;
-        state.loading = true;
+        state.isError = false;
+        state.isSuccess = false;
+        state.message = null;
+        state.isLoading = true;
       })
       .addCase(registerAsync.fulfilled, (state) => {
-        state.loading = false;
-        state.error = null;
+        state.isLoading = false;
+        state.isSuccess = true;
+        state.message = "User registered";
       })
       .addCase(registerAsync.rejected, (state, action) => {
-        state.loading = false;
-        state.error = action.payload?.message || "An unexpected error occured";
+        state.isLoading = false;
+        state.isError = true;
+        state.message =
+          action.payload?.message || "An unexpected error occured";
       });
   },
 });
 
-export const { logout } = userSlice.actions;
+export const { logout, reset, resetToast } = userSlice.actions;
 
 export default userSlice.reducer;

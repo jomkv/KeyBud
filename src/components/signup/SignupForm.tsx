@@ -7,8 +7,9 @@ import GoogleSignupButton from "./GoogleSignupButton";
 import { useDispatch, useSelector } from "react-redux";
 import { registerAsync } from "../../state/user/userSlice";
 import { AppDispatch, RootState } from "../../state/store";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { IUserState } from "../../@types/userType";
+import { useNavigate } from "react-router-dom";
 
 const schema = z
   .object({
@@ -40,8 +41,10 @@ interface IForm {
 }
 
 function SignupForm() {
-  const userState: IUserState = useSelector((state: RootState) => state.user);
+  const { user, isLoading, isError, isSuccess, message }: IUserState =
+    useSelector((state: RootState) => state.user);
   const dispatch = useDispatch<AppDispatch>();
+  const navigate = useNavigate();
 
   const form = useForm<IForm>({
     defaultValues: {
@@ -59,6 +62,12 @@ function SignupForm() {
   const onSubmit = (data: IForm) => {
     dispatch(registerAsync(data));
   };
+
+  useEffect(() => {
+    if (isSuccess) {
+      navigate("/login");
+    }
+  }, [isSuccess, navigate]);
 
   return (
     <>
@@ -131,9 +140,9 @@ function SignupForm() {
             className="btn btn-primary w-100 p-3 fw-bold"
             style={{ color: "white" }}
             type="submit"
-            disabled={userState.loading}
+            disabled={isLoading}
           >
-            {userState.loading ? <Spinner /> : "SIGNUP"}
+            {isLoading ? <Spinner /> : "SIGNUP"}
           </Button>
         </Form.Group>
 
@@ -143,7 +152,7 @@ function SignupForm() {
           </p>
         </div>
 
-        <GoogleSignupButton disabled={userState.loading} />
+        <GoogleSignupButton disabled={isLoading} />
       </Form>
     </>
   );
