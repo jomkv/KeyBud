@@ -1,5 +1,5 @@
 import axios from "axios";
-import IUser from "../types/userType";
+import { IUser } from "../@types/userType";
 
 axios.defaults.baseURL = "http://localhost:4000/api";
 

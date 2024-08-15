@@ -1,8 +1,11 @@
 import React from "react";
 
-function GoogleSignupButton() {
+function GoogleSignupButton({ ...props }) {
   return (
-    <button className="gsi-material-button w-100 pt-4 pb-4 pe-5 ps-5 fs-6">
+    <button
+      {...props}
+      className="gsi-material-button w-100 pt-4 pb-4 pe-5 ps-5 fs-6"
+    >
       <div className="gsi-material-button-state"></div>
       <div className="gsi-material-button-content-wrapper">
         <div className="gsi-material-button-icon">

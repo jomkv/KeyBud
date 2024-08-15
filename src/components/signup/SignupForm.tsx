@@ -1,9 +1,14 @@
-import { Button, Form } from "react-bootstrap";
+import { Button, Form, Spinner } from "react-bootstrap";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 
 import GoogleSignupButton from "./GoogleSignupButton";
+import { useDispatch, useSelector } from "react-redux";
+import { registerAsync } from "../../state/user/userSlice";
+import { AppDispatch, RootState } from "../../state/store";
+import { useState } from "react";
+import { IUserState } from "../../@types/userType";
 
 const schema = z
   .object({
@@ -35,6 +40,9 @@ interface IForm {
 }
 
 function SignupForm() {
+  const userState: IUserState = useSelector((state: RootState) => state.user);
+  const dispatch = useDispatch<AppDispatch>();
+
   const form = useForm<IForm>({
     defaultValues: {
       username: "",
@@ -44,11 +52,12 @@ function SignupForm() {
     },
     resolver: zodResolver(schema),
   });
+
   const { register, handleSubmit, formState } = form;
   const { errors } = formState;
 
   const onSubmit = (data: IForm) => {
-    console.log("Form submitted", data);
+    dispatch(registerAsync(data));
   };
 
   return (
@@ -122,8 +131,9 @@ function SignupForm() {
             className="btn btn-primary w-100 p-3 fw-bold"
             style={{ color: "white" }}
             type="submit"
+            disabled={userState.loading}
           >
-            SIGNUP
+            {userState.loading ? <Spinner /> : "SIGNUP"}
           </Button>
         </Form.Group>
 
@@ -133,7 +143,7 @@ function SignupForm() {
           </p>
         </div>
 
-        <GoogleSignupButton />
+        <GoogleSignupButton disabled={userState.loading} />
       </Form>
     </>
   );
