@@ -1,6 +1,7 @@
 import IPhoto from "./photoType";
 
 interface IUser {
+  _id?: string;
   username: string;
   email: string;
   switchType: string;

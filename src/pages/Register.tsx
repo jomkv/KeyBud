@@ -1,5 +1,4 @@
 import SignupForm from "../components/signup/SignupForm";
-import ToastContainer from "../components/ToastContainer";
 
 function Register() {
   return (
@@ -15,7 +14,6 @@ function Register() {
         src="/images/Logo with Phrase.svg"
       />
       <SignupForm />
-      <ToastContainer />
     </div>
   );
 }

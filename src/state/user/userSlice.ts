@@ -28,10 +28,15 @@ export const loginAsync = createAsyncThunk<
   { rejectValue: IThunkError }
 >("user/login", async (userCredentials: IUserCredentials, thunkAPI) => {
   try {
-    const user: IUser = await axios.post(
+    const res: any = await axios.post(
       "http://localhost:4000/api/user/login",
       userCredentials
     );
+
+    const user: IUser = res.data.userPayload;
+    const token: string = res.data.token;
+
+    localStorage.setItem("token", token);
 
     return user;
   } catch (error: any) {
@@ -58,7 +63,7 @@ export const registerAsync = createAsyncThunk<
   }
 });
 
-const userSlice: Slice = createSlice({
+const userSlice = createSlice({
   name: "user",
   initialState,
   reducers: {

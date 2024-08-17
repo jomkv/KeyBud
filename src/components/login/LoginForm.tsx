@@ -2,8 +2,14 @@ import { Button, Form } from "react-bootstrap";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
+import { useEffect, useState } from "react";
 
-import GoogleSigninButton from "./GoogleSigninButton";
+import Spinner from "../Spinner";
+import { useDispatch, useSelector } from "react-redux";
+import { AppDispatch, RootState } from "../../state/store";
+import { loginAsync, resetToast } from "../../state/user/userSlice";
+import { IUserState } from "../../@types/userType";
+import { useNavigate } from "react-router-dom";
 
 const schema = z.object({
   usernameOrEmail: z.string().nonempty("This field is required"),
@@ -16,6 +22,13 @@ interface IForm {
 }
 
 function LoginForm() {
+  const [isUpdated, setIsUpdated] = useState<boolean>(false);
+  const { isLoading, isSuccess }: IUserState = useSelector(
+    (state: RootState) => state.user
+  );
+  const dispatch = useDispatch<AppDispatch>();
+  const navigate = useNavigate();
+
   const form = useForm<IForm>({
     defaultValues: {
       usernameOrEmail: "",
@@ -26,8 +39,19 @@ function LoginForm() {
   const { register, handleSubmit, formState } = form;
   const { errors } = formState;
 
-  const onSubmit = (data: IForm) => {
-    console.log(data);
+  useEffect(() => {
+    dispatch(resetToast());
+    setIsUpdated(true);
+  }, []);
+
+  useEffect(() => {
+    if (isSuccess && isUpdated) {
+      navigate("/");
+    }
+  }, [isSuccess, navigate, isUpdated]);
+
+  const onSubmit = async (data: IForm) => {
+    dispatch(loginAsync(data));
   };
 
   return (
@@ -77,8 +101,9 @@ function LoginForm() {
           style={{
             color: "white",
           }}
+          disabled={isLoading}
         >
-          SUBMIT
+          {isLoading ? <Spinner /> : "SUBMIT"}
         </Button>
       </Form.Group>
 
@@ -87,8 +112,6 @@ function LoginForm() {
           Don't have an account? <a href="/signup">Signup</a>
         </p>
       </div>
-
-      <GoogleSigninButton />
     </Form>
   );
 }

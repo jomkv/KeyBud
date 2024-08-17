@@ -9,6 +9,7 @@ import Register from "./pages/Register";
 import Profile from "./pages/Profile";
 import CreatePost from "./pages/CreatePost";
 import Messages from "./pages/Messages";
+import ToastContainer from "./components/ToastContainer";
 
 function App() {
   return (
@@ -26,6 +27,7 @@ function App() {
           <Route path="/profile" element={<Profile />} />
           <Route path="/create-post" element={<CreatePost />} />
         </Routes>
+        <ToastContainer />
       </div>
     </Router>
   );

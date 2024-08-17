@@ -4,7 +4,7 @@ import Col from "react-bootstrap/Col";
 import Button from "react-bootstrap/Button";
 import Card from "react-bootstrap/Card";
 
-import { IPosts } from "../../@types/post";
+import { IPost } from "../../@types/postType";
 
 interface PostProps {
   // post: IPosts;

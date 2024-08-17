@@ -3,11 +3,10 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 
-import GoogleSignupButton from "./GoogleSignupButton";
 import { useDispatch, useSelector } from "react-redux";
 import { registerAsync } from "../../state/user/userSlice";
 import { AppDispatch, RootState } from "../../state/store";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { IUserState } from "../../@types/userType";
 import { useNavigate } from "react-router-dom";
 
@@ -41,8 +40,9 @@ interface IForm {
 }
 
 function SignupForm() {
-  const { user, isLoading, isError, isSuccess, message }: IUserState =
-    useSelector((state: RootState) => state.user);
+  const { isLoading, isSuccess }: IUserState = useSelector(
+    (state: RootState) => state.user
+  );
   const dispatch = useDispatch<AppDispatch>();
   const navigate = useNavigate();
 
@@ -151,8 +151,6 @@ function SignupForm() {
             Already have an account? <a href="/login">Login</a>
           </p>
         </div>
-
-        <GoogleSignupButton disabled={isLoading} />
       </Form>
     </>
   );
