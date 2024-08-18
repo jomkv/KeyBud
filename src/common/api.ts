@@ -1,11 +1,9 @@
 import axios from "axios";
-import { IUser } from "../@types/userType";
+import { IPost, IPostInput } from "../@types/postType";
 
-axios.defaults.baseURL = "http://localhost:4000/api";
+axios.defaults.baseURL = process.env.REACT_APP_API_URL;
 
 class Api {
-  constructor() {}
-
   async login(userData: any) {
     try {
       const response = await axios.post("/user/login", userData);
@@ -33,16 +31,11 @@ class Api {
   }
 
   async getPosts() {
-    try {
-      const response = await axios.get("/posts");
-      if (response.status === 200) {
-        return response;
-      } else {
-        throw new Error("Could not connect to database");
-      }
-    } catch (e) {
-      console.log("Error fetching Posts ", e);
-    }
+    const res: any = await axios.get("/posts");
+
+    const posts: IPost[] = res.data.posts;
+
+    return posts;
   }
 
   async getPost(postId: string) {
@@ -57,6 +50,19 @@ class Api {
     } catch (e) {
       console.log("Error fetching Posts ", e);
     }
+  }
+
+  async createPost(data: IPostInput) {
+    const config = {
+      headers: {
+        "Content-Type": "multipart/form-data",
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
+      },
+    };
+
+    const res: any = await axios.post("/posts", data, config);
+
+    return res;
   }
 }
 

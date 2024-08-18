@@ -4,23 +4,35 @@ import { useSelector } from "react-redux";
 import { RootState } from "../state/store";
 import { IUserState } from "../@types/userType";
 import { useEffect } from "react";
+import { IPostState } from "../@types/postType";
 
 function ToastContainer() {
-  const { isError, isSuccess, message }: IUserState = useSelector(
-    (state: RootState) => state.user
-  );
+  const userState: IUserState = useSelector((state: RootState) => state.user);
+  const postState: IPostState = useSelector((state: RootState) => state.post);
 
   useEffect(() => {
-    if (isError) {
-      toast.warn(message);
+    if (userState.isError) {
+      toast.warn(userState.message);
     }
-  }, [isError, message]);
+  }, [userState.isError, userState.message]);
 
   useEffect(() => {
-    if (isSuccess) {
-      toast.success(message);
+    if (userState.isSuccess) {
+      toast.success(userState.message);
     }
-  }, [isSuccess, message]);
+  }, [userState.isSuccess, userState.message]);
+
+  useEffect(() => {
+    if (postState.isError) {
+      toast.warn(postState.message);
+    }
+  }, [postState.isError, postState.message]);
+
+  useEffect(() => {
+    if (postState.isSuccess) {
+      toast.success(postState.message);
+    }
+  }, [postState.isSuccess, postState.message]);
 
   return (
     <ToastifyContainer

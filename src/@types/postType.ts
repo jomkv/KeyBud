@@ -11,6 +11,7 @@ export interface IPost {
     username: string;
   };
   isEditted: boolean;
+  images: IPhoto[];
 }
 
 export interface IPostInput {

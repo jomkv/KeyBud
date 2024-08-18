@@ -7,25 +7,12 @@ import Card from "react-bootstrap/Card";
 import { IPost } from "../../@types/postType";
 
 interface PostProps {
-  // post: IPosts;
+  username: string;
+  title: string;
+  imageUrl: string;
 }
 
-const PostCard: React.FC<PostProps> = () => {
-  const [redirectLink, setRedirectLink] = useState<string>("");
-  const [likeCount, setLikeCount] = useState<number>(0);
-  const [commentCount, setCommentCount] = useState<number>(2);
-  const [isLiked, setIsLiked] = useState<boolean>(false);
-
-  // const handleLikeClick = () => {
-  //   setIsLiked(!isLiked);
-  // };
-
-  useEffect(() => {
-    // const postId = post._id;
-    // const link = `http://localhost:3000/${postId}`;
-    // setRedirectLink(link);
-  }, []);
-
+const PostCard: React.FC<PostProps> = ({ username, title, imageUrl }) => {
   return (
     <Row className="justify-content-center gy-4 mt-1">
       <Col lg={6} md={9} sm={11}>
@@ -46,13 +33,11 @@ const PostCard: React.FC<PostProps> = () => {
                     height: "25px",
                   }}
                 />
-                <p className="m-0 p-0 fs-5">Username</p>
+                <p className="m-0 p-0 fs-5">{username}</p>
               </div>
               <p className="m-0 p-0 fs-6">2 days ago</p>
             </div>
-            <Card.Title className="fs-2 mt-2">
-              Special title treatment
-            </Card.Title>
+            <Card.Title className="fs-2 mt-2">{title}</Card.Title>
           </Card.Header>
           <a
             href="/post"
@@ -63,7 +48,7 @@ const PostCard: React.FC<PostProps> = () => {
             <Card.Body className="pt-0 pb-0">
               <Card.Text>
                 <img
-                  src="images/keyboard_sample_pic.jpg"
+                  src={imageUrl}
                   alt="content"
                   className="img-fluid m-0 p-0"
                 />

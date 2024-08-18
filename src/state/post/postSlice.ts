@@ -1,12 +1,13 @@
+import { IPost, IPostInput, IPostState } from "../../@types/postType";
+import IThunkError from "../../@types/thunkErrorType";
+import Api from "../../common/Api";
+
 import {
   ActionReducerMapBuilder,
   createAsyncThunk,
   createSlice,
   PayloadAction,
 } from "@reduxjs/toolkit";
-import { IPost, IPostInput, IPostState } from "../../@types/postType";
-import IThunkError from "../../@types/thunkErrorType";
-import axios from "axios";
 
 const initialState: IPostState = {
   posts: [],
@@ -22,11 +23,7 @@ export const getAllPostsAsync = createAsyncThunk<
   { rejectValue: IThunkError }
 >("post/getAll", async (_, thunkAPI) => {
   try {
-    const res: any = await axios.get("http://localhost:4000/api/posts");
-
-    const posts: IPost[] = res.data.posts;
-
-    return posts;
+    return await Api.getPosts();
   } catch (error: any) {
     return thunkAPI.rejectWithValue(
       { message: error.response?.data?.message } || "Get all posts failed"
@@ -38,9 +35,9 @@ export const createPostAsync = createAsyncThunk<
   void,
   IPostInput,
   { rejectValue: IThunkError }
->("post/getAll", async (data: IPostInput, thunkAPI) => {
+>("post/create", async (data: IPostInput, thunkAPI) => {
   try {
-    const res: any = await axios.post("http://localhost:4000/api/posts", data);
+    await Api.createPost(data);
   } catch (error: any) {
     return thunkAPI.rejectWithValue(
       { message: error.response?.data?.message } || "Create post failed"
