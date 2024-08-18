@@ -24,12 +24,8 @@ function Home() {
     <div className="bg-light">
       <NavbarComponent />
       <Container className="mb-3 d-flex flex-column">
-        {posts.map((post: IPost) => (
-          <PostCard
-            username={post.ownerId.username}
-            title={post.title}
-            imageUrl={post.images[0].url}
-          />
+        {posts.map((post: IPost, index: number) => (
+          <PostCard post={post} />
         ))}
       </Container>
       <ChatWidget />

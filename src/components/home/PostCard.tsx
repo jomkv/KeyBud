@@ -7,12 +7,10 @@ import Card from "react-bootstrap/Card";
 import { IPost } from "../../@types/postType";
 
 interface PostProps {
-  username: string;
-  title: string;
-  imageUrl: string;
+  post: IPost;
 }
 
-const PostCard: React.FC<PostProps> = ({ username, title, imageUrl }) => {
+const PostCard: React.FC<PostProps> = ({ post }) => {
   return (
     <Row className="justify-content-center gy-4 mt-1">
       <Col lg={6} md={9} sm={11}>
@@ -33,14 +31,14 @@ const PostCard: React.FC<PostProps> = ({ username, title, imageUrl }) => {
                     height: "25px",
                   }}
                 />
-                <p className="m-0 p-0 fs-5">{username}</p>
+                <p className="m-0 p-0 fs-5">{post.ownerId.username}</p>
               </div>
               <p className="m-0 p-0 fs-6">2 days ago</p>
             </div>
-            <Card.Title className="fs-2 mt-2">{title}</Card.Title>
+            <Card.Title className="fs-2 mt-2">{post.title}</Card.Title>
           </Card.Header>
           <a
-            href="/post"
+            href={`/post/${post._id}`}
             style={{
               textDecoration: "none",
             }}
@@ -48,7 +46,7 @@ const PostCard: React.FC<PostProps> = ({ username, title, imageUrl }) => {
             <Card.Body className="pt-0 pb-0">
               <Card.Text>
                 <img
-                  src={imageUrl}
+                  src={post.images[0].url}
                   alt="content"
                   className="img-fluid m-0 p-0"
                 />

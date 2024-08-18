@@ -6,10 +6,11 @@ import Card from "react-bootstrap/Card";
 import Container from "react-bootstrap/Container";
 import ListGroup from "react-bootstrap/ListGroup";
 import Form from "react-bootstrap/Form";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
+import { useParams } from "react-router-dom";
 
 // * Local Imports
 import NavbarComponent from "../components/NavbarComponent";
@@ -26,6 +27,7 @@ interface IForm {
 
 function Post() {
   const [isComment, setIsComment] = useState<boolean>(false);
+  const { id } = useParams();
 
   const form = useForm<IForm>({
     defaultValues: {

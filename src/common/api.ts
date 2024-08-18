@@ -39,17 +39,11 @@ class Api {
   }
 
   async getPost(postId: string) {
-    try {
-      const response = await axios.get("/posts/" + postId);
+    const res = await axios.get(`/posts/${postId}`);
 
-      if (response.status === 200) {
-        return response;
-      } else {
-        throw new Error("Could not connect to database");
-      }
-    } catch (e) {
-      console.log("Error fetching Posts ", e);
-    }
+    const post: IPost = res.data.post;
+
+    return post;
   }
 
   async createPost(data: IPostInput) {

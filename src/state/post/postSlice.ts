@@ -31,6 +31,20 @@ export const getAllPostsAsync = createAsyncThunk<
   }
 });
 
+export const getPostAsync = createAsyncThunk<
+  IPost,
+  string,
+  { rejectValue: IThunkError }
+>("post/get", async (postId: string, thunkAPI) => {
+  try {
+    return await Api.getPost(postId);
+  } catch (error: any) {
+    return thunkAPI.rejectWithValue(
+      { message: error.response?.data?.message } || "Get post failed"
+    );
+  }
+});
+
 export const createPostAsync = createAsyncThunk<
   void,
   IPostInput,
