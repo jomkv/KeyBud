@@ -1,17 +1,18 @@
-import React, { useState } from "react";
-import Button from "react-bootstrap/Button";
 import Container from "react-bootstrap/Container";
 import Form from "react-bootstrap/Form";
 import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
-import NavDropdown from "react-bootstrap/NavDropdown";
+import { AppDispatch, RootState } from "../state/store";
+import { useDispatch, useSelector } from "react-redux";
+import { logout } from "../state/user/userSlice";
 
 function NavbarComponent() {
-  const [newMessages, setNewMessages] = useState<number>(2);
-  const [showMenu, setShowMenu] = useState<boolean>(false);
+  const { user } = useSelector((state: RootState) => state.user);
+  const dispatch = useDispatch<AppDispatch>();
 
-  const handleShowMenu = () => {
-    setShowMenu(!showMenu);
+  const handleLogout = () => {
+    dispatch(logout());
+    window.location.reload();
   };
 
   return (
@@ -32,30 +33,57 @@ function NavbarComponent() {
             style={{ maxHeight: "100px" }}
             navbarScroll
           >
-            <Nav.Link
-              href="/"
-              style={{
-                color: "white",
-              }}
-            >
-              Home
-            </Nav.Link>
-            <Nav.Link
-              href="/messages"
-              style={{
-                color: "white",
-              }}
-            >
-              Messages
-            </Nav.Link>
-            <Nav.Link
-              href="/profile"
-              style={{
-                color: "white",
-              }}
-            >
-              Profile
-            </Nav.Link>
+            {user && (
+              <Nav.Link
+                href="/messages"
+                style={{
+                  color: "white",
+                }}
+              >
+                Messages
+              </Nav.Link>
+            )}
+            {user && (
+              <Nav.Link
+                href="/profile"
+                style={{
+                  color: "white",
+                }}
+              >
+                Profile
+              </Nav.Link>
+            )}
+            {user && (
+              <Nav.Link
+                href=""
+                style={{
+                  color: "white",
+                }}
+                onClick={handleLogout}
+              >
+                Logout
+              </Nav.Link>
+            )}
+            {!user && (
+              <Nav.Link
+                href="/login"
+                style={{
+                  color: "white",
+                }}
+              >
+                Login
+              </Nav.Link>
+            )}
+            {!user && (
+              <Nav.Link
+                href="/signup"
+                style={{
+                  color: "white",
+                }}
+              >
+                Signup
+              </Nav.Link>
+            )}
           </Nav>
           <Form className="d-flex">
             <Form.Control

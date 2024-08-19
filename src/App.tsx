@@ -10,6 +10,7 @@ import Profile from "./pages/Profile";
 import CreatePost from "./pages/CreatePost";
 import Messages from "./pages/Messages";
 import ToastContainer from "./components/ToastContainer";
+import Protect from "./pages/Protect";
 
 function App() {
   return (
@@ -19,13 +20,18 @@ function App() {
         style={{ height: "100vh", width: "100vw" }}
       >
         <Routes>
+          {/* Public Routes */}
           <Route path="/" element={<Home />} />
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<Register />} />
           <Route path="/post/:id" element={<Post />} />
-          <Route path="/messages" element={<Messages />} />
-          <Route path="/profile" element={<Profile />} />
-          <Route path="/create-post" element={<CreatePost />} />
+
+          {/* Protected Routes */}
+          <Route element={<Protect />}>
+            <Route path="/create-post" element={<CreatePost />} />
+            <Route path="/messages" element={<Messages />} />
+            <Route path="/profile" element={<Profile />} />
+          </Route>
         </Routes>
         <ToastContainer />
       </div>

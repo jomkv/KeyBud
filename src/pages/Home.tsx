@@ -9,8 +9,10 @@ import { IPost, IPostState } from "../@types/postType";
 import Container from "react-bootstrap/Container";
 import { useEffect } from "react";
 import { getAllPostsAsync } from "../state/post/postSlice";
+import { IUserState } from "../@types/userType";
 
 function Home() {
+  const { user }: IUserState = useSelector((state: RootState) => state.user);
   const { posts, isLoading }: IPostState = useSelector(
     (state: RootState) => state.post
   );
@@ -25,11 +27,11 @@ function Home() {
       <NavbarComponent />
       <Container className="mb-3 d-flex flex-column">
         {posts.map((post: IPost, index: number) => (
-          <PostCard post={post} />
+          <PostCard key={index} post={post} />
         ))}
       </Container>
-      <ChatWidget />
-      <CreatePostWidget />
+      {user && <ChatWidget />}
+      {user && <CreatePostWidget />}
     </div>
   );
 }

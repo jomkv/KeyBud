@@ -1,18 +1,8 @@
-import React, { Fragment, useEffect, useState } from "react";
 import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
-import Card from "react-bootstrap/Card";
 import ListGroup from "react-bootstrap/ListGroup";
 
 function CommentCard() {
-  const [likeCount, setLikeCount] = useState<number>(0);
-  const [commentCount, setCommentCount] = useState<number>(2);
-  const [isLiked, setIsLiked] = useState<boolean>(false);
-
-  const handleLikeClick = () => {
-    setIsLiked(!isLiked);
-  };
-
   return (
     <ListGroup.Item className="bg-secondary">
       <Row
@@ -26,7 +16,7 @@ function CommentCard() {
         <Col className="d-flex align-items-center justify-content-between">
           <div className="d-flex align-items-center">
             <img
-              src="images/user_icon.png"
+              src="/images/user_icon.png"
               alt="icon"
               className="rounded-circle me-2"
               style={{

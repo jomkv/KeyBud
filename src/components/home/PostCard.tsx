@@ -5,6 +5,7 @@ import Button from "react-bootstrap/Button";
 import Card from "react-bootstrap/Card";
 
 import { IPost } from "../../@types/postType";
+import formatDate from "../../utils/formatDate";
 
 interface PostProps {
   post: IPost;
@@ -33,7 +34,7 @@ const PostCard: React.FC<PostProps> = ({ post }) => {
                 />
                 <p className="m-0 p-0 fs-5">{post.ownerId.username}</p>
               </div>
-              <p className="m-0 p-0 fs-6">2 days ago</p>
+              <p className="m-0 p-0 fs-6">{formatDate(post.createdAt)}</p>
             </div>
             <Card.Title className="fs-2 mt-2">{post.title}</Card.Title>
           </Card.Header>

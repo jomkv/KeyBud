@@ -11,6 +11,7 @@ import {
 
 const initialState: IPostState = {
   posts: [],
+  post: null,
   isLoading: false,
   isError: false,
   isSuccess: false,
@@ -65,6 +66,7 @@ const postSlice = createSlice({
   reducers: {
     reset: (state: IPostState) => {
       state.posts = [];
+      state.post = null;
       state.isLoading = false;
       state.isError = false;
       state.isSuccess = false;
@@ -81,6 +83,7 @@ const postSlice = createSlice({
     builder
       .addCase(getAllPostsAsync.pending, (state) => {
         state.posts = [];
+        state.post = null;
         state.isError = false;
         state.isSuccess = false;
         state.message = null;
@@ -96,6 +99,31 @@ const postSlice = createSlice({
         }
       )
       .addCase(getAllPostsAsync.rejected, (state, action) => {
+        state.isLoading = false;
+        state.isError = true;
+        state.message =
+          action.payload?.message || "An unexpected error occured";
+      });
+
+    // Get post
+    builder
+      .addCase(getPostAsync.pending, (state) => {
+        state.post = null;
+        state.isError = false;
+        state.isSuccess = false;
+        state.message = null;
+        state.isLoading = true;
+      })
+      .addCase(
+        getPostAsync.fulfilled,
+        (state, action: PayloadAction<IPost>) => {
+          state.post = action.payload;
+          state.isLoading = false;
+          state.isSuccess = true;
+          state.message = "Get post success";
+        }
+      )
+      .addCase(getPostAsync.rejected, (state, action) => {
         state.isLoading = false;
         state.isError = true;
         state.message =

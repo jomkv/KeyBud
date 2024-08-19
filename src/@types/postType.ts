@@ -12,6 +12,7 @@ export interface IPost {
   };
   isEditted: boolean;
   images: IPhoto[];
+  createdAt: string;
 }
 
 export interface IPostInput {
@@ -22,6 +23,7 @@ export interface IPostInput {
 
 export interface IPostState {
   posts: IPost[];
+  post: IPost | null;
   isLoading: boolean;
   isError: boolean;
   isSuccess: boolean;

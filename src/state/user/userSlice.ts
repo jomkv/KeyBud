@@ -3,7 +3,6 @@ import {
   createAsyncThunk,
   createSlice,
   PayloadAction,
-  Slice,
 } from "@reduxjs/toolkit";
 import {
   IUser,
@@ -52,7 +51,7 @@ export const registerAsync = createAsyncThunk<
   { rejectValue: IThunkError }
 >("user/register", async (userCredentials: IUserPayload, thunkAPI) => {
   try {
-    const res: any = await axios.post(
+    await axios.post(
       "http://localhost:4000/api/user/register",
       userCredentials
     );
