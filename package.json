@@ -20,6 +20,7 @@
     "axios": "^1.6.8",
     "bootstrap": "^5.3.3",
     "bootstrap-icons": "^1.11.3",
+    "dayjs": "^1.11.12",
     "ldrs": "^1.0.2",
     "quill": "^2.0.2",
     "react": "^18.2.0",
