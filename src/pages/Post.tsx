@@ -119,7 +119,7 @@ function Post() {
               <Card.Body className="pt-0 pb-0">
                 <Card.Text className="p-2 pt-0">{post?.description}</Card.Text>
                 <div className="d-flex justify-content-center">
-                  <div className="w-50">
+                  <div className="w-50 d-flex justify-content-center">
                     <img
                       src={post?.images[0].url}
                       alt="content"

@@ -1,8 +1,9 @@
-import React, { Fragment, useEffect, useState } from "react";
+import React from "react";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import Button from "react-bootstrap/Button";
 import Card from "react-bootstrap/Card";
+import { Link } from "react-router-dom";
 
 import { IPost } from "../../@types/postType";
 import formatDate from "../../utils/formatDate";
@@ -38,14 +39,14 @@ const PostCard: React.FC<PostProps> = ({ post }) => {
             </div>
             <Card.Title className="fs-2 mt-2">{post.title}</Card.Title>
           </Card.Header>
-          <a
-            href={`/post/${post._id}`}
+          <Link
+            to={`/post/${post._id}`}
             style={{
               textDecoration: "none",
             }}
           >
             <Card.Body className="pt-0 pb-0">
-              <Card.Text>
+              <Card.Text className="d-flex justify-content-center">
                 <img
                   src={post.images[0].url}
                   alt="content"
@@ -53,7 +54,7 @@ const PostCard: React.FC<PostProps> = ({ post }) => {
                 />
               </Card.Text>
             </Card.Body>
-          </a>
+          </Link>
           <Card.Footer className="d-flex">
             <Button
               style={{

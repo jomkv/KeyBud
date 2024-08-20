@@ -2,6 +2,8 @@ import Container from "react-bootstrap/Container";
 import Form from "react-bootstrap/Form";
 import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
+import { Link } from "react-router-dom";
+
 import { AppDispatch, RootState } from "../state/store";
 import { useDispatch, useSelector } from "react-redux";
 import { logout } from "../state/user/userSlice";
@@ -18,9 +20,10 @@ function NavbarComponent() {
   return (
     <Navbar sticky="top" expand="lg" className="bg-secondary">
       <Container fluid>
-        <Navbar.Brand href="/">
+        <Link to="/">
           <img alt="logo" src="/images/Final Logo.svg" height={60} />
-        </Navbar.Brand>
+        </Link>
+
         <Navbar.Toggle
           aria-controls="navbarScroll"
           style={{
@@ -34,55 +37,65 @@ function NavbarComponent() {
             navbarScroll
           >
             {user && (
-              <Nav.Link
-                href="/messages"
+              <Link
+                to="/messages"
+                className="me-3"
                 style={{
                   color: "white",
+                  textDecoration: "none",
                 }}
               >
                 Messages
-              </Nav.Link>
+              </Link>
             )}
             {user && (
-              <Nav.Link
-                href="/profile"
+              <Link
+                to="/profile"
+                className="me-3"
                 style={{
                   color: "white",
+                  textDecoration: "none",
                 }}
               >
                 Profile
-              </Nav.Link>
+              </Link>
             )}
             {user && (
-              <Nav.Link
+              <a
                 href=""
+                className="me-3"
                 style={{
                   color: "white",
+                  textDecoration: "none",
                 }}
                 onClick={handleLogout}
               >
                 Logout
-              </Nav.Link>
+              </a>
             )}
             {!user && (
-              <Nav.Link
-                href="/login"
+              <Link
+                to="/login"
+                className="me-3"
                 style={{
                   color: "white",
+                  textDecoration: "none",
                 }}
               >
                 Login
-              </Nav.Link>
+              </Link>
             )}
             {!user && (
-              <Nav.Link
-                href="/signup"
+              <Link
+                to="/signup"
+                className="me-3"
                 style={{
                   color: "white",
+                  textDecoration: "none",
                 }}
               >
                 Signup
-              </Nav.Link>
+              </Link>
             )}
           </Nav>
           <Form className="d-flex">

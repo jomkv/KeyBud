@@ -1,3 +1,5 @@
+import { Link } from "react-router-dom";
+
 import SignupForm from "../components/signup/SignupForm";
 
 function Register() {
@@ -8,13 +10,13 @@ function Register() {
         backgroundColor: "#1F1F1F",
       }}
     >
-      <a href="/">
+      <Link to="/">
         <img
           className="d-none d-md-block"
           alt="logo"
           src="/images/Logo with Phrase.svg"
         />
-      </a>
+      </Link>
 
       <SignupForm />
     </div>
