@@ -60,6 +60,20 @@ export const createPostAsync = createAsyncThunk<
   }
 });
 
+export const likePostAsync = createAsyncThunk<
+  void,
+  string, // postId
+  { rejectValue: IThunkError }
+>("post/like", async (postId: string, thunkAPI) => {
+  try {
+    await Api.likePost(postId);
+  } catch (error: any) {
+    return thunkAPI.rejectWithValue(
+      { message: error.response?.data?.message } || "Like post failed"
+    );
+  }
+});
+
 const postSlice = createSlice({
   name: "post",
   initialState,
@@ -144,6 +158,26 @@ const postSlice = createSlice({
         state.message = "Create post success";
       })
       .addCase(createPostAsync.rejected, (state, action) => {
+        state.isLoading = false;
+        state.isError = true;
+        state.message =
+          action.payload?.message || "An unexpected error occured";
+      });
+
+    // Like post
+    builder
+      .addCase(likePostAsync.pending, (state) => {
+        state.isError = false;
+        state.isSuccess = false;
+        state.message = null;
+        state.isLoading = true;
+      })
+      .addCase(likePostAsync.fulfilled, (state) => {
+        state.isLoading = false;
+        state.isSuccess = true;
+        state.message = "Like post success";
+      })
+      .addCase(likePostAsync.rejected, (state, action) => {
         state.isLoading = false;
         state.isError = true;
         state.message =
