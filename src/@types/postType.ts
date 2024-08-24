@@ -5,7 +5,7 @@ export interface IPost {
   title: string;
   description: string;
   likeCount: number;
-  comments: string[];
+  isLiked: boolean;
   ownerId: {
     _id: string;
     username: string;
@@ -13,6 +13,7 @@ export interface IPost {
   isEditted: boolean;
   images: IPhoto[];
   createdAt: string;
+  updatedAt: string;
 }
 
 export interface IPostInput {
