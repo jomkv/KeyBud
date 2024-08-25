@@ -1,18 +1,42 @@
-import React from "react";
+import React, { useState } from "react";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import Button from "react-bootstrap/Button";
 import Card from "react-bootstrap/Card";
 import { Link } from "react-router-dom";
+import { useSelector } from "react-redux";
+import { toast } from "react-toastify";
 
 import { IPost } from "../../@types/postType";
 import formatDate from "../../utils/formatDate";
+import { RootState } from "../../state/store";
+import Spinner from "../Spinner";
+import { useLikePostMutation } from "../../state/slices/postsApiSlice";
 
 interface PostProps {
   post: IPost;
 }
 
 const PostCard: React.FC<PostProps> = ({ post }) => {
+  const [isLiked, setIsLiked] = useState<boolean>(false);
+
+  const { userInfo: user } = useSelector((state: RootState) => state.auth);
+  const [likePost, { isLoading }] = useLikePostMutation();
+
+  const handleLike = async () => {
+    try {
+      if (!user) {
+        toast.error("Please login to like this post");
+        return;
+      }
+
+      await likePost(post._id).unwrap();
+      setIsLiked(!isLiked);
+    } catch (error: any) {
+      toast.warn(error.data.message || "An error occurred");
+    }
+  };
+
   return (
     <Row className="justify-content-center gy-4 mt-1">
       <Col lg={6} md={9} sm={11}>
@@ -37,51 +61,73 @@ const PostCard: React.FC<PostProps> = ({ post }) => {
               </div>
               <p className="m-0 p-0 fs-6">{formatDate(post.createdAt)}</p>
             </div>
-            <Card.Title className="fs-2 mt-2">{post.title}</Card.Title>
+            <Link
+              to={`/post/${post._id}`}
+              style={{
+                textDecoration: "none",
+              }}
+            >
+              <Card.Title
+                className="fs-2 mt-2"
+                style={{
+                  color: "white",
+                }}
+              >
+                {post.title}
+              </Card.Title>
+            </Link>
           </Card.Header>
-          <Link
-            to={`/post/${post._id}`}
-            style={{
-              textDecoration: "none",
-            }}
-          >
-            <Card.Body className="pt-0 pb-0">
-              <Card.Text className="d-flex justify-content-center">
+          <Card.Body className="pt-0 pb-0">
+            {post.images && post.images.length > 0 && (
+              <div className="d-flex justify-content-center">
                 <img
                   src={post.images[0].url}
                   alt="content"
                   className="img-fluid m-0 p-0"
                 />
-              </Card.Text>
-            </Card.Body>
-          </Link>
+              </div>
+            )}
+          </Card.Body>
           <Card.Footer className="d-flex">
-            <Button
-              style={{
-                backgroundColor: "transparent",
-                borderColor: "transparent",
-              }}
-            >
-              <i
-                className="bi bi-star h2"
-                style={{
-                  color: "#8c52ff",
-                }}
-              ></i>
-            </Button>
-            <Button
-              style={{
-                backgroundColor: "transparent",
-                borderColor: "transparent",
-              }}
-            >
-              <i
-                className="bi bi-chat h2"
-                style={{
-                  color: "#8c52ff",
-                }}
-              ></i>
-            </Button>
+            {user && (
+              <>
+                <Button
+                  style={{
+                    backgroundColor: "transparent",
+                    borderColor: "transparent",
+                  }}
+                  onClick={handleLike}
+                  disabled={isLoading}
+                >
+                  {isLoading ? (
+                    <Spinner />
+                  ) : (
+                    <i
+                      className={`bi ${
+                        isLiked ? "bi-star-fill" : "bi-star"
+                      } h2`}
+                      style={{
+                        color: "#8c52ff",
+                      }}
+                    />
+                  )}
+                </Button>
+                <Button
+                  style={{
+                    backgroundColor: "transparent",
+                    borderColor: "transparent",
+                  }}
+                >
+                  <i
+                    className="bi bi-chat h2"
+                    style={{
+                      color: "#8c52ff",
+                    }}
+                  ></i>
+                </Button>
+              </>
+            )}
+
             <Button
               style={{
                 backgroundColor: "transparent",

@@ -2,14 +2,15 @@ import { Button, Form } from "react-bootstrap";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { toast } from "react-toastify";
 
 import Spinner from "../Spinner";
-import { useDispatch, useSelector } from "react-redux";
+import { useLoginMutation } from "../../state/slices/usersApiSlice";
+import { setCredentials } from "../../state/slices/authSlice";
 import { AppDispatch, RootState } from "../../state/store";
-import { loginAsync, resetToast } from "../../state/user/userSlice";
-import { IUserState } from "../../@types/userType";
-import { useNavigate } from "react-router-dom";
 
 const schema = z.object({
   usernameOrEmail: z.string().nonempty("This field is required"),
@@ -22,10 +23,9 @@ interface IForm {
 }
 
 function LoginForm() {
-  const [isUpdated, setIsUpdated] = useState<boolean>(false);
-  const { isLoading, isSuccess }: IUserState = useSelector(
-    (state: RootState) => state.user
-  );
+  const { userInfo } = useSelector((state: RootState) => state.auth);
+  const [login, { isLoading, isSuccess }] = useLoginMutation();
+
   const dispatch = useDispatch<AppDispatch>();
   const navigate = useNavigate();
 
@@ -36,22 +36,31 @@ function LoginForm() {
     },
     resolver: zodResolver(schema),
   });
+
   const { register, handleSubmit, formState } = form;
   const { errors } = formState;
 
   useEffect(() => {
-    dispatch(resetToast());
-    setIsUpdated(true);
-  }, []);
-
-  useEffect(() => {
-    if (isSuccess && isUpdated) {
+    if (userInfo) {
       navigate("/");
     }
-  }, [isSuccess, navigate, isUpdated]);
+  }, [navigate, userInfo]);
+
+  useEffect(() => {
+    if (isSuccess) {
+      navigate("/");
+    }
+  }, [isSuccess, navigate]);
 
   const onSubmit = async (data: IForm) => {
-    dispatch(loginAsync(data));
+    try {
+      const res: any = await login(data).unwrap();
+      dispatch(setCredentials({ ...res.user }));
+      navigate("/");
+      toast.success("Login successful");
+    } catch (error: any) {
+      toast.warn(error.data.message || "An error occurred");
+    }
   };
 
   return (

@@ -2,13 +2,13 @@ import { Button, Form, Spinner } from "react-bootstrap";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
-
-import { useDispatch, useSelector } from "react-redux";
-import { registerAsync } from "../../state/user/userSlice";
-import { AppDispatch, RootState } from "../../state/store";
-import { useEffect } from "react";
-import { IUserState } from "../../@types/userType";
 import { useNavigate } from "react-router-dom";
+import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { toast } from "react-toastify";
+
+import { AppDispatch, RootState } from "../../state/store";
+import { useRegisterMutation } from "../../state/slices/usersApiSlice";
 
 const schema = z
   .object({
@@ -40,9 +40,9 @@ interface IForm {
 }
 
 function SignupForm() {
-  const { isLoading, isSuccess }: IUserState = useSelector(
-    (state: RootState) => state.user
-  );
+  const { userInfo } = useSelector((state: RootState) => state.auth);
+  const [registerMutation, { isLoading }] = useRegisterMutation();
+
   const dispatch = useDispatch<AppDispatch>();
   const navigate = useNavigate();
 
@@ -59,15 +59,21 @@ function SignupForm() {
   const { register, handleSubmit, formState } = form;
   const { errors } = formState;
 
-  const onSubmit = (data: IForm) => {
-    dispatch(registerAsync(data));
+  const onSubmit = async (data: IForm) => {
+    try {
+      await registerMutation(data).unwrap();
+      navigate("/login");
+      toast.success("Signup successful");
+    } catch (error: any) {
+      toast.warn(error.data.message || "An error occurred");
+    }
   };
 
   useEffect(() => {
-    if (isSuccess) {
-      navigate("/login");
+    if (userInfo) {
+      navigate("/");
     }
-  }, [isSuccess, navigate]);
+  }, [navigate, userInfo]);
 
   return (
     <>
@@ -140,9 +146,8 @@ function SignupForm() {
             className="btn btn-primary w-100 p-3 fw-bold"
             style={{ color: "white" }}
             type="submit"
-            disabled={isLoading}
           >
-            {isLoading ? <Spinner /> : "SIGNUP"}
+            {/* {isLoading ? <Spinner /> : "SIGNUP"} */}
           </Button>
         </Form.Group>
 

@@ -1,16 +1,12 @@
 import NavbarComponent from "../components/NavbarComponent";
 import ChatWidget from "../components/ChatWidget";
 import Spinner from "../components/Spinner";
-import { AppDispatch, RootState } from "../state/store";
-import { IPostState } from "../@types/postType";
-import { createPostAsync } from "../state/post/postSlice";
 
 import { Container, Button, Form } from "react-bootstrap";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { DevTool } from "@hookform/devtools";
 import { z } from "zod";
-import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
 
 const schema = z.object({
@@ -26,10 +22,9 @@ interface IForm {
 }
 
 function CreatePost() {
-  const { isLoading, isSuccess }: IPostState = useSelector(
-    (state: RootState) => state.post
-  );
-  const dispatch = useDispatch<AppDispatch>();
+  // Temporary values
+  const isLoading = false;
+  const isSuccess = false;
 
   const form = useForm<IForm>({
     defaultValues: {
@@ -49,7 +44,7 @@ function CreatePost() {
   }, [isSuccess]);
 
   const onSubmit: SubmitHandler<IForm> = (data: any) => {
-    dispatch(createPostAsync(data));
+    //dispatch(createPostAsync(data));
   };
 
   return (

@@ -2,19 +2,30 @@ import Container from "react-bootstrap/Container";
 import Form from "react-bootstrap/Form";
 import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { toast } from "react-toastify";
 
 import { AppDispatch, RootState } from "../state/store";
-import { useDispatch, useSelector } from "react-redux";
-import { logout } from "../state/user/userSlice";
+import { clearCredentials } from "../state/slices/authSlice";
+import { useLogoutMutation } from "../state/slices/usersApiSlice";
 
 function NavbarComponent() {
-  const { user } = useSelector((state: RootState) => state.user);
   const dispatch = useDispatch<AppDispatch>();
 
-  const handleLogout = () => {
-    dispatch(logout());
-    window.location.reload();
+  const { userInfo: user } = useSelector((state: RootState) => state.auth);
+  const [logout] = useLogoutMutation();
+  const navigate = useNavigate();
+
+  const handleLogout = async () => {
+    try {
+      await logout().unwrap();
+      dispatch(clearCredentials());
+      navigate("/login");
+      toast.success("Logged out");
+    } catch (error: any) {
+      toast.warn(error.data.message || "An error occurred");
+    }
   };
 
   return (
@@ -61,17 +72,18 @@ function NavbarComponent() {
               </Link>
             )}
             {user && (
-              <a
-                href=""
+              <button
                 className="me-3"
                 style={{
                   color: "white",
                   textDecoration: "none",
+                  backgroundColor: "transparent",
+                  border: "none",
                 }}
                 onClick={handleLogout}
               >
                 Logout
-              </a>
+              </button>
             )}
             {!user && (
               <Link

@@ -3,9 +3,9 @@ import { useSelector } from "react-redux";
 import { RootState } from "../state/store";
 
 function Protect() {
-  const { user } = useSelector((state: RootState) => state.user);
+  const { userInfo } = useSelector((state: RootState) => state.auth);
 
-  return user ? <Outlet /> : <Navigate to="/login" />;
+  return userInfo ? <Outlet /> : <Navigate to="/login" />;
 }
 
 export default Protect;

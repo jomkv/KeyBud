@@ -10,18 +10,16 @@ import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
-import { useNavigate, useParams } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
+import { redirect, useNavigate, useParams } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 // * Local Imports
 import NavbarComponent from "../components/NavbarComponent";
 import CommentCard from "../components/post/CommentCard";
 import ChatWidget from "../components/ChatWidget";
-import { AppDispatch, RootState } from "../state/store";
-import { IUserState } from "../@types/userType";
-import { getPostAsync } from "../state/post/postSlice";
-import { IPostState } from "../@types/postType";
 import formatDate from "../utils/formatDate";
+import { useGetPostQuery } from "../state/slices/postsApiSlice";
+import { RootState } from "../state/store";
 
 const schema = z.object({
   comment: z.string().nonempty("Comment cannot be empty"),
@@ -31,19 +29,23 @@ interface IForm {
   comment: string;
 }
 
+function definedOrRedirect(param: string | undefined): asserts param is string {
+  if (param === undefined) {
+    redirect("/");
+  }
+}
+
 function Post() {
-  const { user }: IUserState = useSelector((state: RootState) => state.user);
-  const { post, isError, isLoading }: IPostState = useSelector(
-    (state: RootState) => state.post
-  );
-
-  const [isComment, setIsComment] = useState<boolean>(false);
-  const [isOwner, setIsOwner] = useState<boolean>(false);
-  const [readableDate, setReadableDate] = useState<string>("");
-
   const { id } = useParams();
-  const dispatch = useDispatch<AppDispatch>();
   const navigate = useNavigate();
+  const { userInfo: user } = useSelector((state: RootState) => state.auth);
+
+  const [readableDate, setReadableDate] = useState<string>("");
+  const [isComment, setIsComment] = useState<boolean>(false);
+
+  definedOrRedirect(id);
+
+  const { data: post, isLoading, isError } = useGetPostQuery(id);
 
   const form = useForm<IForm>({
     defaultValues: {
@@ -56,21 +58,10 @@ function Post() {
   const { errors } = formState;
 
   useEffect(() => {
-    if (id) {
-      dispatch(getPostAsync(id));
-    }
-  }, []);
-
-  useEffect(() => {
-    if (post && user) {
-      if (post.ownerId._id === user._id) {
-        setIsOwner(true);
-      }
-    }
     if (post) {
       setReadableDate(formatDate(post.createdAt));
     }
-  }, [post, user]);
+  }, [post]);
 
   useEffect(() => {
     if (isError) {
@@ -118,15 +109,17 @@ function Post() {
 
               <Card.Body className="pt-0 pb-0">
                 <Card.Text className="p-2 pt-0">{post?.description}</Card.Text>
-                <div className="d-flex justify-content-center">
-                  <div className="w-50 d-flex justify-content-center">
-                    <img
-                      src={post?.images[0].url}
-                      alt="content"
-                      className="img-fluid m-0 p-0"
-                    />
+                {post?.images && post.images.length > 0 && (
+                  <div className="d-flex justify-content-center">
+                    <div className="w-50 d-flex justify-content-center">
+                      <img
+                        src={post?.images[0].url}
+                        alt="content"
+                        className="img-fluid m-0 p-0"
+                      />
+                    </div>
                   </div>
-                </div>
+                )}
               </Card.Body>
               <Card.Footer
                 className="d-flex"
@@ -165,49 +158,47 @@ function Post() {
                 </Button>
               </Card.Footer>
               <ListGroup className="list-group-flush">
-                {user && (
-                  <ListGroup.Item className="bg-secondary pb-4">
-                    {isComment ? (
-                      <Form onSubmit={handleSubmit(onSubmit)} noValidate>
-                        <Form.Group className="mb-3">
-                          <Form.Control
-                            size="lg"
-                            as="textarea"
-                            rows={2}
-                            placeholder="Write your comment"
-                            id="comment"
-                            {...register("comment")}
-                            isInvalid={errors.comment?.message ? true : false}
-                          />
-                          <Form.Control.Feedback type="invalid">
-                            {errors.comment?.message}
-                          </Form.Control.Feedback>
-                        </Form.Group>
-                        <div className="w-100 d-flex justify-content-end">
-                          <Button
-                            className="mt-3 ml-auto fs-6 fw-semibold"
-                            style={{ color: "white" }}
-                            type="submit"
-                          >
-                            Comment
-                          </Button>
-                        </div>
-                      </Form>
-                    ) : (
-                      <Form.Control
-                        size="lg"
-                        type="text"
-                        placeholder="Add a comment"
-                        style={{
-                          borderRadius: "25px",
-                        }}
-                        onFocus={() => {
-                          setIsComment(true);
-                        }}
-                      />
-                    )}
-                  </ListGroup.Item>
-                )}
+                <ListGroup.Item className="bg-secondary pb-4">
+                  {isComment ? (
+                    <Form onSubmit={handleSubmit(onSubmit)} noValidate>
+                      <Form.Group className="mb-3">
+                        <Form.Control
+                          size="lg"
+                          as="textarea"
+                          rows={2}
+                          placeholder="Write your comment"
+                          id="comment"
+                          {...register("comment")}
+                          isInvalid={errors.comment?.message ? true : false}
+                        />
+                        <Form.Control.Feedback type="invalid">
+                          {errors.comment?.message}
+                        </Form.Control.Feedback>
+                      </Form.Group>
+                      <div className="w-100 d-flex justify-content-end">
+                        <Button
+                          className="mt-3 ml-auto fs-6 fw-semibold"
+                          style={{ color: "white" }}
+                          type="submit"
+                        >
+                          Comment
+                        </Button>
+                      </div>
+                    </Form>
+                  ) : (
+                    <Form.Control
+                      size="lg"
+                      type="text"
+                      placeholder="Add a comment"
+                      style={{
+                        borderRadius: "25px",
+                      }}
+                      onFocus={() => {
+                        setIsComment(true);
+                      }}
+                    />
+                  )}
+                </ListGroup.Item>
                 <CommentCard />
                 <CommentCard />
                 <CommentCard />
