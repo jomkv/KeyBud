@@ -46,6 +46,7 @@ function Post() {
   const [readableDate, setReadableDate] = useState<string>("");
   const [isComment, setIsComment] = useState<boolean>(false);
   const [isLiked, setIsLiked] = useState<boolean>(false);
+  const [likeCount, setLikeCount] = useState<number>(0);
 
   definedOrRedirect(id);
 
@@ -71,6 +72,7 @@ function Post() {
     if (post) {
       setReadableDate(formatDate(post.createdAt));
       setIsLiked(post.isLiked);
+      setLikeCount(post.likeCount);
     }
   }, [post]);
 
@@ -92,6 +94,13 @@ function Post() {
       }
 
       await likePost(post._id).unwrap();
+
+      if (isLiked) {
+        setLikeCount((prev) => prev - 1);
+      } else {
+        setLikeCount((prev) => prev + 1);
+      }
+
       setIsLiked(!isLiked);
     } catch (error: any) {
       toast.warn(error.data.message || "An error occurred");
@@ -151,33 +160,39 @@ function Post() {
                 )}
               </Card.Body>
               <Card.Footer
-                className="d-flex"
+                className="d-flex align-items-center ps-0"
                 style={{
                   borderBottom: "1px solid #dee2e6",
                 }}
               >
                 {user && (
-                  <Button
-                    style={{
-                      backgroundColor: "transparent",
-                      borderColor: "transparent",
-                    }}
-                    onClick={handleLike}
-                    disabled={isPostLoading || isLikeLoading}
-                  >
-                    {isPostLoading || isLikeLoading ? (
-                      <Spinner />
-                    ) : (
-                      <i
-                        className={`bi ${
-                          isLiked ? "bi-star-fill" : "bi-star"
-                        } h2`}
-                        style={{
-                          color: "#8c52ff",
-                        }}
-                      />
+                  <div className="d-flex align-items-center fs-5 ps-2">
+                    <Button
+                      className="pe-1"
+                      style={{
+                        backgroundColor: "transparent",
+                        borderColor: "transparent",
+                      }}
+                      onClick={handleLike}
+                      disabled={isPostLoading || isLikeLoading}
+                    >
+                      {isPostLoading || isLikeLoading ? (
+                        <Spinner />
+                      ) : (
+                        <i
+                          className={`bi ${
+                            isLiked ? "bi-star-fill" : "bi-star"
+                          } h2`}
+                          style={{
+                            color: "#8c52ff",
+                          }}
+                        />
+                      )}
+                    </Button>
+                    {likeCount > 0 && !isPostLoading && (
+                      <p className="h-100 p-0 m-0 me-2">{likeCount}</p>
                     )}
-                  </Button>
+                  </div>
                 )}
 
                 <Button

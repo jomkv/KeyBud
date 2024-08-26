@@ -19,6 +19,7 @@ interface PostProps {
 
 const PostCard: React.FC<PostProps> = ({ post }) => {
   const [isLiked, setIsLiked] = useState<boolean>(post.isLiked);
+  const [likeCount, setLikeCount] = useState<number>(post.likeCount);
 
   const { userInfo: user } = useSelector((state: RootState) => state.auth);
   const [likePost, { isLoading }] = useLikePostMutation();
@@ -31,6 +32,13 @@ const PostCard: React.FC<PostProps> = ({ post }) => {
       }
 
       await likePost(post._id).unwrap();
+
+      if (isLiked) {
+        setLikeCount((prev) => prev - 1);
+      } else {
+        setLikeCount((prev) => prev + 1);
+      }
+
       setIsLiked(!isLiked);
     } catch (error: any) {
       toast.warn(error.data.message || "An error occurred");
@@ -88,43 +96,54 @@ const PostCard: React.FC<PostProps> = ({ post }) => {
               </div>
             )}
           </Card.Body>
-          <Card.Footer className="d-flex">
+          <Card.Footer className="d-flex align-items-center ps-0">
             {user && (
               <>
-                <Button
-                  style={{
-                    backgroundColor: "transparent",
-                    borderColor: "transparent",
-                  }}
-                  onClick={handleLike}
-                  disabled={isLoading}
-                >
-                  {isLoading ? (
-                    <Spinner />
-                  ) : (
+                <div className="d-flex align-items-center fs-5 ps-2">
+                  <Button
+                    className="pe-1"
+                    style={{
+                      backgroundColor: "transparent",
+                      borderColor: "transparent",
+                    }}
+                    onClick={handleLike}
+                    disabled={isLoading}
+                  >
+                    {isLoading ? (
+                      <Spinner />
+                    ) : (
+                      <i
+                        className={`bi ${
+                          isLiked ? "bi-star-fill" : "bi-star"
+                        } h2`}
+                        style={{
+                          color: "#8c52ff",
+                        }}
+                      />
+                    )}
+                  </Button>
+                  {likeCount > 0 && (
+                    <p className="h-100 p-0 m-0 me-2">{likeCount}</p>
+                  )}
+                </div>
+
+                <div className="d-flex align-items-center fs-5">
+                  <Button
+                    className="pe-1"
+                    style={{
+                      backgroundColor: "transparent",
+                      borderColor: "transparent",
+                    }}
+                  >
                     <i
-                      className={`bi ${
-                        isLiked ? "bi-star-fill" : "bi-star"
-                      } h2`}
+                      className="bi bi-chat h2"
                       style={{
                         color: "#8c52ff",
                       }}
-                    />
-                  )}
-                </Button>
-                <Button
-                  style={{
-                    backgroundColor: "transparent",
-                    borderColor: "transparent",
-                  }}
-                >
-                  <i
-                    className="bi bi-chat h2"
-                    style={{
-                      color: "#8c52ff",
-                    }}
-                  ></i>
-                </Button>
+                    ></i>
+                  </Button>
+                  <p className="h-100 p-0 m-0 me-2">4</p>
+                </div>
               </>
             )}
 
