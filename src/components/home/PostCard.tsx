@@ -18,7 +18,7 @@ interface PostProps {
 }
 
 const PostCard: React.FC<PostProps> = ({ post }) => {
-  const [isLiked, setIsLiked] = useState<boolean>(false);
+  const [isLiked, setIsLiked] = useState<boolean>(post.isLiked);
 
   const { userInfo: user } = useSelector((state: RootState) => state.auth);
   const [likePost, { isLoading }] = useLikePostMutation();

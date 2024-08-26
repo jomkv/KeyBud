@@ -9,7 +9,7 @@ export const postsApiSlice = apiSlice.injectEndpoints({
         url: POSTS_URL,
         method: "GET",
       }),
-      keepUnusedDataFor: 5,
+      keepUnusedDataFor: 0,
       transformResponse: (response: { posts: IPost[] }) => response.posts,
     }),
     getPost: builder.query<IPost, string>({
@@ -17,7 +17,7 @@ export const postsApiSlice = apiSlice.injectEndpoints({
         url: `${POSTS_URL}/${postId}`,
         method: "GET",
       }),
-      keepUnusedDataFor: 5,
+      keepUnusedDataFor: 0,
       transformResponse: (response: { post: IPost }) => response.post,
     }),
     likePost: builder.mutation<any, string>({

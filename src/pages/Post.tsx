@@ -12,6 +12,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { redirect, useNavigate, useParams } from "react-router-dom";
 import { useSelector } from "react-redux";
+import { toast } from "react-toastify";
 
 // * Local Imports
 import NavbarComponent from "../components/NavbarComponent";
@@ -20,6 +21,8 @@ import ChatWidget from "../components/ChatWidget";
 import formatDate from "../utils/formatDate";
 import { useGetPostQuery } from "../state/slices/postsApiSlice";
 import { RootState } from "../state/store";
+import Spinner from "../components/Spinner";
+import { useLikePostMutation } from "../state/slices/postsApiSlice";
 
 const schema = z.object({
   comment: z.string().nonempty("Comment cannot be empty"),
@@ -42,10 +45,17 @@ function Post() {
 
   const [readableDate, setReadableDate] = useState<string>("");
   const [isComment, setIsComment] = useState<boolean>(false);
+  const [isLiked, setIsLiked] = useState<boolean>(false);
 
   definedOrRedirect(id);
 
-  const { data: post, isLoading, isError } = useGetPostQuery(id);
+  const {
+    data: post,
+    isLoading: isPostLoading,
+    isError: isPostError,
+  } = useGetPostQuery(id);
+
+  const [likePost, { isLoading: isLikeLoading }] = useLikePostMutation();
 
   const form = useForm<IForm>({
     defaultValues: {
@@ -60,14 +70,33 @@ function Post() {
   useEffect(() => {
     if (post) {
       setReadableDate(formatDate(post.createdAt));
+      setIsLiked(post.isLiked);
     }
   }, [post]);
 
   useEffect(() => {
-    if (isError) {
+    if (isPostError) {
       navigate("/");
     }
-  }, [isError]);
+  }, [isPostError, navigate]);
+
+  const handleLike = async () => {
+    if (!post) {
+      return;
+    }
+
+    try {
+      if (!user) {
+        toast.error("Please login to like this post");
+        return;
+      }
+
+      await likePost(post._id).unwrap();
+      setIsLiked(!isLiked);
+    } catch (error: any) {
+      toast.warn(error.data.message || "An error occurred");
+    }
+  };
 
   const onSubmit = (data: IForm) => {
     console.log(data);
@@ -133,13 +162,21 @@ function Post() {
                       backgroundColor: "transparent",
                       borderColor: "transparent",
                     }}
+                    onClick={handleLike}
+                    disabled={isPostLoading || isLikeLoading}
                   >
-                    <i
-                      className="bi bi-star h2"
-                      style={{
-                        color: "#8c52ff",
-                      }}
-                    ></i>
+                    {isPostLoading || isLikeLoading ? (
+                      <Spinner />
+                    ) : (
+                      <i
+                        className={`bi ${
+                          isLiked ? "bi-star-fill" : "bi-star"
+                        } h2`}
+                        style={{
+                          color: "#8c52ff",
+                        }}
+                      />
+                    )}
                   </Button>
                 )}
 
