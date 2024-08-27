@@ -2,7 +2,14 @@ import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
 import ListGroup from "react-bootstrap/ListGroup";
 
-function CommentCard() {
+import { IComment } from "../../@types/commentType";
+import formatDate from "../../utils/formatDate";
+
+interface CommentProps {
+  comment: IComment;
+}
+
+const CommentCard: React.FC<CommentProps> = ({ comment }) => {
   return (
     <ListGroup.Item className="bg-secondary">
       <Row
@@ -23,20 +30,17 @@ function CommentCard() {
                 height: "25px",
               }}
             />
-            <p className="m-0 p-0 fs-5">Username • 2 days ago</p>
+            <p className="m-0 p-0 fs-5">
+              {comment.ownerId.username} • {formatDate(comment.createdAt)}
+            </p>
           </div>
         </Col>
         <Col>
-          <p>
-            Lorem ipsum, dolor sit amet consectetur adipisicing elit. Veniam
-            omnis corporis ab, dolor maiores soluta dolorem, nesciunt
-            perferendis exercitationem ad nisi, molestias vitae tenetur sint
-            sequi natus. Sed, natus asperiores.
-          </p>
+          <p>{comment.comment}</p>
         </Col>
       </Row>
     </ListGroup.Item>
   );
-}
+};
 
 export default CommentCard;

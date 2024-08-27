@@ -41,7 +41,7 @@ const PostCard: React.FC<PostProps> = ({ post }) => {
 
       setIsLiked(!isLiked);
     } catch (error: any) {
-      toast.warn(error.data.message || "An error occurred");
+      toast.warn(error?.data?.message || "An error occurred");
     }
   };
 
@@ -142,7 +142,9 @@ const PostCard: React.FC<PostProps> = ({ post }) => {
                       }}
                     ></i>
                   </Button>
-                  <p className="h-100 p-0 m-0 me-2">4</p>
+                  {post.commentCount > 0 && (
+                    <p className="h-100 p-0 m-0 me-2">{post.commentCount}</p>
+                  )}
                 </div>
               </>
             )}

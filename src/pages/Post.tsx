@@ -4,33 +4,20 @@ import Col from "react-bootstrap/Col";
 import Button from "react-bootstrap/Button";
 import Card from "react-bootstrap/Card";
 import Container from "react-bootstrap/Container";
-import ListGroup from "react-bootstrap/ListGroup";
-import Form from "react-bootstrap/Form";
 import { useEffect, useState } from "react";
-import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { z } from "zod";
 import { redirect, useNavigate, useParams } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { toast } from "react-toastify";
 
 // * Local Imports
 import NavbarComponent from "../components/NavbarComponent";
-import CommentCard from "../components/post/CommentCard";
 import ChatWidget from "../components/ChatWidget";
 import formatDate from "../utils/formatDate";
 import { useGetPostQuery } from "../state/slices/postsApiSlice";
 import { RootState } from "../state/store";
 import Spinner from "../components/Spinner";
 import { useLikePostMutation } from "../state/slices/postsApiSlice";
-
-const schema = z.object({
-  comment: z.string().nonempty("Comment cannot be empty"),
-});
-
-interface IForm {
-  comment: string;
-}
+import Comments from "../components/post/Comments";
 
 function definedOrRedirect(param: string | undefined): asserts param is string {
   if (param === undefined) {
@@ -44,7 +31,6 @@ function Post() {
   const { userInfo: user } = useSelector((state: RootState) => state.auth);
 
   const [readableDate, setReadableDate] = useState<string>("");
-  const [isComment, setIsComment] = useState<boolean>(false);
   const [isLiked, setIsLiked] = useState<boolean>(false);
   const [likeCount, setLikeCount] = useState<number>(0);
 
@@ -57,16 +43,6 @@ function Post() {
   } = useGetPostQuery(id);
 
   const [likePost, { isLoading: isLikeLoading }] = useLikePostMutation();
-
-  const form = useForm<IForm>({
-    defaultValues: {
-      comment: "",
-    },
-    resolver: zodResolver(schema),
-  });
-
-  const { register, handleSubmit, formState } = form;
-  const { errors } = formState;
 
   useEffect(() => {
     if (post) {
@@ -103,12 +79,8 @@ function Post() {
 
       setIsLiked(!isLiked);
     } catch (error: any) {
-      toast.warn(error.data.message || "An error occurred");
+      toast.warn(error?.data?.message || "An error occurred");
     }
-  };
-
-  const onSubmit = (data: IForm) => {
-    console.log(data);
   };
 
   return (
@@ -209,53 +181,7 @@ function Post() {
                   ></i>
                 </Button>
               </Card.Footer>
-              <ListGroup className="list-group-flush">
-                <ListGroup.Item className="bg-secondary pb-4">
-                  {isComment ? (
-                    <Form onSubmit={handleSubmit(onSubmit)} noValidate>
-                      <Form.Group className="mb-3">
-                        <Form.Control
-                          size="lg"
-                          as="textarea"
-                          rows={2}
-                          placeholder="Write your comment"
-                          id="comment"
-                          {...register("comment")}
-                          isInvalid={errors.comment?.message ? true : false}
-                        />
-                        <Form.Control.Feedback type="invalid">
-                          {errors.comment?.message}
-                        </Form.Control.Feedback>
-                      </Form.Group>
-                      <div className="w-100 d-flex justify-content-end">
-                        <Button
-                          className="mt-3 ml-auto fs-6 fw-semibold"
-                          style={{ color: "white" }}
-                          type="submit"
-                        >
-                          Comment
-                        </Button>
-                      </div>
-                    </Form>
-                  ) : (
-                    <Form.Control
-                      size="lg"
-                      type="text"
-                      placeholder="Add a comment"
-                      style={{
-                        borderRadius: "25px",
-                      }}
-                      onFocus={() => {
-                        setIsComment(true);
-                      }}
-                    />
-                  )}
-                </ListGroup.Item>
-                <CommentCard />
-                <CommentCard />
-                <CommentCard />
-                <CommentCard />
-              </ListGroup>
+              <Comments postId={id} />
             </Card>
           </Col>
         </Row>

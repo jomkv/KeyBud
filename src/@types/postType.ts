@@ -14,6 +14,7 @@ export interface IPost {
   images: IPhoto[];
   createdAt: string;
   updatedAt: string;
+  commentCount: number;
 }
 
 export interface IPostInput {

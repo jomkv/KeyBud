@@ -24,7 +24,7 @@ function NavbarComponent() {
       navigate("/login");
       toast.success("Logged out");
     } catch (error: any) {
-      toast.warn(error.data.message || "An error occurred");
+      toast.warn(error?.data?.message || "An error occurred");
     }
   };
 
