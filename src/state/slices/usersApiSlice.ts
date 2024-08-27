@@ -1,6 +1,7 @@
-import { IUserCredentials, IUserPayload } from "../../@types/userType";
+import { IUser, IUserCredentials, IUserPayload } from "../../@types/userType";
 import { apiSlice } from "./apiSlice";
 import { USERS_URL } from "../constants";
+import { IPost } from "../../@types/postType";
 
 export const usersApiSlice = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
@@ -22,6 +23,24 @@ export const usersApiSlice = apiSlice.injectEndpoints({
         url: `${USERS_URL}/register`,
         method: "POST",
         body: userCredentials,
+      }),
+    }),
+    getProfile: builder.query<
+      { user: IUser; posts: IPost[]; likes: IPost[] },
+      string
+    >({
+      query: (userId: string) => ({
+        url: `${USERS_URL}/profile/${userId}`,
+        method: "GET",
+      }),
+      transformResponse: (response: {
+        user: IUser;
+        posts: IPost[];
+        likes: IPost[];
+      }) => ({
+        user: response.user,
+        posts: response.posts,
+        likes: response.likes,
       }),
     }),
   }),
