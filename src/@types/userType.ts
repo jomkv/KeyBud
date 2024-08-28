@@ -2,9 +2,10 @@ import IPhoto from "./photoType";
 
 interface IUser {
   _id?: string;
+  id?: string;
   username: string;
   email: string;
-  switchType: string;
+  switchType?: string;
   icon?: IPhoto;
 }
 
@@ -21,11 +22,7 @@ interface IUserCredentials {
 }
 
 interface IUserState {
-  user: IUser | null;
-  isLoading: boolean;
-  isError: boolean;
-  isSuccess: boolean;
-  message: string | null;
+  userInfo: IUser | null;
 }
 
 export type { IUser, IUserPayload, IUserCredentials, IUserState };

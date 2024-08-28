@@ -3,8 +3,9 @@ import { useEffect, useState } from "react";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import Button from "react-bootstrap/Button";
-import Card from "react-bootstrap/Card";
 import Container from "react-bootstrap/Container";
+import { useParams, useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 
 // * Local Imports
 import NavbarComponent from "../components/NavbarComponent";
@@ -12,9 +13,28 @@ import Build from "../components/profile/Build";
 import Posts from "../components/profile/Posts";
 import Likes from "../components/profile/Likes";
 import ChatWidget from "../components/ChatWidget";
+import definedOrRedirect from "../utils/definedOrRedirect";
+import { useGetProfileQuery } from "../state/slices/usersApiSlice";
 
 function Profile() {
   const [tab, setTab] = useState("build");
+
+  const { id } = useParams();
+  const navigate = useNavigate();
+
+  definedOrRedirect(id);
+
+  const { data: profileData, isError, error } = useGetProfileQuery(id);
+
+  useEffect(() => {
+    if (isError) {
+      console.log(error);
+      navigate("/");
+      toast.warn("User not found");
+    }
+  }, [isError, navigate, error]);
+
+  console.log(profileData);
 
   return (
     <div className="bg-light">
@@ -31,7 +51,7 @@ function Profile() {
             >
               <div className="d-flex align-items-center">
                 <img
-                  src="images/user_icon.png"
+                  src="/images/user_icon.png"
                   className="rounded-circle me-3"
                   style={{
                     width: "5rem",
@@ -41,10 +61,14 @@ function Profile() {
               </div>
               <Row xs={1} sm={1}>
                 <Col>
-                  <p className="fs-3 fw-bold m-0">Username</p>
+                  <p className="fs-3 fw-bold m-0">
+                    {profileData?.user.username}
+                  </p>
                 </Col>
                 <Col>
-                  <p className="fs-5">Tactile</p>
+                  <p className="fs-5">
+                    {profileData?.user.switchType || "Tactile"}
+                  </p>
                 </Col>
               </Row>
             </div>
@@ -149,7 +173,9 @@ function Profile() {
         </Row>
         <Row className="justify-content-center mt-3">
           {tab === "build" && <Build />}
-          {tab === "posts" && <Posts />}
+          {tab === "posts" && profileData && (
+            <Posts posts={profileData?.posts} />
+          )}
           {tab === "likes" && <Likes />}
         </Row>
       </Container>

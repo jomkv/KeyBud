@@ -1,11 +1,10 @@
 // * Third Party Imports
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
-import Button from "react-bootstrap/Button";
 import Card from "react-bootstrap/Card";
 import Container from "react-bootstrap/Container";
 import { useEffect, useState } from "react";
-import { redirect, useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { toast } from "react-toastify";
 
@@ -15,15 +14,10 @@ import ChatWidget from "../components/ChatWidget";
 import formatDate from "../utils/formatDate";
 import { useGetPostQuery } from "../state/slices/postsApiSlice";
 import { RootState } from "../state/store";
-import Spinner from "../components/Spinner";
 import { useLikePostMutation } from "../state/slices/postsApiSlice";
 import Comments from "../components/post/Comments";
-
-function definedOrRedirect(param: string | undefined): asserts param is string {
-  if (param === undefined) {
-    redirect("/");
-  }
-}
+import definedOrRedirect from "../utils/definedOrRedirect";
+import CardFooter from "../components/post_card/CardFooter";
 
 function Post() {
   const { id } = useParams();
@@ -131,56 +125,14 @@ function Post() {
                   </div>
                 )}
               </Card.Body>
-              <Card.Footer
-                className="d-flex align-items-center ps-0"
-                style={{
-                  borderBottom: "1px solid #dee2e6",
-                }}
-              >
-                {user && (
-                  <div className="d-flex align-items-center fs-5 ps-2">
-                    <Button
-                      className="pe-1"
-                      style={{
-                        backgroundColor: "transparent",
-                        borderColor: "transparent",
-                      }}
-                      onClick={handleLike}
-                      disabled={isPostLoading || isLikeLoading}
-                    >
-                      {isPostLoading || isLikeLoading ? (
-                        <Spinner />
-                      ) : (
-                        <i
-                          className={`bi ${
-                            isLiked ? "bi-star-fill" : "bi-star"
-                          } h2`}
-                          style={{
-                            color: "#8c52ff",
-                          }}
-                        />
-                      )}
-                    </Button>
-                    {likeCount > 0 && !isPostLoading && (
-                      <p className="h-100 p-0 m-0 me-2">{likeCount}</p>
-                    )}
-                  </div>
-                )}
-
-                <Button
-                  style={{
-                    backgroundColor: "transparent",
-                    borderColor: "transparent",
-                  }}
-                >
-                  <i
-                    className="bi bi-share h2"
-                    style={{
-                      color: "#8c52ff",
-                    }}
-                  ></i>
-                </Button>
-              </Card.Footer>
+              {post && (
+                <CardFooter
+                  postId={id}
+                  initialLikeCount={post?.likeCount}
+                  isPostLiked={post?.isLiked}
+                  commentCount={post?.commentCount}
+                />
+              )}
               <Comments postId={id} />
             </Card>
           </Col>

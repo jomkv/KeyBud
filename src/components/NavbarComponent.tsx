@@ -61,7 +61,7 @@ function NavbarComponent() {
             )}
             {user && (
               <Link
-                to="/profile"
+                to={`/profile/${user.id}`}
                 className="me-3"
                 style={{
                   color: "white",

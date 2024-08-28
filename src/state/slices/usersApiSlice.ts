@@ -30,7 +30,7 @@ export const usersApiSlice = apiSlice.injectEndpoints({
       string
     >({
       query: (userId: string) => ({
-        url: `${USERS_URL}/profile/${userId}`,
+        url: `${USERS_URL}/${userId}`,
         method: "GET",
       }),
       transformResponse: (response: {
@@ -46,5 +46,9 @@ export const usersApiSlice = apiSlice.injectEndpoints({
   }),
 });
 
-export const { useLoginMutation, useLogoutMutation, useRegisterMutation } =
-  usersApiSlice;
+export const {
+  useLoginMutation,
+  useLogoutMutation,
+  useRegisterMutation,
+  useGetProfileQuery,
+} = usersApiSlice;

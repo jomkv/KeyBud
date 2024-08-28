@@ -19,7 +19,7 @@ function Build() {
           <div className="d-flex justify-content-center">
             <div className="w-50">
               <img
-                src="images/keyboard_sample_pic.jpg"
+                src="/images/keyboard_sample_pic.jpg"
                 alt="content"
                 className="img-fluid m-0 p-0"
               />

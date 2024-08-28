@@ -12,6 +12,7 @@ import formatDate from "../../utils/formatDate";
 import { RootState } from "../../state/store";
 import Spinner from "../Spinner";
 import { useLikePostMutation } from "../../state/slices/postsApiSlice";
+import CardFooter from "../post_card/CardFooter";
 
 interface PostProps {
   post: IPost;
@@ -96,73 +97,12 @@ const PostCard: React.FC<PostProps> = ({ post }) => {
               </div>
             )}
           </Card.Body>
-          <Card.Footer className="d-flex align-items-center ps-0">
-            {user && (
-              <>
-                <div className="d-flex align-items-center fs-5 ps-2">
-                  <Button
-                    className="pe-1"
-                    style={{
-                      backgroundColor: "transparent",
-                      borderColor: "transparent",
-                    }}
-                    onClick={handleLike}
-                    disabled={isLoading}
-                  >
-                    {isLoading ? (
-                      <Spinner />
-                    ) : (
-                      <i
-                        className={`bi ${
-                          isLiked ? "bi-star-fill" : "bi-star"
-                        } h2`}
-                        style={{
-                          color: "#8c52ff",
-                        }}
-                      />
-                    )}
-                  </Button>
-                  {likeCount > 0 && (
-                    <p className="h-100 p-0 m-0 me-2">{likeCount}</p>
-                  )}
-                </div>
-
-                <div className="d-flex align-items-center fs-5">
-                  <Button
-                    className="pe-1"
-                    style={{
-                      backgroundColor: "transparent",
-                      borderColor: "transparent",
-                    }}
-                  >
-                    <i
-                      className="bi bi-chat h2"
-                      style={{
-                        color: "#8c52ff",
-                      }}
-                    ></i>
-                  </Button>
-                  {post.commentCount > 0 && (
-                    <p className="h-100 p-0 m-0 me-2">{post.commentCount}</p>
-                  )}
-                </div>
-              </>
-            )}
-
-            <Button
-              style={{
-                backgroundColor: "transparent",
-                borderColor: "transparent",
-              }}
-            >
-              <i
-                className="bi bi-share h2"
-                style={{
-                  color: "#8c52ff",
-                }}
-              ></i>
-            </Button>
-          </Card.Footer>
+          <CardFooter
+            postId={post._id}
+            initialLikeCount={post.likeCount}
+            isPostLiked={post.isLiked}
+            commentCount={post.commentCount}
+          />
         </Card>
       </Col>
     </Row>

@@ -25,12 +25,12 @@ function App() {
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<Register />} />
           <Route path="/post/:id" element={<Post />} />
+          <Route path="/profile/:id" element={<Profile />} />
 
           {/* Protected Routes */}
           <Route element={<Protect />}>
             <Route path="/create-post" element={<CreatePost />} />
             <Route path="/messages" element={<Messages />} />
-            <Route path="/profile" element={<Profile />} />
           </Route>
         </Routes>
         <ToastContainer />
