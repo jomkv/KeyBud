@@ -1,17 +1,11 @@
-import React, { useState } from "react";
+import React from "react";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
-import Button from "react-bootstrap/Button";
 import Card from "react-bootstrap/Card";
 import { Link } from "react-router-dom";
-import { useSelector } from "react-redux";
-import { toast } from "react-toastify";
 
 import { IPost } from "../../@types/postType";
 import formatDate from "../../utils/formatDate";
-import { RootState } from "../../state/store";
-import Spinner from "../Spinner";
-import { useLikePostMutation } from "../../state/slices/postsApiSlice";
 import CardFooter from "../post_card/CardFooter";
 
 interface PostProps {
@@ -19,33 +13,6 @@ interface PostProps {
 }
 
 const PostCard: React.FC<PostProps> = ({ post }) => {
-  const [isLiked, setIsLiked] = useState<boolean>(post.isLiked);
-  const [likeCount, setLikeCount] = useState<number>(post.likeCount);
-
-  const { userInfo: user } = useSelector((state: RootState) => state.auth);
-  const [likePost, { isLoading }] = useLikePostMutation();
-
-  const handleLike = async () => {
-    try {
-      if (!user) {
-        toast.error("Please login to like this post");
-        return;
-      }
-
-      await likePost(post._id).unwrap();
-
-      if (isLiked) {
-        setLikeCount((prev) => prev - 1);
-      } else {
-        setLikeCount((prev) => prev + 1);
-      }
-
-      setIsLiked(!isLiked);
-    } catch (error: any) {
-      toast.warn(error?.data?.message || "An error occurred");
-    }
-  };
-
   return (
     <Row className="justify-content-center gy-4 mt-1">
       <Col lg={6} md={9} sm={11}>

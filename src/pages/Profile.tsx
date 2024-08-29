@@ -24,17 +24,14 @@ function Profile() {
 
   definedOrRedirect(id);
 
-  const { data: profileData, isError, error } = useGetProfileQuery(id);
+  const { data: profileData, isError } = useGetProfileQuery(id);
 
   useEffect(() => {
     if (isError) {
-      console.log(error);
       navigate("/");
       toast.warn("User not found");
     }
-  }, [isError, navigate, error]);
-
-  console.log(profileData);
+  }, [isError, navigate]);
 
   return (
     <div className="bg-light">
@@ -176,7 +173,9 @@ function Profile() {
           {tab === "posts" && profileData && (
             <Posts posts={profileData?.posts} />
           )}
-          {tab === "likes" && <Likes />}
+          {tab === "likes" && profileData && (
+            <Likes posts={profileData?.likes} />
+          )}
         </Row>
       </Container>
 
