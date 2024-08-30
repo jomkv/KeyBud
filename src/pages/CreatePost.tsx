@@ -1,13 +1,15 @@
 import NavbarComponent from "../components/NavbarComponent";
 import ChatWidget from "../components/ChatWidget";
 import Spinner from "../components/Spinner";
+import { useCreatePostMutation } from "../state/slices/postsApiSlice";
 
 import { Container, Button, Form } from "react-bootstrap";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { DevTool } from "@hookform/devtools";
 import { z } from "zod";
 import { useEffect } from "react";
+import { toast } from "react-toastify";
+import { useNavigate } from "react-router-dom";
 
 const schema = z.object({
   title: z.string().nonempty("Title is required").max(150, "Title is too long"),
@@ -22,9 +24,9 @@ interface IForm {
 }
 
 function CreatePost() {
-  // Temporary values
-  const isLoading = false;
-  const isSuccess = false;
+  const [createPost, { isLoading }] = useCreatePostMutation();
+
+  const navigate = useNavigate();
 
   const form = useForm<IForm>({
     defaultValues: {
@@ -34,17 +36,19 @@ function CreatePost() {
     },
     resolver: zodResolver(schema),
   });
-  const { register, handleSubmit, formState, control, reset } = form;
+  const { register, handleSubmit, formState, reset } = form;
   const { errors } = formState;
 
-  useEffect(() => {
-    if (isSuccess) {
-      reset();
+  const onSubmit: SubmitHandler<IForm> = async (data: any) => {
+    try {
+      await createPost(data).unwrap();
+      toast.success("Post created successfully");
+    } catch (error) {
+      console.log(error);
+      toast.warn("An error occured while creating post");
     }
-  }, [isSuccess]);
 
-  const onSubmit: SubmitHandler<IForm> = (data: any) => {
-    //dispatch(createPostAsync(data));
+    // reset();
   };
 
   return (
@@ -120,7 +124,6 @@ function CreatePost() {
         </Form>
       </Container>
       <ChatWidget />
-      <DevTool control={control} />
     </div>
   );
 }

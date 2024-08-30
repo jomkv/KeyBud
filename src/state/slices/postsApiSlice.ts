@@ -1,6 +1,6 @@
 import { apiSlice } from "./apiSlice";
 import { POSTS_URL } from "../constants";
-import { IPost } from "../../@types/postType";
+import { IPost, IPostInput } from "../../@types/postType";
 
 export const postsApiSlice = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
@@ -26,8 +26,28 @@ export const postsApiSlice = apiSlice.injectEndpoints({
         method: "POST",
       }),
     }),
+    createPost: builder.mutation<any, IPostInput>({
+      query: (post: IPostInput) => {
+        // let bodyFormData = new FormData()
+        // bodyFormData.append("images", post?.images)
+        // * TODO: Fix this
+        return {
+          url: POSTS_URL,
+          method: "POST",
+          body: post,
+          headers: {
+            "Content-Type": "multipart/form-data;",
+          },
+          formData: true,
+        };
+      },
+    }),
   }),
 });
 
-export const { useGetPostsQuery, useGetPostQuery, useLikePostMutation } =
-  postsApiSlice;
+export const {
+  useGetPostsQuery,
+  useGetPostQuery,
+  useLikePostMutation,
+  useCreatePostMutation,
+} = postsApiSlice;
