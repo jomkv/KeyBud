@@ -20,7 +20,7 @@ export interface IPost {
 export interface IPostInput {
   title: string;
   description: string;
-  images?: IPhoto[];
+  images?: Blob[];
 }
 
 export interface IPostState {

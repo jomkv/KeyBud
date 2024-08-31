@@ -27,20 +27,12 @@ export const postsApiSlice = apiSlice.injectEndpoints({
       }),
     }),
     createPost: builder.mutation<any, IPostInput>({
-      query: (post: IPostInput) => {
-        // let bodyFormData = new FormData()
-        // bodyFormData.append("images", post?.images)
-        // * TODO: Fix this
-        return {
-          url: POSTS_URL,
-          method: "POST",
-          body: post,
-          headers: {
-            "Content-Type": "multipart/form-data;",
-          },
-          formData: true,
-        };
-      },
+      query: (post: IPostInput) => ({
+        url: POSTS_URL,
+        method: "POST",
+        body: post,
+        formData: true,
+      }),
     }),
   }),
 });

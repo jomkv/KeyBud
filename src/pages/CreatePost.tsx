@@ -2,12 +2,12 @@ import NavbarComponent from "../components/NavbarComponent";
 import ChatWidget from "../components/ChatWidget";
 import Spinner from "../components/Spinner";
 import { useCreatePostMutation } from "../state/slices/postsApiSlice";
+import { IPostInput } from "../@types/postType";
 
 import { Container, Button, Form } from "react-bootstrap";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
-import { useEffect } from "react";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 
@@ -39,7 +39,7 @@ function CreatePost() {
   const { register, handleSubmit, formState, reset } = form;
   const { errors } = formState;
 
-  const onSubmit: SubmitHandler<IForm> = async (data: any) => {
+  const onSubmit: SubmitHandler<IForm> = async (data: IPostInput) => {
     try {
       await createPost(data).unwrap();
       toast.success("Post created successfully");
@@ -48,7 +48,7 @@ function CreatePost() {
       toast.warn("An error occured while creating post");
     }
 
-    // reset();
+    reset();
   };
 
   return (
