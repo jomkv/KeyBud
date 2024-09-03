@@ -32,9 +32,9 @@ function NavbarComponent() {
     <Navbar
       sticky="top"
       expand="lg"
-      className="bg-secondary"
       style={{
         position: "sticky",
+        backgroundColor: "#2b2b2b",
       }}
     >
       <Container fluid>

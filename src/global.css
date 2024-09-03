@@ -168,13 +168,46 @@ body {
   height: 90%;
   margin: 5rem;
   display: flex;
-  background-color: aqua;
-}
-
-.chat-container {
-  background-color: #272727;
 }
 
 .chat-container:hover {
   background-color: #363636;
+}
+
+.conversation-selector {
+  width: 25%;
+}
+
+.conversation-container {
+  width: 75%;
+}
+
+@media (max-width: 991px) {
+  .conversation-selector {
+    width: 10%;
+  }
+
+  .conversation-container {
+    width: 90%;
+  }
+}
+
+@media (max-width: 767px) {
+  .conversation-selector {
+    width: 15%;
+  }
+
+  .conversation-container {
+    width: 85%;
+  }
+}
+
+@media (max-width: 575px) {
+  .conversation-selector {
+    width: 20%;
+  }
+
+  .conversation-container {
+    width: 80%;
+  }
 }

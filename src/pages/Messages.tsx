@@ -1,12 +1,18 @@
-import { Container, Row, Col } from "react-bootstrap";
-
 import NavbarComponent from "../components/NavbarComponent";
 import ConversationSelector from "../components/messages/ConversationSelector";
 import Conversation from "../components/messages/Conversation";
 
+import { useEffect, useState } from "react";
+
 function Messages() {
+  const [conversation, setConversation] = useState<string>(""); // conversationId
+
+  useEffect(() => {
+    console.log("conversationId: ", conversation);
+  }, [conversation]);
+
   return (
-    <div className="bg-light h-100 bg-light">
+    <div className="bg-secondary h-100">
       <NavbarComponent />
 
       <div
@@ -16,7 +22,7 @@ function Messages() {
           overflow: "auto",
         }}
       >
-        <ConversationSelector />
+        <ConversationSelector setConversation={setConversation} />
         <Conversation />
       </div>
     </div>

@@ -1,30 +1,52 @@
 import { Row, Col } from "react-bootstrap";
 
-function ConversationOption() {
+interface IOptionProps {
+  conversation: {
+    id: string;
+    name: string;
+    recentMessage: string;
+  };
+  setConversation: React.Dispatch<React.SetStateAction<string>>;
+}
+
+const ConversationOption: React.FC<IOptionProps> = ({
+  conversation,
+  setConversation,
+}) => {
+  const handleCLick = () => {
+    setConversation(conversation.id);
+  };
+
   return (
-    <Row className="gx-0 chat-container">
-      <Col xs={2} sm={2}>
+    <Row
+      className="gx-0 chat-container pt-2 pb-2 rounded"
+      onClick={handleCLick}
+      style={{
+        cursor: "pointer",
+      }}
+    >
+      <Col md={12} lg={2} className="d-flex justify-content-center">
         <img
           src="images/user_icon.png"
           alt="icon"
           className="rounded-circle me-0 p-2"
           style={{
             objectFit: "cover",
-            width: "80px",
-            height: "80px",
+            width: "3.5rem",
+            height: "3.5rem",
           }}
         />
       </Col>
       <Col
-        xs={10}
-        sm={10}
-        className="ps-2 d-flex flex-column justify-content-center"
+        md={0}
+        lg={10}
+        className="ps-2 d-flex flex-column justify-content-center d-none d-lg-block"
       >
-        <p className="m-0 p-0 fs-5 fw-bold">Username</p>
-        <p className="m-0 p-0 fw-light">Lorem ipsum dolor sit ame.....</p>
+        <p className="m-0 p-0 fs-5 fw-bold">{conversation.name}</p>
+        <p className="m-0 p-0 fw-light">{conversation.recentMessage}</p>
       </Col>
     </Row>
   );
-}
+};
 
 export default ConversationOption;

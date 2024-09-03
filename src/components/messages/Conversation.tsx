@@ -1,17 +1,18 @@
-import { Button } from "react-bootstrap";
+import { useState } from "react";
+import { Button, Form } from "react-bootstrap";
 
 function Conversation() {
+  const [buttonIcon, setButtonIcon] = useState<string>("bi-send");
+
+  const handleSubmit = () => {};
+
   return (
-    <div
-      className="h-100 w-75"
-      style={{
-        borderLeft: "3px solid #000000",
-      }}
-    >
+    <div className="h-100 conversation-container border-start border-light">
       <div
-        className="border-bottom border-black w-100 d-flex justify-content-center align-items-center pt-2"
+        className="border-bottom border-light w-100 d-flex justify-content-center align-items-center pt-2"
         style={{
           height: "10%",
+          color: "white",
         }}
       >
         <p className="fs-3">John Doe</p>
@@ -51,15 +52,38 @@ function Conversation() {
           </p>
         </div>
       </div>
-      <div
-        className="d-flex"
+      <Form
+        className="d-flex p-3"
         style={{
           height: "10%",
         }}
+        onSubmit={handleSubmit}
       >
-        <input className="w-100" type="text" placeholder="Message goes here" />
-        <Button>Send</Button>
-      </div>
+        <Form.Control
+          size="lg"
+          type="text"
+          placeholder="Message goes here"
+          style={{
+            borderRadius: "25px",
+          }}
+        />
+        <Button
+          type="submit"
+          style={{
+            color: "#8c52ff",
+            backgroundColor: "transparent",
+            border: "none",
+          }}
+          onMouseOver={() => {
+            setButtonIcon("bi-send-fill");
+          }}
+          onMouseLeave={() => {
+            setButtonIcon("bi-send");
+          }}
+        >
+          <i className={`bi ${buttonIcon} fs-2`}></i>
+        </Button>
+      </Form>
     </div>
   );
 }
