@@ -29,7 +29,14 @@ function NavbarComponent() {
   };
 
   return (
-    <Navbar sticky="top" expand="lg" className="bg-secondary">
+    <Navbar
+      sticky="top"
+      expand="lg"
+      className="bg-secondary"
+      style={{
+        position: "sticky",
+      }}
+    >
       <Container fluid>
         <Link to="/">
           <img alt="logo" src="/images/Final Logo.svg" height={60} />
