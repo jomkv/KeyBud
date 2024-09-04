@@ -39,12 +39,22 @@ function Conversation() {
           </p>
         </div>
         <div
-          className="align-self-start"
+          className="align-self-start d-flex"
           style={{
-            maxWidth: "48%",
+            maxWidth: "50%",
           }}
         >
-          <p className="fs-4 p-3 rounded bg-primary-subtle">
+          <img
+            src="images/user_icon.png"
+            alt="icon"
+            className="rounded-circle me-0 p-2 align-self-end"
+            style={{
+              objectFit: "cover",
+              width: "3.5rem",
+              height: "3.5rem",
+            }}
+          />
+          <p className="fs-4 p-3 mb-2 rounded bg-primary-subtle">
             Lorem ipsum dolor sit amet consectetur adipisicing elit. Nam laborum
             inventore mollitia accusantium, aliquam neque sed necessitatibus
             cupiditate quaerat eos! Ut quod voluptate totam nesciunt blanditiis
@@ -52,6 +62,7 @@ function Conversation() {
           </p>
         </div>
       </div>
+
       <Form
         className="d-flex p-3"
         style={{

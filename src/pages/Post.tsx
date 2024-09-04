@@ -14,7 +14,6 @@ import ChatWidget from "../components/ChatWidget";
 import formatDate from "../utils/formatDate";
 import { useGetPostQuery } from "../state/slices/postsApiSlice";
 import { RootState } from "../state/store";
-import { useLikePostMutation } from "../state/slices/postsApiSlice";
 import Comments from "../components/post/Comments";
 import definedOrRedirect from "../utils/definedOrRedirect";
 import CardFooter from "../components/post_card/CardFooter";
@@ -25,8 +24,6 @@ function Post() {
   const { userInfo: user } = useSelector((state: RootState) => state.auth);
 
   const [readableDate, setReadableDate] = useState<string>("");
-  const [isLiked, setIsLiked] = useState<boolean>(false);
-  const [likeCount, setLikeCount] = useState<number>(0);
 
   definedOrRedirect(id);
 
@@ -36,46 +33,18 @@ function Post() {
     isError: isPostError,
   } = useGetPostQuery(id);
 
-  const [likePost, { isLoading: isLikeLoading }] = useLikePostMutation();
-
   useEffect(() => {
     if (post) {
       setReadableDate(formatDate(post.createdAt));
-      setIsLiked(post.isLiked);
-      setLikeCount(post.likeCount);
     }
   }, [post]);
 
   useEffect(() => {
     if (isPostError) {
       navigate("/");
+      toast.warn("Post not found");
     }
   }, [isPostError, navigate]);
-
-  const handleLike = async () => {
-    if (!post) {
-      return;
-    }
-
-    try {
-      if (!user) {
-        toast.error("Please login to like this post");
-        return;
-      }
-
-      await likePost(post._id).unwrap();
-
-      if (isLiked) {
-        setLikeCount((prev) => prev - 1);
-      } else {
-        setLikeCount((prev) => prev + 1);
-      }
-
-      setIsLiked(!isLiked);
-    } catch (error: any) {
-      toast.warn(error?.data?.message || "An error occurred");
-    }
-  };
 
   return (
     <div className="bg-light">
