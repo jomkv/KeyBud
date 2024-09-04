@@ -1,5 +1,4 @@
 import NavbarComponent from "../components/NavbarComponent";
-import ChatWidget from "../components/ChatWidget";
 import PostCard from "../components/home/PostCard";
 import CreatePostWidget from "../components/CreatePostWidget";
 import { RootState } from "../state/store";
@@ -24,7 +23,6 @@ function Home() {
             <PostCard key={index} post={post} />
           ))}
       </Container>
-      {user && <ChatWidget />}
       {user && <CreatePostWidget />}
     </div>
   );

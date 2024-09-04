@@ -12,7 +12,6 @@ import NavbarComponent from "../components/NavbarComponent";
 import Build from "../components/profile/Build";
 import Posts from "../components/profile/Posts";
 import Likes from "../components/profile/Likes";
-import ChatWidget from "../components/ChatWidget";
 import definedOrRedirect from "../utils/definedOrRedirect";
 import { useGetProfileQuery } from "../state/slices/usersApiSlice";
 
@@ -178,8 +177,6 @@ function Profile() {
           )}
         </Row>
       </Container>
-
-      <ChatWidget />
     </div>
   );
 }

@@ -1,5 +1,4 @@
 import NavbarComponent from "../components/NavbarComponent";
-import ChatWidget from "../components/ChatWidget";
 import Spinner from "../components/Spinner";
 import { useCreatePostMutation } from "../state/slices/postsApiSlice";
 import { IPostInput } from "../@types/postType";
@@ -123,7 +122,6 @@ function CreatePost() {
           </div>
         </Form>
       </Container>
-      <ChatWidget />
     </div>
   );
 }

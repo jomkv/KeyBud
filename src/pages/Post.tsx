@@ -9,7 +9,6 @@ import { toast } from "react-toastify";
 
 // * Local Imports
 import NavbarComponent from "../components/NavbarComponent";
-import ChatWidget from "../components/ChatWidget";
 import { useGetPostQuery } from "../state/slices/postsApiSlice";
 import { RootState } from "../state/store";
 import definedOrRedirect from "../utils/definedOrRedirect";
@@ -50,8 +49,6 @@ function Post() {
           </Col>
         </Row>
       </Container>
-
-      {user && <ChatWidget />}
     </div>
   );
 }
