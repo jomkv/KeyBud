@@ -20,6 +20,11 @@ const Card: React.FC<ICardProps> = ({ post, isPostPage }) => {
     >
       <CardHeader post={post} isPostPage={isPostPage} />
       <BootstrapCard.Body className="pt-0 pb-0">
+        {isPostPage && (
+          <BootstrapCard.Text className="p-2 pt-0">
+            {post?.description}
+          </BootstrapCard.Text>
+        )}
         {post.images && post.images.length > 0 && (
           <div className="d-flex justify-content-center">
             <img
