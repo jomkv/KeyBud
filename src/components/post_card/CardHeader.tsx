@@ -8,10 +8,10 @@ import { RootState } from "../../state/store";
 
 interface ICardHeaderProps {
   post: IPost;
-  disableLink?: boolean;
+  isPostPage?: boolean;
 }
 
-const CardHeader: React.FC<ICardHeaderProps> = ({ post, disableLink }) => {
+const CardHeader: React.FC<ICardHeaderProps> = ({ post, isPostPage }) => {
   const { userInfo: user } = useSelector((state: RootState) => state.auth);
 
   return (
@@ -43,9 +43,9 @@ const CardHeader: React.FC<ICardHeaderProps> = ({ post, disableLink }) => {
           </Button>
         )}
       </div>
-      {disableLink ? (
+      {isPostPage ? (
         <Card.Title
-          className="fs-2 mt-2"
+          className="fs-2 mt-3 p-2 pb-0"
           style={{
             color: "white",
           }}
@@ -60,7 +60,7 @@ const CardHeader: React.FC<ICardHeaderProps> = ({ post, disableLink }) => {
           }}
         >
           <Card.Title
-            className="fs-2 mt-3 p-2 pb-0"
+            className="fs-2 mt-2"
             style={{
               color: "white",
             }}

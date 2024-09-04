@@ -1,5 +1,6 @@
+import { Col } from "react-bootstrap";
 import { IPost } from "../../@types/postType";
-import ProfilePostCard from "./ProfilePostCard";
+import Card from "../post_card/Card";
 
 interface IPostsProps {
   posts: IPost[];
@@ -9,7 +10,9 @@ const Likes: React.FC<IPostsProps> = ({ posts }) => {
   return (
     <>
       {posts.map((post) => (
-        <ProfilePostCard key={post._id} post={post} />
+        <Col md={12} sm={12} className="mb-4">
+          <Card key={post._id} post={post} />
+        </Col>
       ))}
     </>
   );
