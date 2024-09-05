@@ -25,23 +25,26 @@ export const usersApiSlice = apiSlice.injectEndpoints({
         body: userCredentials,
       }),
     }),
-    getProfile: builder.query<
-      { user: IUser; posts: IPost[]; likes: IPost[] },
-      string
-    >({
+    getUserLikes: builder.query<IPost[], string>({
+      query: (userId: string) => ({
+        url: `${USERS_URL}/${userId}/likes`,
+        method: "GET",
+      }),
+      transformResponse: (response: any) => response.likedPosts,
+    }),
+    getUserPosts: builder.query<IPost[], string>({
+      query: (userId: string) => ({
+        url: `${USERS_URL}/${userId}/posts`,
+        method: "GET",
+      }),
+      transformResponse: (response: any) => response.userPosts,
+    }),
+    getProfile: builder.query<IUser, string>({
       query: (userId: string) => ({
         url: `${USERS_URL}/${userId}`,
         method: "GET",
       }),
-      transformResponse: (response: {
-        user: IUser;
-        posts: IPost[];
-        likes: IPost[];
-      }) => ({
-        user: response.user,
-        posts: response.posts,
-        likes: response.likes,
-      }),
+      transformResponse: (response: { user: IUser }) => response.user,
     }),
   }),
 });
@@ -51,4 +54,6 @@ export const {
   useLogoutMutation,
   useRegisterMutation,
   useGetProfileQuery,
+  useGetUserLikesQuery,
+  useGetUserPostsQuery,
 } = usersApiSlice;

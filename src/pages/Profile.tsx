@@ -6,6 +6,7 @@ import Button from "react-bootstrap/Button";
 import Container from "react-bootstrap/Container";
 import { useParams, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
+import Skeleton from "react-loading-skeleton";
 
 // * Local Imports
 import NavbarComponent from "../components/NavbarComponent";
@@ -23,7 +24,7 @@ function Profile() {
 
   definedOrRedirect(id);
 
-  const { data: profileData, isError } = useGetProfileQuery(id);
+  const { data: userData, isLoading, isError } = useGetProfileQuery(id);
 
   useEffect(() => {
     if (isError) {
@@ -46,24 +47,39 @@ function Profile() {
               }}
             >
               <div className="d-flex align-items-center">
-                <img
-                  src="/images/user_icon.png"
-                  className="rounded-circle me-3"
-                  style={{
-                    width: "5rem",
-                  }}
-                  alt="Icon"
-                />
+                {isLoading ? (
+                  <Skeleton
+                    circle={true}
+                    className="me-3"
+                    style={{
+                      height: "5rem",
+                      width: "5rem",
+                    }}
+                  />
+                ) : (
+                  <img
+                    src="/images/user_icon.png"
+                    className="rounded-circle me-3"
+                    style={{
+                      width: "5rem",
+                    }}
+                    alt="Icon"
+                  />
+                )}
               </div>
               <Row xs={1} sm={1}>
                 <Col>
                   <p className="fs-3 fw-bold m-0">
-                    {profileData?.user.username}
+                    {isLoading ? <Skeleton width={100} /> : userData?.username}
                   </p>
                 </Col>
                 <Col>
                   <p className="fs-5">
-                    {profileData?.user.switchType || "Tactile"}
+                    {isLoading ? (
+                      <Skeleton width={100} />
+                    ) : (
+                      userData?.switchType || "Tactile"
+                    )}
                   </p>
                 </Col>
               </Row>
@@ -169,12 +185,8 @@ function Profile() {
         </Row>
         <Row className="justify-content-center mt-3">
           {tab === "build" && <Build />}
-          {tab === "posts" && profileData && (
-            <Posts posts={profileData?.posts} />
-          )}
-          {tab === "likes" && profileData && (
-            <Likes posts={profileData?.likes} />
-          )}
+          {tab === "posts" && <Posts userId={id} />}
+          {tab === "likes" && <Likes userId={id} />}
         </Row>
       </Container>
     </div>
