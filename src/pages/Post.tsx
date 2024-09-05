@@ -4,20 +4,18 @@ import Col from "react-bootstrap/Col";
 import Container from "react-bootstrap/Container";
 import { useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { useSelector } from "react-redux";
 import { toast } from "react-toastify";
 
 // * Local Imports
 import NavbarComponent from "../components/NavbarComponent";
 import { useGetPostQuery } from "../state/slices/postsApiSlice";
-import { RootState } from "../state/store";
 import definedOrRedirect from "../utils/definedOrRedirect";
 import Card from "../components/post_card/Card";
+import CardSkeleton from "../components/post_card/CardSkeleton";
 
 function Post() {
   const { id } = useParams();
   const navigate = useNavigate();
-  const { userInfo: user } = useSelector((state: RootState) => state.auth);
 
   definedOrRedirect(id);
 
@@ -42,7 +40,7 @@ function Post() {
         <Row className="justify-content-center gy-4 mt-2">
           <Col md={11} sm={11}>
             {isPostLoading ? (
-              <h1>Loading...</h1>
+              <CardSkeleton isPostPage={true} />
             ) : (
               post && <Card post={post} isPostPage={true} />
             )}

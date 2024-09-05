@@ -1,6 +1,7 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
 import { Provider } from "react-redux";
+import { SkeletonTheme } from "react-loading-skeleton";
 
 import App from "./App";
 import { store } from "./state/store";
@@ -8,6 +9,7 @@ import "./global.css";
 import "bootstrap/dist/css/bootstrap.css";
 import "bootstrap/dist/js/bootstrap.bundle.min.js";
 import "bootstrap-icons/font/bootstrap-icons.css";
+import "react-loading-skeleton/dist/skeleton.css";
 import "./App.scss";
 
 const root = ReactDOM.createRoot(
@@ -16,7 +18,9 @@ const root = ReactDOM.createRoot(
 root.render(
   <React.StrictMode>
     <Provider store={store}>
-      <App />
+      <SkeletonTheme baseColor="#3e3e3e" highlightColor="#696969">
+        <App />
+      </SkeletonTheme>
     </Provider>
   </React.StrictMode>
 );
