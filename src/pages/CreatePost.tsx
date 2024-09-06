@@ -8,7 +8,6 @@ import { SubmitHandler, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { toast } from "react-toastify";
-import { useNavigate } from "react-router-dom";
 
 const schema = z.object({
   title: z.string().nonempty("Title is required").max(150, "Title is too long"),
@@ -24,8 +23,6 @@ interface IForm {
 
 function CreatePost() {
   const [createPost, { isLoading }] = useCreatePostMutation();
-
-  const navigate = useNavigate();
 
   const form = useForm<IForm>({
     defaultValues: {

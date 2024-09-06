@@ -1,5 +1,5 @@
 import { Card } from "react-bootstrap";
-import Skeleton, { SkeletonTheme } from "react-loading-skeleton";
+import Skeleton from "react-loading-skeleton";
 
 interface ICardProps {
   isPostPage?: boolean;
