@@ -34,6 +34,12 @@ export const postsApiSlice = apiSlice.injectEndpoints({
         formData: true,
       }),
     }),
+    pinPost: builder.mutation<any, string>({
+      query: (postId: string) => ({
+        url: `${POSTS_URL}/${postId}/pin`,
+        method: "POST",
+      }),
+    }),
   }),
 });
 
@@ -42,4 +48,5 @@ export const {
   useGetPostQuery,
   useLikePostMutation,
   useCreatePostMutation,
+  usePinPostMutation,
 } = postsApiSlice;
