@@ -1,10 +1,11 @@
-import { Button, Card } from "react-bootstrap";
+import { Card } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
 
 import formatDate from "../../utils/formatDate";
 import { IPost } from "../../@types/postType";
 import { RootState } from "../../state/store";
+import OptionButton from "./OptionButton";
 
 interface ICardHeaderProps {
   post: IPost;
@@ -30,18 +31,7 @@ const CardHeader: React.FC<ICardHeaderProps> = ({ post, isPostPage }) => {
             {post.ownerId.username} • {formatDate(post.createdAt)}
           </p>
         </div>
-        {user && user.id === post.ownerId._id && (
-          <Button
-            className="m-0 p-0 fs-3"
-            style={{
-              color: "#8c52ff",
-              backgroundColor: "transparent",
-              border: "none",
-            }}
-          >
-            <i className="bi bi-three-dots-vertical"></i>
-          </Button>
-        )}
+        {user && user.id === post.ownerId._id && <OptionButton post={post} />}
       </div>
       {isPostPage ? (
         <Card.Title
