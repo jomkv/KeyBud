@@ -11,6 +11,7 @@ import CreatePost from "./pages/CreatePost";
 import Messages from "./pages/Messages";
 import ToastContainer from "./components/ToastContainer";
 import Protect from "./pages/Protect";
+import EditPost from "./pages/EditPost";
 
 function App() {
   return (
@@ -30,6 +31,7 @@ function App() {
           {/* Protected Routes */}
           <Route element={<Protect />}>
             <Route path="/create-post" element={<CreatePost />} />
+            <Route path="/edit-post/:id" element={<EditPost />} />
             <Route path="/messages" element={<Messages />} />
           </Route>
         </Routes>
