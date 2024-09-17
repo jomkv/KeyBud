@@ -4,6 +4,7 @@ import { IPost } from "../../@types/postType";
 import CardFooter from "../post_card/CardFooter";
 import CardHeader from "../post_card/CardHeader";
 import Comments from "../post/Comments";
+import ImageCarousel from "./ImageCarousel";
 
 interface ICardProps {
   post: IPost;
@@ -26,13 +27,7 @@ const Card: React.FC<ICardProps> = ({ post, isPostPage }) => {
           </BootstrapCard.Text>
         )}
         {post.images && post.images.length > 0 && (
-          <div className="d-flex justify-content-center">
-            <img
-              src={post.images[0].url}
-              alt="content"
-              className="img-fluid m-0 p-0"
-            />
-          </div>
+          <ImageCarousel images={post.images} />
         )}
       </BootstrapCard.Body>
       <CardFooter
