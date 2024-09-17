@@ -15,12 +15,13 @@ export interface IPost {
   createdAt: string;
   updatedAt: string;
   commentCount: number;
+  isPinned: boolean;
 }
 
 export interface IPostInput {
   title: string;
   description: string;
-  images?: Blob[];
+  images?: FileList;
 }
 
 export interface IPostState {

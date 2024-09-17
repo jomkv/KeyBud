@@ -17,7 +17,7 @@ import definedOrRedirect from "../utils/definedOrRedirect";
 import { useGetProfileQuery } from "../state/slices/usersApiSlice";
 
 function Profile() {
-  const [tab, setTab] = useState("build");
+  const [tab, setTab] = useState("posts");
 
   const { id } = useParams();
   const navigate = useNavigate();
@@ -92,36 +92,7 @@ function Profile() {
             lg={5}
             className="d-flex justify-content-center justify-content-lg-end align-items-end"
           >
-            <Row xs={3} sm={3} className="mt-2">
-              <Col>
-                {tab === "build" ? (
-                  <Button
-                    className="fs-3 rounded-5 p-4 pt-2 pb-2 bg-secondary"
-                    style={{
-                      color: "white",
-                      borderColor: "white",
-                    }}
-                    onClick={() => {
-                      setTab("build");
-                    }}
-                  >
-                    Build
-                  </Button>
-                ) : (
-                  <Button
-                    className="fs-3 rounded-5 p-4 pt-2 pb-2"
-                    style={{
-                      backgroundColor: "transparent",
-                      borderColor: "transparent",
-                    }}
-                    onClick={() => {
-                      setTab("build");
-                    }}
-                  >
-                    Build
-                  </Button>
-                )}
-              </Col>
+            <Row xs={2} sm={2} className="mt-2">
               <Col>
                 {tab === "posts" ? (
                   <Button
@@ -184,7 +155,6 @@ function Profile() {
           </Col>
         </Row>
         <Row className="justify-content-center mt-3">
-          {tab === "build" && <Build />}
           {tab === "posts" && <Posts userId={id} />}
           {tab === "likes" && <Likes userId={id} />}
         </Row>

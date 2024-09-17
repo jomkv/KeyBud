@@ -26,8 +26,8 @@ export const postsApiSlice = apiSlice.injectEndpoints({
         method: "POST",
       }),
     }),
-    createPost: builder.mutation<any, IPostInput>({
-      query: (post: IPostInput) => ({
+    createPost: builder.mutation<any, FormData>({
+      query: (post: FormData) => ({
         url: POSTS_URL,
         method: "POST",
         body: post,
