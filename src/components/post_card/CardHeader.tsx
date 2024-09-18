@@ -28,7 +28,8 @@ const CardHeader: React.FC<ICardHeaderProps> = ({ post, isPostPage }) => {
             }}
           />
           <p className="m-0 p-0 fs-5">
-            {post.ownerId.username} • {formatDate(post.createdAt)}
+            {post.ownerId.username} • {formatDate(post.createdAt)}{" "}
+            {post.isPinned ? "📌" : ""}
           </p>
         </div>
         {user && user.id === post.ownerId._id && <OptionButton post={post} />}

@@ -27,7 +27,7 @@ const Card: React.FC<ICardProps> = ({ post, isPostPage }) => {
           </BootstrapCard.Text>
         )}
         {post.images && post.images.length > 0 && (
-          <ImageCarousel images={post.images} />
+          <ImageCarousel images={post.images} isPostPage={isPostPage} />
         )}
       </BootstrapCard.Body>
       <CardFooter

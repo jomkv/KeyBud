@@ -1,17 +1,19 @@
 import { Col } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 
 import Card from "../post_card/Card";
 import { useGetUserPostsQuery } from "../../state/slices/usersApiSlice";
 import CardSkeleton from "../post_card/CardSkeleton";
+import { IPost } from "../../@types/postType";
 
 interface IPostsProps {
   userId: string;
 }
 
 const Posts: React.FC<IPostsProps> = ({ userId }) => {
+  const [posts, setPosts] = useState<IPost[]>([]);
   const { data: userPosts, isLoading, isError } = useGetUserPostsQuery(userId);
   const navigate = useNavigate();
 
@@ -21,6 +23,19 @@ const Posts: React.FC<IPostsProps> = ({ userId }) => {
       toast.warn("User not found");
     }
   }, [isError, navigate]);
+
+  useEffect(() => {
+    if (!userPosts) return;
+
+    const postsCopy = [...userPosts];
+
+    // Sort posts so that pinned posts are at the top
+    const sortedPosts: IPost[] = postsCopy.sort(
+      (a, b) => (b.isPinned ? 1 : 0) - (a.isPinned ? 1 : 0)
+    );
+
+    setPosts(sortedPosts);
+  }, [userPosts]);
 
   return (
     <>
@@ -32,8 +47,8 @@ const Posts: React.FC<IPostsProps> = ({ userId }) => {
               <CardSkeleton />
             </Col>
           ))}
-      {userPosts &&
-        userPosts.map((post) => (
+      {posts &&
+        posts.map((post) => (
           <Col md={12} sm={12} className="mb-4">
             <Card key={post._id} post={post} />
           </Col>
