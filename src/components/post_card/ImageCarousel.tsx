@@ -1,16 +1,31 @@
 import IPhoto from "../../@types/photoType";
 
 import Carousel from "react-bootstrap/Carousel";
+import { useEffect, useState } from "react";
 
 interface IImageCarouselProps {
   images: IPhoto[];
   isPostPage?: boolean;
+  imageHeight?: string;
 }
 
 const ImageCarousel: React.FC<IImageCarouselProps> = ({
   images,
   isPostPage,
+  imageHeight,
 }) => {
+  const [height, setHeight] = useState<string>("15rem");
+
+  useEffect(() => {
+    if (imageHeight) {
+      setHeight(imageHeight);
+    } else if (isPostPage) {
+      setHeight("25rem");
+    } else {
+      setHeight("15rem");
+    }
+  }, []);
+
   return (
     <Carousel controls={images.length > 1} indicators={false} interval={null}>
       {images.map((image: IPhoto, index: number) => (
@@ -20,7 +35,7 @@ const ImageCarousel: React.FC<IImageCarouselProps> = ({
             style={{
               width: "100%",
               backgroundColor: "#2F2F2F",
-              height: isPostPage ? "25rem" : "15rem",
+              height: height,
             }}
             key={index}
           >

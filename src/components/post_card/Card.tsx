@@ -10,9 +10,15 @@ interface ICardProps {
   post: IPost;
   isPostPage?: boolean;
   isComment?: boolean;
+  imageHeight?: string;
 }
 
-const Card: React.FC<ICardProps> = ({ post, isPostPage, isComment }) => {
+const Card: React.FC<ICardProps> = ({
+  post,
+  isPostPage,
+  isComment,
+  imageHeight,
+}) => {
   return (
     <BootstrapCard
       className="bg-secondary"
@@ -28,7 +34,11 @@ const Card: React.FC<ICardProps> = ({ post, isPostPage, isComment }) => {
           </BootstrapCard.Text>
         )}
         {post.images && post.images.length > 0 && (
-          <ImageCarousel images={post.images} isPostPage={isPostPage} />
+          <ImageCarousel
+            images={post.images}
+            isPostPage={isPostPage}
+            imageHeight={imageHeight}
+          />
         )}
       </BootstrapCard.Body>
       <CardFooter

@@ -50,7 +50,7 @@ const Posts: React.FC<IPostsProps> = ({ userId }) => {
       {posts &&
         posts.map((post) => (
           <Col md={12} sm={12} className="mb-4">
-            <Card key={post._id} post={post} />
+            <Card key={post._id} post={post} imageHeight="25rem" />
           </Col>
         ))}
     </>
