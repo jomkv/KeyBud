@@ -16,7 +16,7 @@ const ImageCarousel: React.FC<IImageCarouselProps> = ({
       {images.map((image: IPhoto, index: number) => (
         <Carousel.Item>
           <div
-            className="d-flex justify-content-center"
+            className="d-flex justify-content-center rounded"
             style={{
               width: "100%",
               backgroundColor: "#2F2F2F",

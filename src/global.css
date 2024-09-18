@@ -211,3 +211,11 @@ body {
     width: 80%;
   }
 }
+
+.card_header_username {
+  transition: border-bottom 0.5s;
+}
+
+.card_header_username:hover {
+  border-bottom: 1px solid white;
+}

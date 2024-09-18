@@ -28,8 +28,18 @@ const CardHeader: React.FC<ICardHeaderProps> = ({ post, isPostPage }) => {
             }}
           />
           <p className="m-0 p-0 fs-5">
-            {post.ownerId.username} • {formatDate(post.createdAt)}{" "}
-            {post.isPinned ? "📌" : ""}
+            <Link
+              to={`/profile/${post.ownerId._id}`}
+              className="card_header_username"
+              style={{
+                cursor: "pointer",
+                color: "white",
+                textDecoration: "none",
+              }}
+            >
+              {post.ownerId.username}
+            </Link>{" "}
+            • {formatDate(post.createdAt)} {post.isPinned ? "📌" : ""}
           </p>
         </div>
         {user && user.id === post.ownerId._id && <OptionButton post={post} />}
