@@ -10,9 +10,10 @@ import { IComment } from "../../@types/commentType";
 
 interface CommentProps {
   postId: string;
+  isComment: boolean;
 }
 
-const Comments: React.FC<CommentProps> = ({ postId }) => {
+const Comments: React.FC<CommentProps> = ({ postId, isComment }) => {
   const navigate = useNavigate();
   const { data: comments, isError } = useGetPostCommentsQuery(postId);
 
@@ -25,7 +26,7 @@ const Comments: React.FC<CommentProps> = ({ postId }) => {
 
   return (
     <ListGroup className="list-group-flush">
-      <CommentForm postId={postId} />
+      <CommentForm isCommentInit={isComment} postId={postId} />
 
       {comments?.map((comment: IComment, index: number) => (
         <CommentCard key={index} comment={comment} />

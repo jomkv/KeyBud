@@ -9,9 +9,10 @@ import ImageCarousel from "./ImageCarousel";
 interface ICardProps {
   post: IPost;
   isPostPage?: boolean;
+  isComment?: boolean;
 }
 
-const Card: React.FC<ICardProps> = ({ post, isPostPage }) => {
+const Card: React.FC<ICardProps> = ({ post, isPostPage, isComment }) => {
   return (
     <BootstrapCard
       className="bg-secondary"
@@ -36,7 +37,9 @@ const Card: React.FC<ICardProps> = ({ post, isPostPage }) => {
         isPostLiked={post.isLiked}
         commentCount={post.commentCount}
       />
-      {isPostPage && <Comments postId={post._id} />}
+      {isPostPage && (
+        <Comments postId={post._id} isComment={isComment || false} />
+      )}
     </BootstrapCard>
   );
 };

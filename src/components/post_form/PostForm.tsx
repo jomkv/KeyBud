@@ -173,7 +173,7 @@ const PostForm: React.FC<IPostFormProps> = ({
 
   return (
     <Form
-      className="bg-secondary p-4 mt-3 rounded-3"
+      className="bg-secondary p-4 mt-3 mb-3 rounded-3"
       noValidate
       onSubmit={handleSubmit(handleFormSubmit)}
       encType="multipart/form-data"
@@ -219,10 +219,10 @@ const PostForm: React.FC<IPostFormProps> = ({
           onDrop={handleDrop}
         >
           {isDragging ? (
-            <p>Drop images here</p>
+            <p className="m-4">Drop images here</p>
           ) : (
             <>
-              <p>
+              <p className="m-4">
                 Drag and drop images here or{" "}
                 <span
                   role="button"

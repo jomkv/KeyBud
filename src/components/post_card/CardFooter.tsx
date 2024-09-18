@@ -1,12 +1,13 @@
 import Card from "react-bootstrap/Card";
 import { Button } from "react-bootstrap";
 import { useSelector } from "react-redux";
+import { toast } from "react-toastify";
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 import { RootState } from "../../state/store";
 import Spinner from "../Spinner";
 import { useLikePostMutation } from "../../state/slices/postsApiSlice";
-import { toast } from "react-toastify";
-import { useState } from "react";
 
 interface CardFooterProps {
   postId: string;
@@ -25,10 +26,23 @@ const CardFooter: React.FC<CardFooterProps> = ({
 }) => {
   const [likeCount, setLikeCount] = useState<number>(initialLikeCount);
   const [isLiked, setIsLiked] = useState<boolean>(isPostLiked);
+  const [isCommentHover, setIsCommentHover] = useState<boolean>(false);
+  const [isShareHover, setIsShareHover] = useState<boolean>(false);
+
+  const navigate = useNavigate();
 
   const { userInfo: user } = useSelector((state: RootState) => state.auth);
 
   const [likePost, { isLoading: isLikeLoading }] = useLikePostMutation();
+
+  const handleShare = () => {
+    navigator.clipboard.writeText(`${window.location.origin}/post/${postId}`);
+    toast.info("Link copied to clipboard");
+  };
+
+  const handleComment = () => {
+    navigate(`/post/${postId}?comment=true`);
+  };
 
   const handleLike = async () => {
     try {
@@ -86,9 +100,12 @@ const CardFooter: React.FC<CardFooterProps> = ({
                 backgroundColor: "transparent",
                 borderColor: "transparent",
               }}
+              onMouseOver={() => setIsCommentHover(true)}
+              onMouseLeave={() => setIsCommentHover(false)}
+              onClick={handleComment}
             >
               <i
-                className="bi bi-chat h2"
+                className={`bi bi-chat${isCommentHover ? "-fill" : ""} h2`}
                 style={{
                   color: "#8c52ff",
                 }}
@@ -106,9 +123,12 @@ const CardFooter: React.FC<CardFooterProps> = ({
           backgroundColor: "transparent",
           borderColor: "transparent",
         }}
+        onMouseOver={() => setIsShareHover(true)}
+        onMouseLeave={() => setIsShareHover(false)}
+        onClick={handleShare}
       >
         <i
-          className="bi bi-share h2"
+          className={`bi bi-share${isShareHover ? "-fill" : ""} h2`}
           style={{
             color: "#8c52ff",
           }}

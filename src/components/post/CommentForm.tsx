@@ -22,10 +22,11 @@ interface IForm {
 
 interface CommentFormProps {
   postId: string;
+  isCommentInit: boolean;
 }
 
-const CommentForm: React.FC<CommentFormProps> = ({ postId }) => {
-  const [isComment, setIsComment] = useState<boolean>(false);
+const CommentForm: React.FC<CommentFormProps> = ({ postId, isCommentInit }) => {
+  const [isComment, setIsComment] = useState<boolean>(isCommentInit);
 
   const navigate = useNavigate();
   const [createComment, { isLoading }] = useCreateCommentMutation();
@@ -68,6 +69,7 @@ const CommentForm: React.FC<CommentFormProps> = ({ postId }) => {
               id="comment"
               {...register("comment")}
               isInvalid={errors.comment?.message ? true : false}
+              autoFocus
             />
             <Form.Control.Feedback type="invalid">
               {errors.comment?.message}

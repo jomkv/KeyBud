@@ -2,9 +2,10 @@
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import Container from "react-bootstrap/Container";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { toast } from "react-toastify";
+import queryString from "query-string";
 
 // * Local Imports
 import NavbarComponent from "../components/NavbarComponent";
@@ -14,6 +15,8 @@ import Card from "../components/post_card/Card";
 import CardSkeleton from "../components/post_card/CardSkeleton";
 
 function Post() {
+  const [isComment, setIsComment] = useState<boolean>(false);
+
   const { id } = useParams();
   const navigate = useNavigate();
 
@@ -24,6 +27,14 @@ function Post() {
     isLoading: isPostLoading,
     isError: isPostError,
   } = useGetPostQuery(id);
+
+  useEffect(() => {
+    const isComment = queryString.parse(window.location.search).comment;
+
+    if (isComment && isComment === "true") {
+      setIsComment(true);
+    }
+  }, []);
 
   useEffect(() => {
     if (isPostError) {
@@ -42,7 +53,9 @@ function Post() {
             {isPostLoading ? (
               <CardSkeleton isPostPage={true} />
             ) : (
-              post && <Card post={post} isPostPage={true} />
+              post && (
+                <Card post={post} isPostPage={true} isComment={isComment} />
+              )
             )}
           </Col>
         </Row>
