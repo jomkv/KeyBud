@@ -1,6 +1,6 @@
 import NavbarComponent from "../components/NavbarComponent";
 import { useCreatePostMutation } from "../state/slices/postsApiSlice";
-import PostForm from "../components/PostForm";
+import PostForm from "../components/post_form/PostForm";
 
 import { Container } from "react-bootstrap";
 import { toast } from "react-toastify";

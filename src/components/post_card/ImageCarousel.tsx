@@ -8,7 +8,7 @@ interface IImageCarouselProps {
 
 const ImageCarousel: React.FC<IImageCarouselProps> = ({ images }) => {
   return (
-    <Carousel controls={images.length > 1} indicators={false}>
+    <Carousel controls={images.length > 1} indicators={false} interval={null}>
       {images.map((image: IPhoto, index: number) => (
         <Carousel.Item>
           <div
@@ -17,6 +17,7 @@ const ImageCarousel: React.FC<IImageCarouselProps> = ({ images }) => {
               width: "100%",
               height: "30rem",
             }}
+            key={index}
           >
             <img
               key={index}

@@ -40,7 +40,7 @@ export const postsApiSlice = apiSlice.injectEndpoints({
         method: "POST",
       }),
     }),
-    editPost: builder.mutation<any, { post: IPostInput; postId: string }>({
+    editPost: builder.mutation<any, { post: FormData; postId: string }>({
       query: ({ post, postId }) => ({
         url: `${POSTS_URL}/${postId}`,
         method: "PUT",

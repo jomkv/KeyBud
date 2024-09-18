@@ -1,5 +1,5 @@
-import Spinner from "../components/Spinner";
-import { IPostInput } from "../@types/postType";
+import Spinner from "../Spinner";
+import { IPostInput } from "../../@types/postType";
 
 import { Button, Form } from "react-bootstrap";
 import { useForm } from "react-hook-form";
@@ -34,14 +34,17 @@ interface IPostFormProps {
   onSubmit: (data: FormData) => Promise<void>;
   isLoading: boolean;
   defaultValues?: IDefaultValues;
+  isEdit?: boolean;
 }
 
 const PostForm: React.FC<IPostFormProps> = ({
   onSubmit,
   isLoading,
   defaultValues,
+  isEdit,
 }) => {
   const [images, setImages] = useState<File[]>([]);
+  const [isImageChange, setIsImageChange] = useState<boolean>(false);
   const [isDragging, setIsDragging] = useState<boolean>(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
@@ -89,13 +92,37 @@ const PostForm: React.FC<IPostFormProps> = ({
         continue;
       }
 
+      setIsImageChange(true);
       setImages((prev) => [...prev, file]);
     }
   };
 
+  const getImageFile = async (url: string) => {
+    const fileName = url.split("/").slice(-1)[0].split(".")[0];
+    const fileExt = url.split("/").slice(-1)[0].split(".")[1];
+
+    const response = await fetch(url);
+    const blob = await response.blob();
+    const file = new File([blob], fileName + fileExt, {
+      type: blob.type,
+    });
+
+    return file;
+  };
+
+  const populateImages = async () => {
+    if (defaultValues?.images) {
+      // Set images from cloudinary to default values
+      const cloudImages: File[] = await Promise.all(
+        defaultValues.images.map((image) => getImageFile(image.url))
+      );
+      setImages(cloudImages);
+    }
+  };
+
   useEffect(() => {
-    console.log(images);
-  }, [images]);
+    populateImages();
+  }, []);
 
   const onFileSelect = (event: React.ChangeEvent<HTMLInputElement>) => {
     const files = event.target.files;
@@ -123,6 +150,7 @@ const PostForm: React.FC<IPostFormProps> = ({
   };
 
   const handleUploadDelete = (index: number) => {
+    setIsImageChange(true);
     setImages(images.filter((_, i) => i !== index));
   };
 
@@ -131,6 +159,7 @@ const PostForm: React.FC<IPostFormProps> = ({
 
     payload.append("title", data.title);
     payload.append("description", data.description);
+    payload.append("isImageChange", isImageChange.toString());
 
     for (let i = 0; i < images.length; i++) {
       payload.append("images", images[i]);
@@ -144,12 +173,12 @@ const PostForm: React.FC<IPostFormProps> = ({
 
   return (
     <Form
-      className="bg-secondary p-4 mt-5 rounded-3"
+      className="bg-secondary p-4 mt-3 rounded-3"
       noValidate
       onSubmit={handleSubmit(handleFormSubmit)}
       encType="multipart/form-data"
     >
-      <p className="fs-2 fw-bold">Create post</p>
+      <p className="fs-2 fw-bold">{isEdit ? "Edit" : "Create"} post</p>
       <Form.Group className="mb-3">
         <Form.Label className="fs-5 fw-medium">Title *</Form.Label>
         <Form.Control
@@ -179,7 +208,9 @@ const PostForm: React.FC<IPostFormProps> = ({
       <Form.Group className="mb-3">
         <Form.Label className="fs-5 fw-medium">Keyboard Images</Form.Label>
         <div
-          className="w-100 pt-5 pb-5 rounded d-flex flex-column align-items-center justify-content-center fs-4"
+          className={`w-100 pt-5 pb-5 rounded d-flex flex-column align-items-center justify-content-center fs-4 ${
+            images.length >= 4 ? "d-none" : ""
+          }`}
           style={{
             border: "4px dashed white",
           }}
