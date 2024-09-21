@@ -7,13 +7,7 @@ import ConversationOption from "./ConversationOption";
 import { useGetConversationsQuery } from "../../state/slices/messagesApiSlice";
 import OptionSkeleton from "./OptionSkeleton";
 
-interface IConversationSelectorProps {
-  setConversation: React.Dispatch<React.SetStateAction<string>>;
-}
-
-const ConversationSelector: React.FC<IConversationSelectorProps> = ({
-  setConversation,
-}) => {
+const ConversationSelector: React.FC = () => {
   const {
     data: conversations,
     isError,
@@ -61,11 +55,7 @@ const ConversationSelector: React.FC<IConversationSelectorProps> = ({
         {conversations &&
           conversations.length > 0 &&
           conversations.map((conversation, index) => (
-            <ConversationOption
-              key={index}
-              conversation={conversation}
-              setConversation={setConversation}
-            />
+            <ConversationOption key={index} conversation={conversation} />
           ))}
       </Container>
     </div>

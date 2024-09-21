@@ -1,23 +1,23 @@
 import { Row, Col } from "react-bootstrap";
 import { IConvo } from "../../@types/messageType";
+import { setConversationId } from "../../state/slices/conversationSlice";
+import { useDispatch } from "react-redux";
 
 interface IOptionProps {
   conversation: IConvo;
-  setConversation: React.Dispatch<React.SetStateAction<string>>;
 }
 
-const ConversationOption: React.FC<IOptionProps> = ({
-  conversation,
-  setConversation,
-}) => {
-  const handleCLick = () => {
-    setConversation(conversation._id);
+const ConversationOption: React.FC<IOptionProps> = ({ conversation }) => {
+  const dispatch = useDispatch();
+
+  const handleClick = () => {
+    dispatch(setConversationId(conversation._id));
   };
 
   return (
     <Row
       className="gx-0 chat-container pt-2 pb-2 rounded"
-      onClick={handleCLick}
+      onClick={handleClick}
       style={{
         cursor: "pointer",
       }}
@@ -40,7 +40,7 @@ const ConversationOption: React.FC<IOptionProps> = ({
         className="ps-2 d-flex flex-column justify-content-center d-none d-lg-block"
       >
         <p className="m-0 p-0 fs-5 fw-bold">
-          {conversation.participants[0].username}
+          {conversation.participants[1].username}
         </p>
         <p className="m-0 p-0 fw-light">{conversation.messages[0].message}</p>
       </Col>

@@ -2,15 +2,7 @@ import NavbarComponent from "../components/NavbarComponent";
 import ConversationSelector from "../components/messages/ConversationSelector";
 import Conversation from "../components/messages/Conversation";
 
-import { useEffect, useState } from "react";
-
 function Messages() {
-  const [conversation, setConversation] = useState<string>(""); // conversationId
-
-  useEffect(() => {
-    console.log("conversationId: ", conversation);
-  }, [conversation]);
-
   return (
     <div className="bg-light h-100">
       <NavbarComponent />
@@ -22,7 +14,7 @@ function Messages() {
           overflow: "auto",
         }}
       >
-        <ConversationSelector setConversation={setConversation} />
+        <ConversationSelector />
         <Conversation />
       </div>
     </div>
