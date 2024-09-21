@@ -1,5 +1,16 @@
+import { IUser } from "./userType";
+
 export interface IMessage {
-  // TODO
+  _id: string;
+  senderId: string;
+  receiverId: string;
+  message: string;
+}
+
+export interface IConvo {
+  _id: string;
+  participants: IUser[]; // array of userIds
+  messages: IMessage[];
 }
 
 export interface IMessageInput {

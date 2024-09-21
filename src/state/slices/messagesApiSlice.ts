@@ -1,9 +1,10 @@
 import { apiSlice } from "./apiSlice";
 import { MESSAGES_URL } from "../constants";
+import { IConvo } from "../../@types/messageType";
 
 const messagesApiSlice = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
-    getConversations: builder.query({
+    getConversations: builder.query<IConvo[], void>({
       query: () => ({
         url: `${MESSAGES_URL}/`,
         method: "GET",

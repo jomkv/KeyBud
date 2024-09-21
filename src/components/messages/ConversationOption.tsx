@@ -1,11 +1,8 @@
 import { Row, Col } from "react-bootstrap";
+import { IConvo } from "../../@types/messageType";
 
 interface IOptionProps {
-  conversation: {
-    id: string;
-    name: string;
-    recentMessage: string;
-  };
+  conversation: IConvo;
   setConversation: React.Dispatch<React.SetStateAction<string>>;
 }
 
@@ -14,7 +11,7 @@ const ConversationOption: React.FC<IOptionProps> = ({
   setConversation,
 }) => {
   const handleCLick = () => {
-    setConversation(conversation.id);
+    setConversation(conversation._id);
   };
 
   return (
@@ -42,8 +39,10 @@ const ConversationOption: React.FC<IOptionProps> = ({
         lg={10}
         className="ps-2 d-flex flex-column justify-content-center d-none d-lg-block"
       >
-        <p className="m-0 p-0 fs-5 fw-bold">{conversation.name}</p>
-        <p className="m-0 p-0 fw-light">{conversation.recentMessage}</p>
+        <p className="m-0 p-0 fs-5 fw-bold">
+          {conversation.participants[0].username}
+        </p>
+        <p className="m-0 p-0 fw-light">{conversation.messages[0].message}</p>
       </Col>
     </Row>
   );

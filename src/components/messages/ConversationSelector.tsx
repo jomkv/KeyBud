@@ -1,35 +1,36 @@
 import { Container } from "react-bootstrap";
+import { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 
 import ConversationOption from "./ConversationOption";
+import { useGetConversationsQuery } from "../../state/slices/messagesApiSlice";
+import OptionSkeleton from "./OptionSkeleton";
 
 interface IConversationSelectorProps {
   setConversation: React.Dispatch<React.SetStateAction<string>>;
 }
 
-const conversationList = [
-  {
-    id: "1",
-    name: "User 1",
-    recentMessage: "Lorem ipsum dolor sit ame.....",
-  },
-  {
-    id: "2",
-    name: "User 2",
-    recentMessage: "Lorem ipsum dolor sit ame.....",
-  },
-  {
-    id: "3",
-    name: "User 3",
-    recentMessage: "Lorem ipsum dolor sit ame.....",
-  },
-];
-
 const ConversationSelector: React.FC<IConversationSelectorProps> = ({
   setConversation,
 }) => {
+  const {
+    data: conversations,
+    isError,
+    isLoading,
+  } = useGetConversationsQuery();
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (isError) {
+      navigate("/");
+      toast.warn("Something went wrong. Please try again later.");
+    }
+  }, [isError, navigate]);
+
   return (
     <div
-      className="h-100 conversation-selector bg-secondary"
+      className="h-100 conversation-selector bg-secondary rounded-start"
       style={{ color: "white" }}
     >
       <div
@@ -38,11 +39,11 @@ const ConversationSelector: React.FC<IConversationSelectorProps> = ({
           height: "10%",
         }}
       >
-        <p className="fs-3">Messages</p>
+        <p className="fs-3 d-none d-lg-block">Messages</p>
       </div>
       <Container
         fluid
-        className="bg-secondary pt-3"
+        className="bg-secondary pt-3 rounded-start"
         style={{
           color: "white",
           height: "90%",
@@ -50,13 +51,22 @@ const ConversationSelector: React.FC<IConversationSelectorProps> = ({
           overflowY: "auto",
         }}
       >
-        {conversationList.map((conversation, index) => (
-          <ConversationOption
-            key={index}
-            conversation={conversation}
-            setConversation={setConversation}
-          />
-        ))}
+        {isLoading && (
+          <>
+            <OptionSkeleton />
+            <OptionSkeleton />
+            <OptionSkeleton />
+          </>
+        )}
+        {conversations &&
+          conversations.length > 0 &&
+          conversations.map((conversation, index) => (
+            <ConversationOption
+              key={index}
+              conversation={conversation}
+              setConversation={setConversation}
+            />
+          ))}
       </Container>
     </div>
   );

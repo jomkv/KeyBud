@@ -12,11 +12,11 @@ function Messages() {
   }, [conversation]);
 
   return (
-    <div className="bg-secondary h-100">
+    <div className="bg-light h-100">
       <NavbarComponent />
 
       <div
-        className="w-100 d-flex"
+        className="w-100 d-flex p-1 p-sm-2 p-md-3 p-lg-4"
         style={{
           height: "calc(100vh - 76px)",
           overflow: "auto",

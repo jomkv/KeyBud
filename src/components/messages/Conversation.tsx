@@ -7,7 +7,7 @@ function Conversation() {
   const handleSubmit = () => {};
 
   return (
-    <div className="h-100 conversation-container border-start border-light">
+    <div className="h-100 bg-secondary conversation-container border-start border-light rounded-end">
       <div
         className="border-bottom border-light w-100 d-flex justify-content-center align-items-center pt-2"
         style={{
@@ -64,7 +64,7 @@ function Conversation() {
       </div>
 
       <Form
-        className="d-flex p-3"
+        className="d-flex p-2"
         style={{
           height: "10%",
         }}

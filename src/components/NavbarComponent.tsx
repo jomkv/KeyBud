@@ -80,7 +80,7 @@ function NavbarComponent() {
             )}
             {user && (
               <button
-                className="me-3"
+                className="p-0 m-0"
                 style={{
                   color: "white",
                   textDecoration: "none",
