@@ -19,8 +19,19 @@ const messagesApiSlice = apiSlice.injectEndpoints({
         body: { message: data.message },
       }),
     }),
+    getConversation: builder.query<IConvo, string>({
+      query: (conversationId) => ({
+        url: `${MESSAGES_URL}/${conversationId}`,
+        method: "GET",
+      }),
+      transformResponse: (response: { conversation: IConvo }) =>
+        response.conversation,
+    }),
   }),
 });
 
-export const { useGetConversationsQuery, useSendMessageMutation } =
-  messagesApiSlice;
+export const {
+  useGetConversationsQuery,
+  useSendMessageMutation,
+  useGetConversationQuery,
+} = messagesApiSlice;
