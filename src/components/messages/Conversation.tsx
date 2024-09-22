@@ -5,13 +5,11 @@ import SendMessageForm from "./SendMessageForm";
 import { RootState } from "../../state/store";
 
 function Conversation() {
-  const conversationId = useSelector(
-    (state: RootState) => state.conversation.conversationId
-  );
+  const conversation = useSelector((state: RootState) => state.conversation);
 
   useEffect(() => {
-    console.log(conversationId);
-  }, [conversationId]);
+    console.log(conversation);
+  }, [conversation]);
 
   return (
     <div className="h-100 bg-secondary conversation-container border-start border-light rounded-end">

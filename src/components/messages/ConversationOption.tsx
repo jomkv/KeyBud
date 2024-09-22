@@ -1,6 +1,6 @@
 import { Row, Col } from "react-bootstrap";
 import { IConvo } from "../../@types/messageType";
-import { setConversationId } from "../../state/slices/conversationSlice";
+import { setConversation } from "../../state/slices/conversationSlice";
 import { useDispatch } from "react-redux";
 
 interface IOptionProps {
@@ -11,7 +11,7 @@ const ConversationOption: React.FC<IOptionProps> = ({ conversation }) => {
   const dispatch = useDispatch();
 
   const handleClick = () => {
-    dispatch(setConversationId(conversation._id));
+    dispatch(setConversation(conversation));
   };
 
   return (

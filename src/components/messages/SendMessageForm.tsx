@@ -1,10 +1,68 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Button, Form } from "react-bootstrap";
+import { useSelector } from "react-redux";
+import { z } from "zod";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { toast } from "react-toastify";
+import Spinner from "../Spinner";
+
+import { RootState } from "../../state/store";
+import { useSendMessageMutation } from "../../state/slices/messagesApiSlice";
+
+const schema = z.object({
+  message: z.string().nonempty("Message cannot be empty"),
+});
+
+interface IForm {
+  message: string;
+}
 
 function SendMessageForm() {
-  const [buttonIcon, setButtonIcon] = useState<string>("bi-send");
+  const conversation = useSelector((state: RootState) => state.conversation);
 
-  const handleSubmit = () => {};
+  const [buttonIcon, setButtonIcon] = useState<string>("bi-send");
+  const [recipientId, setRecipientId] = useState<string | null>(null);
+  const [sendMessage, { isLoading }] = useSendMessageMutation();
+
+  const form = useForm<IForm>({
+    defaultValues: {
+      message: "",
+    },
+    resolver: zodResolver(schema),
+  });
+
+  const { register, handleSubmit, reset } = form;
+
+  useEffect(() => {
+    if (conversation.isSet) {
+      const id = conversation.participants.find((participant) => {
+        return participant._id !== localStorage.getItem("userId");
+      })?._id;
+
+      if (id) {
+        setRecipientId(id);
+      }
+    }
+  }, [conversation]);
+
+  const onSubmit = async (formData: IForm) => {
+    if (!recipientId) return;
+
+    try {
+      const data = {
+        receiverId: recipientId,
+        message: formData.message,
+      };
+
+      await sendMessage(data).unwrap();
+      toast.success("Message sent");
+      setButtonIcon("bi-send");
+      reset();
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   return (
     <Form
@@ -12,7 +70,7 @@ function SendMessageForm() {
       style={{
         height: "10%",
       }}
-      onSubmit={handleSubmit}
+      onSubmit={handleSubmit(onSubmit)}
     >
       <Form.Control
         size="lg"
@@ -21,9 +79,12 @@ function SendMessageForm() {
         style={{
           borderRadius: "25px",
         }}
+        readOnly={!recipientId}
+        {...register("message")}
       />
       <Button
         type="submit"
+        disabled={!recipientId || isLoading}
         style={{
           color: "#8c52ff",
           backgroundColor: "transparent",
@@ -36,7 +97,7 @@ function SendMessageForm() {
           setButtonIcon("bi-send");
         }}
       >
-        <i className={`bi ${buttonIcon} fs-2`}></i>
+        {isLoading ? <Spinner /> : <i className={`bi ${buttonIcon} fs-2`}></i>}
       </Button>
     </Form>
   );
