@@ -170,10 +170,6 @@ body {
   display: flex;
 }
 
-.chat-container:hover {
-  background-color: #363636;
-}
-
 .conversation-selector {
   width: 25%;
 }

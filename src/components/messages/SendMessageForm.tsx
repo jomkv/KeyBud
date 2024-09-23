@@ -58,10 +58,11 @@ function SendMessageForm() {
       await sendMessage(data).unwrap();
       toast.success("Message sent");
       setButtonIcon("bi-send");
-      reset();
     } catch (error) {
-      console.log(error);
+      toast.warn("Failed to send message");
     }
+
+    reset();
   };
 
   return (

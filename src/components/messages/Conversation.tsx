@@ -1,18 +1,30 @@
 import { useSelector } from "react-redux";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
+import { Container } from "react-bootstrap";
 
 import SendMessageForm from "./SendMessageForm";
 import { RootState } from "../../state/store";
-import { Container, Row } from "react-bootstrap";
-import MessageOut from "./MessageOut";
-import MessageIn from "./MessageIn";
+import Messages from "./Messages";
 
 function Conversation() {
-  const conversation = useSelector((state: RootState) => state.conversation);
+  const [recipientName, setRecipientName] = useState<string>("");
+
+  const selectedConversation = useSelector(
+    (state: RootState) => state.conversation
+  );
+  const user = useSelector((state: RootState) => state.auth);
 
   useEffect(() => {
-    console.log(conversation);
-  }, [conversation]);
+    if (selectedConversation.isSet) {
+      const name = selectedConversation.participants.find((participant) => {
+        return participant._id !== user.userInfo?.id;
+      })?.username;
+
+      if (name) {
+        setRecipientName(name);
+      }
+    }
+  }, [selectedConversation, user]);
 
   return (
     <div className="h-100 bg-secondary conversation-container border-start border-light rounded-end">
@@ -23,7 +35,7 @@ function Conversation() {
           color: "white",
         }}
       >
-        <p className="fs-3">John Doe</p>
+        <p className="fs-3">{recipientName}</p>
       </div>
       <Container
         fluid
@@ -34,12 +46,9 @@ function Conversation() {
           overflow: "auto",
         }}
       >
-        <Row xs={{ cols: 1 }} sm={{ cols: 1 }}>
-          <MessageOut message="hello world" />
-          <MessageIn message="hello to you too gangy" />
-          <MessageIn message="secondary msg" showIcon={true} />
-          <MessageOut message="Lorem ipsum dolor, sit amet consectetur adipisicing elit. Officia tenetur reiciendis modi consequatur nulla aperiam eligendi maiores, sunt nobis corrupti facere facilis laudantium sequi atque maxime! Voluptatem iure pariatur et!" />
-        </Row>
+        {selectedConversation.isSet && (
+          <Messages convoId={selectedConversation._id} />
+        )}
       </Container>
 
       <SendMessageForm />
