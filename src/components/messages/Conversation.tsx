@@ -3,6 +3,9 @@ import { useEffect } from "react";
 
 import SendMessageForm from "./SendMessageForm";
 import { RootState } from "../../state/store";
+import { Container, Row } from "react-bootstrap";
+import MessageOut from "./MessageOut";
+import MessageIn from "./MessageIn";
 
 function Conversation() {
   const conversation = useSelector((state: RootState) => state.conversation);
@@ -22,51 +25,22 @@ function Conversation() {
       >
         <p className="fs-3">John Doe</p>
       </div>
-      <div
-        className="d-flex flex-column justify-content-end ps-2 pe-2"
+      <Container
+        fluid
+        className="p-3"
         style={{
           height: "80%",
           maxHeight: "80%",
           overflow: "auto",
         }}
       >
-        <div
-          className="align-self-end"
-          style={{
-            maxWidth: "48%",
-          }}
-        >
-          <p className="fs-4 p-3 rounded bg-primary">
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Nam laborum
-            inventore mollitia accusantium, aliquam neque sed necessitatibus
-            cupiditate quaerat eos! Ut quod voluptate totam nesciunt blanditiis
-            unde nulla dignissimos dolores?
-          </p>
-        </div>
-        <div
-          className="align-self-start d-flex"
-          style={{
-            maxWidth: "50%",
-          }}
-        >
-          <img
-            src="images/user_icon.png"
-            alt="icon"
-            className="rounded-circle me-0 p-2 align-self-end"
-            style={{
-              objectFit: "cover",
-              width: "3.5rem",
-              height: "3.5rem",
-            }}
-          />
-          <p className="fs-4 p-3 mb-2 rounded bg-primary-subtle">
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Nam laborum
-            inventore mollitia accusantium, aliquam neque sed necessitatibus
-            cupiditate quaerat eos! Ut quod voluptate totam nesciunt blanditiis
-            unde nulla dignissimos dolores?
-          </p>
-        </div>
-      </div>
+        <Row xs={{ cols: 1 }} sm={{ cols: 1 }}>
+          <MessageOut message="hello world" />
+          <MessageIn message="hello to you too gangy" />
+          <MessageIn message="secondary msg" showIcon={true} />
+          <MessageOut message="Lorem ipsum dolor, sit amet consectetur adipisicing elit. Officia tenetur reiciendis modi consequatur nulla aperiam eligendi maiores, sunt nobis corrupti facere facilis laudantium sequi atque maxime! Voluptatem iure pariatur et!" />
+        </Row>
+      </Container>
 
       <SendMessageForm />
     </div>
