@@ -13,13 +13,14 @@ import { IUserState } from "../../@types/userType";
 
 interface IProps {
   convoId: string;
+  scrollToBottom: () => void;
 }
 
 const isSender = (message: IMessage, user: IUserState) => {
   return message.senderId === user.userInfo?.id;
 };
 
-const Messages: React.FC<IProps> = ({ convoId }) => {
+const Messages: React.FC<IProps> = ({ convoId, scrollToBottom }) => {
   const {
     data: conversation,
     isLoading,
@@ -36,6 +37,10 @@ const Messages: React.FC<IProps> = ({ convoId }) => {
       toast.warn("Something went wrong. Please try again later.");
     }
   }, [isError, navigate]);
+
+  useEffect(() => {
+    scrollToBottom();
+  }, [conversation]);
 
   return (
     <Row xs={{ cols: 1 }} sm={{ cols: 1 }}>

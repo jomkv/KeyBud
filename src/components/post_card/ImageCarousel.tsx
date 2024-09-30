@@ -29,7 +29,7 @@ const ImageCarousel: React.FC<IImageCarouselProps> = ({
   return (
     <Carousel controls={images.length > 1} indicators={false} interval={null}>
       {images.map((image: IPhoto, index: number) => (
-        <Carousel.Item>
+        <Carousel.Item key={index}>
           <div
             className="d-flex justify-content-center rounded"
             style={{

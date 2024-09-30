@@ -43,13 +43,13 @@ const Posts: React.FC<IPostsProps> = ({ userId }) => {
         Array(4)
           .fill(0)
           .map((_, index) => (
-            <Col md={12} sm={12} className="mb-4">
+            <Col key={index} md={12} sm={12} className="mb-4">
               <CardSkeleton />
             </Col>
           ))}
       {posts &&
         posts.map((post) => (
-          <Col md={12} sm={12} className="mb-4">
+          <Col key={post._id} md={12} sm={12} className="mb-4">
             <Card key={post._id} post={post} imageHeight="25rem" />
           </Col>
         ))}

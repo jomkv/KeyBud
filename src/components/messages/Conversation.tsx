@@ -1,10 +1,11 @@
 import { useSelector } from "react-redux";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Container } from "react-bootstrap";
 
 import SendMessageForm from "./SendMessageForm";
 import { RootState } from "../../state/store";
 import Messages from "./Messages";
+import { socket } from "../../socket";
 
 function Conversation() {
   const [recipientName, setRecipientName] = useState<string>("");
@@ -26,6 +27,18 @@ function Conversation() {
     }
   }, [selectedConversation, user]);
 
+  useEffect(() => {
+    socket.on("newMessage", (data: any) => {
+      console.log(data);
+    });
+  }, []);
+
+  const messagesEndRef = useRef<null | HTMLDivElement>(null);
+
+  const scrollToBottom = () => {
+    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+  };
+
   return (
     <div className="h-100 bg-secondary conversation-container border-start border-light rounded-end">
       <div
@@ -45,9 +58,13 @@ function Conversation() {
           maxHeight: "80%",
           overflow: "auto",
         }}
+        ref={messagesEndRef}
       >
         {selectedConversation.isSet && (
-          <Messages convoId={selectedConversation._id} />
+          <Messages
+            convoId={selectedConversation._id}
+            scrollToBottom={scrollToBottom}
+          />
         )}
       </Container>
 
