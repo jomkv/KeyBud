@@ -5,6 +5,7 @@ import { SkeletonTheme } from "react-loading-skeleton";
 
 import App from "./App";
 import { store } from "./state/store";
+import SocketContextProvider from "./context/SocketContext";
 import "./global.css";
 import "bootstrap/dist/css/bootstrap.css";
 import "bootstrap/dist/js/bootstrap.bundle.min.js";
@@ -18,9 +19,11 @@ const root = ReactDOM.createRoot(
 root.render(
   <React.StrictMode>
     <Provider store={store}>
-      <SkeletonTheme baseColor="#3e3e3e" highlightColor="#696969">
-        <App />
-      </SkeletonTheme>
+      <SocketContextProvider>
+        <SkeletonTheme baseColor="#3e3e3e" highlightColor="#696969">
+          <App />
+        </SkeletonTheme>
+      </SocketContextProvider>
     </Provider>
   </React.StrictMode>
 );

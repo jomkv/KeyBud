@@ -5,7 +5,6 @@ import { Container } from "react-bootstrap";
 import SendMessageForm from "./SendMessageForm";
 import { RootState } from "../../state/store";
 import Messages from "./Messages";
-import { socket } from "../../socket";
 
 function Conversation() {
   const [recipientName, setRecipientName] = useState<string>("");
@@ -26,12 +25,6 @@ function Conversation() {
       }
     }
   }, [selectedConversation, user]);
-
-  useEffect(() => {
-    socket.on("newMessage", (data: any) => {
-      console.log(data);
-    });
-  }, []);
 
   const messagesEndRef = useRef<null | HTMLDivElement>(null);
 
