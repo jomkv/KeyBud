@@ -13,7 +13,7 @@ interface SocketContextType {
   socket: Socket | null;
 }
 
-const SocketContext = createContext<SocketContextType | undefined>(undefined);
+const SocketContext = createContext<SocketContextType>({ socket: null });
 
 export const useSocketContext = () => {
   return useContext(SocketContext);

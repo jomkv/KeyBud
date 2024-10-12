@@ -51,7 +51,6 @@ function Conversation() {
           maxHeight: "80%",
           overflow: "auto",
         }}
-        ref={messagesEndRef}
       >
         {selectedConversation.isSet && (
           <Messages
@@ -59,6 +58,7 @@ function Conversation() {
             scrollToBottom={scrollToBottom}
           />
         )}
+        <div ref={messagesEndRef} />
       </Container>
 
       <SendMessageForm />

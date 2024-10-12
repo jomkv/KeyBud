@@ -20,6 +20,7 @@ interface IForm {
 
 function SendMessageForm() {
   const conversation = useSelector((state: RootState) => state.conversation);
+  const user = useSelector((state: RootState) => state.auth.userInfo);
 
   const [buttonIcon, setButtonIcon] = useState<string>("bi-send");
   const [recipientId, setRecipientId] = useState<string | null>(null);
@@ -37,7 +38,7 @@ function SendMessageForm() {
   useEffect(() => {
     if (conversation.isSet) {
       const id = conversation.participants.find((participant) => {
-        return participant._id !== localStorage.getItem("userId");
+        return participant._id !== user?.id;
       })?._id;
 
       if (id) {
