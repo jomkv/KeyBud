@@ -6,6 +6,7 @@ import { toast } from "react-toastify";
 import ConversationOption from "./ConversationOption";
 import { useGetConversationsQuery } from "../../state/slices/messagesApiSlice";
 import OptionSkeleton from "./OptionSkeleton";
+import SearchConversation from "./SearchConversation";
 
 const ConversationSelector: React.FC = () => {
   const {
@@ -45,6 +46,7 @@ const ConversationSelector: React.FC = () => {
           overflowY: "auto",
         }}
       >
+        <SearchConversation />
         {isLoading && (
           <>
             <OptionSkeleton />

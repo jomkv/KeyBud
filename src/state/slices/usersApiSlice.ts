@@ -1,4 +1,9 @@
-import { IUser, IUserCredentials, IUserPayload } from "../../@types/userType";
+import {
+  IUser,
+  IUserCredentials,
+  IUsernameAndId,
+  IUserPayload,
+} from "../../@types/userType";
 import { apiSlice } from "./apiSlice";
 import { USERS_URL } from "../constants";
 import { IPost } from "../../@types/postType";
@@ -39,6 +44,13 @@ export const usersApiSlice = apiSlice.injectEndpoints({
       }),
       transformResponse: (response: any) => response.userPosts,
     }),
+    getUsernamesAndIds: builder.query<IUsernameAndId[], void>({
+      query: () => ({
+        url: `${USERS_URL}`,
+        method: "GET",
+      }),
+      transformResponse: (response: any) => response.users,
+    }),
     getProfile: builder.query<IUser, string>({
       query: (userId: string) => ({
         url: `${USERS_URL}/${userId}`,
@@ -56,4 +68,5 @@ export const {
   useGetProfileQuery,
   useGetUserLikesQuery,
   useGetUserPostsQuery,
+  useGetUsernamesAndIdsQuery,
 } = usersApiSlice;

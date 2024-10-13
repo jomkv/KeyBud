@@ -9,6 +9,11 @@ interface IUser {
   icon?: IPhoto;
 }
 
+interface IUsernameAndId {
+  _id: string;
+  username: string;
+}
+
 interface IUserPayload {
   username: string;
   email: string;
@@ -25,4 +30,10 @@ interface IUserState {
   userInfo: IUser | null;
 }
 
-export type { IUser, IUserPayload, IUserCredentials, IUserState };
+export type {
+  IUser,
+  IUserPayload,
+  IUserCredentials,
+  IUserState,
+  IUsernameAndId,
+};
