@@ -4,3 +4,4 @@ export const POSTS_URL = "/posts";
 export const USERS_URL = "/user";
 export const COMMENTS_URL = "/comment";
 export const MESSAGES_URL = "/message";
+export const SEARCH_URL = "/search";
