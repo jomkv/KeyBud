@@ -13,6 +13,18 @@ export interface IConvo {
   messages: IMessage[];
 }
 
+export interface IRecipient {
+  recipientId: string;
+  username: string;
+}
+
+export interface IConvoState {
+  recipient: IRecipient | null;
+  convoId?: string | null;
+  messages: IMessage[];
+  isSet?: boolean;
+}
+
 export interface IMessageInput {
   // TODO
 }

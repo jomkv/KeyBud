@@ -13,7 +13,7 @@ import { IUserState } from "../../@types/userType";
 import { useSocketContext } from "../../context/SocketContext";
 
 interface IProps {
-  convoId: string;
+  convoId: string | null | undefined;
   scrollToBottom: () => void;
 }
 
@@ -37,7 +37,9 @@ const Messages: React.FC<IProps> = ({ convoId, scrollToBottom }) => {
     isLoading,
     isError,
     isSuccess,
-  } = useGetConversationQuery(convoId);
+  } = useGetConversationQuery(convoId, { skip: !convoId });
+
+  useEffect(() => {}, []);
 
   useEffect(() => {
     if (isError) {

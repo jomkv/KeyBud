@@ -36,14 +36,8 @@ function SendMessageForm() {
   const { register, handleSubmit, reset } = form;
 
   useEffect(() => {
-    if (conversation.isSet) {
-      const id = conversation.participants.find((participant) => {
-        return participant._id !== user?.id;
-      })?._id;
-
-      if (id) {
-        setRecipientId(id);
-      }
+    if (conversation.isSet && conversation.recipient) {
+      setRecipientId(conversation.recipient.recipientId);
     }
   }, [conversation]);
 

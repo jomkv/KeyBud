@@ -15,14 +15,8 @@ function Conversation() {
   const user = useSelector((state: RootState) => state.auth);
 
   useEffect(() => {
-    if (selectedConversation.isSet) {
-      const name = selectedConversation.participants.find((participant) => {
-        return participant._id !== user.userInfo?.id;
-      })?.username;
-
-      if (name) {
-        setRecipientName(name);
-      }
+    if (selectedConversation.isSet && selectedConversation.recipient) {
+      setRecipientName(selectedConversation.recipient.username);
     }
   }, [selectedConversation, user]);
 
@@ -54,7 +48,7 @@ function Conversation() {
       >
         {selectedConversation.isSet && (
           <Messages
-            convoId={selectedConversation._id}
+            convoId={selectedConversation.convoId}
             scrollToBottom={scrollToBottom}
           />
         )}

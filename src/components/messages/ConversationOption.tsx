@@ -5,24 +5,53 @@ import { useEffect, useState } from "react";
 import { IConvo } from "../../@types/messageType";
 import { setConversation } from "../../state/slices/conversationSlice";
 import { RootState } from "../../state/store";
+import { IUser } from "../../@types/userType";
 
 interface IOptionProps {
   conversation: IConvo;
 }
 
+const findRecipient = (participants: IUser[], userId: string): IUser | null => {
+  return participants.find((user) => user._id !== userId) || null;
+};
+
 const ConversationOption: React.FC<IOptionProps> = ({ conversation }) => {
   const selectedConversation = useSelector(
     (state: RootState) => state.conversation
   );
+  const user = useSelector((state: RootState) => state.auth.userInfo);
   const dispatch = useDispatch();
   const [isSelected, setIsSelected] = useState(false);
 
   const handleClick = () => {
-    dispatch(setConversation(conversation));
+    if (!user?.id) {
+      return;
+    }
+
+    const recipient: IUser | null = findRecipient(
+      conversation.participants,
+      user.id
+    );
+
+    if (!recipient || !recipient?._id) {
+      return;
+    }
+
+    dispatch(
+      setConversation({
+        recipient: { recipientId: recipient._id, username: recipient.username },
+        messages: conversation.messages,
+        convoId: conversation._id,
+      })
+    );
   };
 
   useEffect(() => {
-    if (selectedConversation._id === conversation._id) {
+    if (
+      conversation.participants.find(
+        (user) => user.id === selectedConversation.recipient?.recipientId
+      )
+    ) {
       setIsSelected(true);
     } else {
       setIsSelected(false);

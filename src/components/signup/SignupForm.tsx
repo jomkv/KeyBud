@@ -147,7 +147,7 @@ function SignupForm() {
             style={{ color: "white" }}
             type="submit"
           >
-            {/* {isLoading ? <Spinner /> : "SIGNUP"} */}
+            {isLoading ? <Spinner /> : "SIGNUP"}
           </Button>
         </Form.Group>
 

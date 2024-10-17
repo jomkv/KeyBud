@@ -1,13 +1,9 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { IConvo } from "../../@types/messageType";
+import { IConvoState } from "../../@types/messageType";
 
-interface IState extends IConvo {
-  isSet: boolean;
-}
-
-const initialState: IState = {
-  _id: "",
-  participants: [],
+const initialState: IConvoState = {
+  recipient: null,
+  convoId: null,
   messages: [],
   isSet: false,
 };
@@ -16,11 +12,11 @@ const conversationSlice = createSlice({
   name: "messages",
   initialState,
   reducers: {
-    setConversation: (state, action: PayloadAction<IConvo>) => {
+    setConversation: (state, action: PayloadAction<IConvoState>) => {
       state.isSet = true;
-      state._id = action.payload._id;
-      state.participants = action.payload.participants;
-      state.messages = action.payload.messages;
+      state.convoId = action.payload.convoId || null;
+      state.recipient = action.payload.recipient;
+      state.messages = action.payload.messages || [];
     },
   },
 });
