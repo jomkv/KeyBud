@@ -49,11 +49,7 @@ const ConversationOption: React.FC<IOptionProps> = ({ conversation }) => {
   }, []);
 
   useEffect(() => {
-    if (
-      conversation.participants.find(
-        (user) => user.id === selectedConversation.recipient?.recipientId
-      )
-    ) {
+    if (conversation._id === selectedConversation.convoId) {
       setIsSelected(true);
     } else {
       setIsSelected(false);
