@@ -22,17 +22,9 @@ const ConversationOption: React.FC<IOptionProps> = ({ conversation }) => {
   const user = useSelector((state: RootState) => state.auth.userInfo);
   const dispatch = useDispatch();
   const [isSelected, setIsSelected] = useState(false);
+  const [recipient, setRecipient] = useState<IUser | null>(null);
 
   const handleClick = () => {
-    if (!user?.id) {
-      return;
-    }
-
-    const recipient: IUser | null = findRecipient(
-      conversation.participants,
-      user.id
-    );
-
     if (!recipient || !recipient?._id) {
       return;
     }
@@ -45,6 +37,16 @@ const ConversationOption: React.FC<IOptionProps> = ({ conversation }) => {
       })
     );
   };
+
+  useEffect(() => {
+    if (!user?.id) {
+      return;
+    }
+
+    const rec: IUser | null = findRecipient(conversation.participants, user.id);
+
+    if (rec) setRecipient(rec);
+  }, []);
 
   useEffect(() => {
     if (
@@ -84,9 +86,7 @@ const ConversationOption: React.FC<IOptionProps> = ({ conversation }) => {
         lg={10}
         className="ps-2 d-flex flex-column justify-content-center d-none d-lg-block"
       >
-        <p className="m-0 p-0 fs-5 fw-bold">
-          {conversation.participants[1].username}
-        </p>
+        <p className="m-0 p-0 fs-5 fw-bold">{recipient?.username}</p>
         <p className="m-0 p-0 fw-light">{conversation.messages[0].message}</p>
       </Col>
     </Row>
