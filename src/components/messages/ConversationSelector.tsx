@@ -1,12 +1,13 @@
-import { Container } from "react-bootstrap";
+import { Button, Container } from "react-bootstrap";
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
+import { useDispatch } from "react-redux";
 
 import ConversationOption from "./ConversationOption";
 import { useGetConversationsQuery } from "../../state/slices/messagesApiSlice";
 import OptionSkeleton from "./OptionSkeleton";
-import SearchConversation from "./SearchConversation";
+import { createNew } from "../../state/slices/conversationSlice";
 
 const ConversationSelector: React.FC = () => {
   const {
@@ -14,7 +15,9 @@ const ConversationSelector: React.FC = () => {
     isError,
     isLoading,
   } = useGetConversationsQuery();
+
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   useEffect(() => {
     if (isError) {
@@ -22,6 +25,10 @@ const ConversationSelector: React.FC = () => {
       toast.warn("Something went wrong. Please try again later.");
     }
   }, [isError, navigate]);
+
+  const handleCreateNew = () => {
+    dispatch(createNew());
+  };
 
   return (
     <div
@@ -46,7 +53,15 @@ const ConversationSelector: React.FC = () => {
           overflowY: "auto",
         }}
       >
-        <SearchConversation />
+        <Button
+          className="w-100 fs-5 fw-semibold mb-3"
+          variant="light"
+          style={{ height: "4rem" }}
+          onClick={handleCreateNew}
+        >
+          Create new
+        </Button>
+        {/* <SearchConversation /> */}
         {isLoading && (
           <>
             <OptionSkeleton />

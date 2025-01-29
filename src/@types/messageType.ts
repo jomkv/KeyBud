@@ -22,6 +22,7 @@ export interface IConvoState {
   recipient: IRecipient | null;
   convoId?: string | null;
   messages: IMessage[];
+  createNew?: boolean;
   isSet?: boolean;
 }
 

@@ -34,4 +34,5 @@ export const {
   useGetConversationsQuery,
   useSendMessageMutation,
   useGetConversationQuery,
+  useLazyGetConversationQuery,
 } = messagesApiSlice;

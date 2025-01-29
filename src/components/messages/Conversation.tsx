@@ -5,6 +5,7 @@ import { Container } from "react-bootstrap";
 import SendMessageForm from "./SendMessageForm";
 import { RootState } from "../../state/store";
 import Messages from "./Messages";
+import NewConversationForm from "./NewConversationForm";
 
 function Conversation() {
   const [recipientName, setRecipientName] = useState<string>("");
@@ -12,11 +13,16 @@ function Conversation() {
   const selectedConversation = useSelector(
     (state: RootState) => state.conversation
   );
+
   const user = useSelector((state: RootState) => state.auth);
 
   useEffect(() => {
     if (selectedConversation.isSet && selectedConversation.recipient) {
       setRecipientName(selectedConversation.recipient.username);
+    }
+
+    if (!selectedConversation.isSet || selectedConversation.createNew) {
+      setRecipientName("");
     }
   }, [selectedConversation, user]);
 
@@ -35,7 +41,9 @@ function Conversation() {
           color: "white",
         }}
       >
-        <p className="fs-3">{recipientName}</p>
+        <p className="fs-3">
+          {selectedConversation.createNew ? "New Chat" : recipientName}
+        </p>
       </div>
       <Container
         fluid
@@ -47,15 +55,18 @@ function Conversation() {
         }}
       >
         {selectedConversation.isSet && (
-          <Messages
-            convoId={selectedConversation.convoId}
-            scrollToBottom={scrollToBottom}
-          />
+          <>
+            <Messages
+              convoId={selectedConversation.convoId}
+              scrollToBottom={scrollToBottom}
+            />
+            <div ref={messagesEndRef} />
+          </>
         )}
-        <div ref={messagesEndRef} />
+        {selectedConversation.createNew && <NewConversationForm />}
       </Container>
 
-      <SendMessageForm />
+      {!selectedConversation.createNew && <SendMessageForm />}
     </div>
   );
 }

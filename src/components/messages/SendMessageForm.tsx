@@ -5,8 +5,8 @@ import { z } from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { toast } from "react-toastify";
-import Spinner from "../Spinner";
 
+import Spinner from "../Spinner";
 import { RootState } from "../../state/store";
 import { useSendMessageMutation } from "../../state/slices/messagesApiSlice";
 
@@ -20,7 +20,6 @@ interface IForm {
 
 function SendMessageForm() {
   const conversation = useSelector((state: RootState) => state.conversation);
-  const user = useSelector((state: RootState) => state.auth.userInfo);
 
   const [buttonIcon, setButtonIcon] = useState<string>("bi-send");
   const [recipientId, setRecipientId] = useState<string | null>(null);

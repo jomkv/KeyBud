@@ -7,7 +7,10 @@ import { toast } from "react-toastify";
 import MessageOut from "./MessageOut";
 import MessageIn from "./MessageIn";
 import { IMessage } from "../../@types/messageType";
-import { useGetConversationQuery } from "../../state/slices/messagesApiSlice";
+import {
+  useGetConversationQuery,
+  useLazyGetConversationQuery,
+} from "../../state/slices/messagesApiSlice";
 import { RootState } from "../../state/store";
 import { IUserState } from "../../@types/userType";
 import { useSocketContext } from "../../context/SocketContext";
@@ -21,7 +24,6 @@ const isSender = (message: IMessage, user: IUserState) => {
   try {
     return message.senderId === user.userInfo?.id;
   } catch (error) {
-    console.log(message);
     return false;
   }
 };
@@ -32,14 +34,16 @@ const Messages: React.FC<IProps> = ({ convoId, scrollToBottom }) => {
   const navigate = useNavigate();
   const { socket } = useSocketContext();
 
-  const {
-    data: conversation,
-    isLoading,
-    isError,
-    isSuccess,
-  } = useGetConversationQuery(convoId, { skip: !convoId });
+  const [
+    getConversation,
+    { data: conversation, isLoading, isError, isSuccess },
+  ] = useLazyGetConversationQuery();
 
-  useEffect(() => {}, []);
+  useEffect(() => {
+    if (convoId) {
+      getConversation(convoId);
+    }
+  }, [convoId]);
 
   useEffect(() => {
     if (isError) {
