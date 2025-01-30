@@ -2,13 +2,14 @@ import Container from "react-bootstrap/Container";
 import Form from "react-bootstrap/Form";
 import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useSearchParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { toast } from "react-toastify";
 
 import { AppDispatch, RootState } from "../state/store";
 import { clearCredentials } from "../state/slices/authSlice";
 import { useLogoutMutation } from "../state/slices/usersApiSlice";
+import { useEffect, useState } from "react";
 
 function NavbarComponent() {
   const dispatch = useDispatch<AppDispatch>();
@@ -16,6 +17,8 @@ function NavbarComponent() {
   const { userInfo: user } = useSelector((state: RootState) => state.auth);
   const [logout] = useLogoutMutation();
   const navigate = useNavigate();
+  const [searchParams, setSearchParams] = useSearchParams();
+  const [search, setSearch] = useState("");
 
   const handleLogout = async () => {
     try {
@@ -27,6 +30,18 @@ function NavbarComponent() {
       toast.warn(error?.data?.message || "An error occurred");
     }
   };
+
+  const handleSubmit = (formData: any) => {
+    navigate(`/search?query=${formData.search}`);
+  };
+
+  useEffect(() => {
+    const searchValue = searchParams.get("search");
+
+    if (searchValue) {
+      setSearch(searchValue);
+    }
+  }, [searchParams.get("search")]);
 
   return (
     <Navbar
@@ -117,12 +132,15 @@ function NavbarComponent() {
               </Link>
             )}
           </Nav>
-          <Form className="d-flex">
+          <Form className="d-flex" onSubmit={handleSubmit}>
             <Form.Control
               type="search"
               placeholder="Search"
               className="me-2"
               aria-label="Search"
+              name="search"
+              value={search}
+              onChange={(e) => setSearch(e.target.value)}
             />
           </Form>
         </Navbar.Collapse>

@@ -7,8 +7,11 @@ const searchApiSlice = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
     search: builder.mutation<{ posts: IPost[]; users: IUser[] }, string>({
       query: (searchTerm: string) => ({
-        url: `${SEARCH_URL}/${searchTerm}`,
+        url: SEARCH_URL,
         method: "POST",
+        body: {
+          query: searchTerm,
+        },
       }),
     }),
     searchPosts: builder.mutation<IPost[], string>({

@@ -12,6 +12,7 @@ import Messages from "./pages/Messages";
 import ToastContainer from "./components/ToastContainer";
 import Protect from "./pages/Protect";
 import EditPost from "./pages/EditPost";
+import Search from "./pages/Search";
 
 function App() {
   return (
@@ -27,6 +28,7 @@ function App() {
           <Route path="/signup" element={<Register />} />
           <Route path="/post/:id" element={<Post />} />
           <Route path="/profile/:id" element={<Profile />} />
+          <Route path="/search" element={<Search />} />
 
           {/* Protected Routes */}
           <Route element={<Protect />}>
