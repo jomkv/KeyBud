@@ -32,7 +32,7 @@ function NavbarComponent() {
   };
 
   const handleSubmit = (formData: any) => {
-    navigate(`/search?query=${formData.search}`);
+    navigate(`/search?search=${search}`);
   };
 
   useEffect(() => {
