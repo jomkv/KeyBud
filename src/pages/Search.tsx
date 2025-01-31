@@ -6,6 +6,7 @@ import NavbarComponent from "../components/NavbarComponent";
 import { useSearchMutation } from "../state/slices/searchApiSlice";
 import CardSkeleton from "../components/post_card/CardSkeleton";
 import Card from "../components/post_card/Card";
+import UserCard from "../components/user_card/UserCard";
 
 function Search() {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -107,12 +108,12 @@ function Search() {
             </Row>
           </Col>
         </Row>
-        <Row className="justify-content-center mt-3">
+        <Row className="justify-content-center mt-3 gap-3">
           {isLoading &&
             Array(4)
               .fill(0)
               .map((_, index) => (
-                <Col key={index} md={12} sm={12} className="mb-4">
+                <Col key={index} md={12} sm={12}>
                   <CardSkeleton />
                 </Col>
               ))}
@@ -120,8 +121,16 @@ function Search() {
             results &&
             isSuccess &&
             results.posts.map((post) => (
-              <Col key={post._id} md={12} sm={12} className="mb-4">
+              <Col key={post._id} md={12} sm={12}>
                 <Card key={post._id} post={post} imageHeight="25rem" />
+              </Col>
+            ))}
+          {tab === "users" &&
+            results &&
+            isSuccess &&
+            results.users.map((user) => (
+              <Col xs={12} sm={12}>
+                <UserCard user={user} />
               </Col>
             ))}
         </Row>
