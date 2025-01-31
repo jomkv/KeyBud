@@ -7,6 +7,7 @@ import { useSearchMutation } from "../state/slices/searchApiSlice";
 import CardSkeleton from "../components/post_card/CardSkeleton";
 import Card from "../components/post_card/Card";
 import UserCard from "../components/user_card/UserCard";
+import NoResults from "../components/NoResults";
 
 function Search() {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -117,22 +118,34 @@ function Search() {
                   <CardSkeleton />
                 </Col>
               ))}
-          {tab === "posts" &&
-            results &&
-            isSuccess &&
-            results.posts.map((post) => (
-              <Col key={post._id} md={12} sm={12}>
-                <Card key={post._id} post={post} imageHeight="25rem" />
-              </Col>
-            ))}
-          {tab === "users" &&
-            results &&
-            isSuccess &&
-            results.users.map((user) => (
-              <Col xs={12} sm={12}>
-                <UserCard user={user} />
-              </Col>
-            ))}
+          {results && isSuccess && (
+            <>
+              {tab === "posts" && results.posts.length === 0 && (
+                <Col xs={12} sm={12}>
+                  <NoResults />
+                </Col>
+              )}
+              {tab === "users" && results.users.length === 0 && (
+                <Col xs={12} sm={12}>
+                  <NoResults />
+                </Col>
+              )}
+
+              {tab === "posts" &&
+                results.posts.map((post) => (
+                  <Col key={post._id} md={12} sm={12}>
+                    <Card key={post._id} post={post} imageHeight="25rem" />
+                  </Col>
+                ))}
+
+              {tab === "users" &&
+                results.users.map((user) => (
+                  <Col xs={12} sm={12}>
+                    <UserCard user={user} />
+                  </Col>
+                ))}
+            </>
+          )}
         </Row>
       </Container>
     </div>

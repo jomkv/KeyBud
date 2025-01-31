@@ -7,6 +7,7 @@ import Card from "../post_card/Card";
 import { useGetUserPostsQuery } from "../../state/slices/usersApiSlice";
 import CardSkeleton from "../post_card/CardSkeleton";
 import { IPost } from "../../@types/postType";
+import NoResults from "../NoResults";
 
 interface IPostsProps {
   userId: string;
@@ -47,6 +48,11 @@ const Posts: React.FC<IPostsProps> = ({ userId }) => {
               <CardSkeleton />
             </Col>
           ))}
+      {posts && posts.length === 0 && (
+        <Col xs={12} sm={12}>
+          <NoResults />
+        </Col>
+      )}
       {posts &&
         posts.map((post) => (
           <Col key={post._id} md={12} sm={12} className="mb-4">
