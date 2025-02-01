@@ -11,6 +11,19 @@ const commentsApiSlice = apiSlice.injectEndpoints({
         body: { comment: data.comment },
       }),
     }),
+    editComment: builder.mutation<any, ICommentInput>({
+      query: (data: ICommentInput) => ({
+        url: `${COMMENTS_URL}/${data.repliesTo}`,
+        method: "PUT",
+        body: { comment: data.comment },
+      }),
+    }),
+    deleteComment: builder.mutation<any, string>({
+      query: (commentId) => ({
+        url: `${COMMENTS_URL}/${commentId}`,
+        method: "DELETE",
+      }),
+    }),
     getPostComments: builder.query<IComment[], string>({
       query: (postId: string) => ({
         url: `${COMMENTS_URL}/all/${postId}`,
@@ -23,5 +36,9 @@ const commentsApiSlice = apiSlice.injectEndpoints({
   }),
 });
 
-export const { useCreateCommentMutation, useGetPostCommentsQuery } =
-  commentsApiSlice;
+export const {
+  useCreateCommentMutation,
+  useEditCommentMutation,
+  useDeleteCommentMutation,
+  useGetPostCommentsQuery,
+} = commentsApiSlice;
