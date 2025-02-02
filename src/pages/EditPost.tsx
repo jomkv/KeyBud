@@ -1,34 +1,16 @@
 import NavbarComponent from "../components/NavbarComponent";
-import Spinner from "../components/Spinner";
 import {
   useEditPostMutation,
   useGetPostQuery,
 } from "../state/slices/postsApiSlice";
-import { IPostInput } from "../@types/postType";
 import definedOrRedirect from "../utils/definedOrRedirect";
 
-import { Container, Button, Form } from "react-bootstrap";
-import { SubmitHandler, useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { z } from "zod";
+import { Container } from "react-bootstrap";
 import { toast } from "react-toastify";
 import { useNavigate, useParams } from "react-router-dom";
 import { useEffect } from "react";
-import Skeleton from "react-loading-skeleton";
 import PostFormSkeleton from "../components/post_form/PostFormSkeleton";
 import PostForm from "../components/post_form/PostForm";
-
-const schema = z.object({
-  title: z.string().nonempty("Title is required").max(150, "Title is too long"),
-  description: z.string().nonempty("Body is required"),
-  images: z.any(),
-});
-
-interface IForm {
-  title: string;
-  description: string;
-  images: any;
-}
 
 function EditPost() {
   const [editPost, { isLoading }] = useEditPostMutation();
