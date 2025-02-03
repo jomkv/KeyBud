@@ -7,17 +7,19 @@ import Container from "react-bootstrap/Container";
 import { useParams, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import Skeleton from "react-loading-skeleton";
+import { useSelector } from "react-redux";
 
 // * Local Imports
 import NavbarComponent from "../components/NavbarComponent";
-import Build from "../components/profile/Build";
 import Posts from "../components/profile/Posts";
 import Likes from "../components/profile/Likes";
 import definedOrRedirect from "../utils/definedOrRedirect";
 import { useGetProfileQuery } from "../state/slices/usersApiSlice";
+import { RootState } from "../state/store";
 
 function Profile() {
-  const [tab, setTab] = useState("posts");
+  const [tab, setTab] = useState<string>("posts");
+  const [isEditHover, setIsEditHover] = useState<boolean>(false);
 
   const { id } = useParams();
   const navigate = useNavigate();
@@ -25,6 +27,7 @@ function Profile() {
   definedOrRedirect(id);
 
   const { data: userData, isLoading, isError } = useGetProfileQuery(id);
+  const { userInfo: user } = useSelector((state: RootState) => state.auth);
 
   useEffect(() => {
     if (isError) {
@@ -32,6 +35,10 @@ function Profile() {
       toast.warn("User not found");
     }
   }, [isError, navigate]);
+
+  const handleEdit = () => {
+    navigate("/edit-profile");
+  };
 
   return (
     <div className="bg-light">
@@ -83,6 +90,26 @@ function Profile() {
                   </p>
                 </Col>
               </Row>
+              {user?.id === userData?._id && (
+                <div className="w-100 d-flex justify-content-end">
+                  <Button
+                    style={{
+                      backgroundColor: "transparent",
+                      borderColor: "transparent",
+                    }}
+                    onMouseOver={() => setIsEditHover(true)}
+                    onMouseLeave={() => setIsEditHover(false)}
+                    onClick={handleEdit}
+                  >
+                    <i
+                      className={`bi bi-pencil${isEditHover ? "-fill" : ""} h2`}
+                      style={{
+                        color: "#8c52ff",
+                      }}
+                    />
+                  </Button>
+                </div>
+              )}
             </div>
           </Col>
           <Col xs={0} md={0} lg={2}></Col>

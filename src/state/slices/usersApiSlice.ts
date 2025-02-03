@@ -58,6 +58,13 @@ export const usersApiSlice = apiSlice.injectEndpoints({
       }),
       transformResponse: (response: { user: IUser }) => response.user,
     }),
+    getMe: builder.query<IUser, void>({
+      query: () => ({
+        url: `${USERS_URL}/me`,
+        method: "GET",
+      }),
+      transformResponse: (response: { user: IUser }) => response.user,
+    }),
   }),
 });
 
@@ -69,4 +76,5 @@ export const {
   useGetUserLikesQuery,
   useGetUserPostsQuery,
   useGetUsernamesAndIdsQuery,
+  useGetMeQuery,
 } = usersApiSlice;
