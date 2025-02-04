@@ -4,10 +4,10 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { useNavigate } from "react-router-dom";
 import { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { toast } from "react-toastify";
 
-import { AppDispatch, RootState } from "../../state/store";
+import { RootState } from "../../state/store";
 import { useRegisterMutation } from "../../state/slices/usersApiSlice";
 
 const schema = z
@@ -25,6 +25,7 @@ const schema = z
       .string()
       .nonempty("Password is required")
       .min(8, "Password is too short"),
+    switchType: z.string().min(1, "Please select a switch type"),
     confirm: z.string(),
   })
   .refine((data) => data.password === data.confirm, {
@@ -37,13 +38,13 @@ interface IForm {
   email: string;
   password: string;
   confirm: string;
+  switchType: string;
 }
 
 function SignupForm() {
   const { userInfo } = useSelector((state: RootState) => state.auth);
   const [registerMutation, { isLoading }] = useRegisterMutation();
 
-  const dispatch = useDispatch<AppDispatch>();
   const navigate = useNavigate();
 
   const form = useForm<IForm>({
@@ -52,6 +53,7 @@ function SignupForm() {
       email: "",
       password: "",
       confirm: "",
+      switchType: "",
     },
     resolver: zodResolver(schema),
   });
@@ -89,6 +91,19 @@ function SignupForm() {
         <p className="fs-1 fw-bold">Signup</p>
 
         <Form.Group className="mb-3">
+          <Form.Label>Email *</Form.Label>
+          <Form.Control
+            type="email"
+            id="email"
+            isInvalid={errors.email?.message ? true : false}
+            {...register("email")}
+          />
+          <Form.Control.Feedback type="invalid">
+            {errors.email?.message}
+          </Form.Control.Feedback>
+        </Form.Group>
+
+        <Form.Group className="mb-3">
           <Form.Label>Username *</Form.Label>
           <Form.Control
             type="text"
@@ -102,15 +117,18 @@ function SignupForm() {
         </Form.Group>
 
         <Form.Group className="mb-3">
-          <Form.Label>Email *</Form.Label>
-          <Form.Control
-            type="email"
-            id="email"
-            isInvalid={errors.email?.message ? true : false}
-            {...register("email")}
-          />
+          <Form.Label>Switch Type *</Form.Label>
+          <Form.Select
+            {...register("switchType")}
+            isInvalid={errors.switchType?.message ? true : false}
+          >
+            <option value="">Select</option>
+            <option value="Linear">Linear</option>
+            <option value="Tactile">Tactile</option>
+            <option value="Clicky">Clicky</option>
+          </Form.Select>
           <Form.Control.Feedback type="invalid">
-            {errors.email?.message}
+            {errors.switchType?.message}
           </Form.Control.Feedback>
         </Form.Group>
 
