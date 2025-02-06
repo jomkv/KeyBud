@@ -1,8 +1,14 @@
-import React from "react";
-
 function GoogleSigninButton() {
+  const handleClick = () => {
+    window.location.href = `${process.env.REACT_APP_API_URL}/auth/login-google`;
+  };
+
   return (
-    <button className="gsi-material-button w-100 pt-4 pb-4 pe-5 ps-5 fs-6">
+    <button
+      className="gsi-material-button w-100 pt-4 pb-4 pe-5 ps-5 fs-6"
+      onClick={handleClick}
+      type="button"
+    >
       <div className="gsi-material-button-state"></div>
       <div className="gsi-material-button-content-wrapper">
         <div className="gsi-material-button-icon">
@@ -32,10 +38,8 @@ function GoogleSigninButton() {
             <path fill="none" d="M0 0h48v48H0z"></path>
           </svg>
         </div>
-        <span className="gsi-material-button-contents">
-          Sign in with Google
-        </span>
-        <span style={{ display: "none" }}>Sign in with Google</span>
+        <span className="gsi-material-button-contents">Log in with Google</span>
+        <span style={{ display: "none" }}>Log in with Google</span>
       </div>
     </button>
   );
