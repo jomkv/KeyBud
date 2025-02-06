@@ -4,7 +4,7 @@ import ListGroup from "react-bootstrap/ListGroup";
 import { Link } from "react-router-dom";
 
 import { IComment } from "../../@types/commentType";
-import formatDate from "../../utils/formatDate";
+import formatDate from "../../utils/dateHelpers";
 import CommentOption from "./CommentOption";
 import { useUserContext } from "../../context/UserContext";
 

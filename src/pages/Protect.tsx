@@ -9,7 +9,15 @@ function Protect() {
     return <Spinner />;
   }
 
-  return user && isSuccess ? <Outlet /> : <Navigate to="/login" />;
+  if (!user) {
+    return <Navigate to="/login" />;
+  }
+
+  if (!user.username || !user.switchType) {
+    return <Navigate to="/set-info" />;
+  }
+
+  return <Outlet />;
 }
 
 export default Protect;

@@ -8,6 +8,7 @@ interface IUser {
   password?: string;
   email: string;
   icon?: IPhoto;
+  usernameEditedAt?: string;
 }
 
 interface IUsernameAndId {

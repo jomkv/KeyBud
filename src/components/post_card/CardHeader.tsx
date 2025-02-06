@@ -1,7 +1,7 @@
 import { Card } from "react-bootstrap";
 import { Link } from "react-router-dom";
 
-import formatDate from "../../utils/formatDate";
+import formatDate from "../../utils/dateHelpers";
 import { IPost } from "../../@types/postType";
 import OptionButton from "./OptionButton";
 import { useUserContext } from "../../context/UserContext";

@@ -45,6 +45,22 @@ export const usersApiSlice = apiSlice.injectEndpoints({
       }),
       transformResponse: (response: { user: IUser }) => response.user,
     }),
+    editProfile: builder.mutation<
+      IUser,
+      {
+        username: string;
+        switchType: string;
+        icon?: File;
+      }
+    >({
+      query: (formData) => ({
+        url: USERS_URL,
+        method: "PUT",
+        formData: true,
+        body: formData,
+      }),
+      transformResponse: (response: { user: IUser }) => response.user,
+    }),
   }),
 });
 
@@ -55,4 +71,5 @@ export const {
   useGetUsernamesAndIdsQuery,
   useGetMeQuery,
   useLazyGetMeQuery,
+  useEditProfileMutation,
 } = usersApiSlice;

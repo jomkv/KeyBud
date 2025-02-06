@@ -59,7 +59,12 @@ function LoginForm() {
 
       if (setUser) setUser(user);
 
-      navigate("/");
+      if (!user.username || !user.switchType) {
+        navigate("/set-info");
+      } else {
+        navigate("/");
+      }
+
       toast.success("Login successful");
     } catch (error: any) {
       toast.warn(error.data.message || "An error occurred");
