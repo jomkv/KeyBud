@@ -4,11 +4,10 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { useNavigate } from "react-router-dom";
 import { useEffect } from "react";
-import { useSelector } from "react-redux";
 import { toast } from "react-toastify";
 
-import { RootState } from "../../state/store";
-import { useRegisterMutation } from "../../state/slices/usersApiSlice";
+import { useRegisterMutation } from "../../state/slices/authApiSlice";
+import { useUserContext } from "../../context/UserContext";
 
 const schema = z
   .object({
@@ -42,7 +41,7 @@ interface IForm {
 }
 
 function SignupForm() {
-  const { userInfo } = useSelector((state: RootState) => state.auth);
+  const { user } = useUserContext();
   const [registerMutation, { isLoading }] = useRegisterMutation();
 
   const navigate = useNavigate();
@@ -72,10 +71,10 @@ function SignupForm() {
   };
 
   useEffect(() => {
-    if (userInfo) {
+    if (user) {
       navigate("/");
     }
-  }, [navigate, userInfo]);
+  }, [navigate, user]);
 
   return (
     <>

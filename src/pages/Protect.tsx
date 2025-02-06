@@ -1,11 +1,15 @@
 import { Navigate, Outlet } from "react-router-dom";
-import { useSelector } from "react-redux";
-import { RootState } from "../state/store";
+import { useUserContext } from "../context/UserContext";
+import Spinner from "../components/Spinner";
 
 function Protect() {
-  const { userInfo } = useSelector((state: RootState) => state.auth);
+  const { user, isLoading, isSuccess } = useUserContext();
 
-  return userInfo ? <Outlet /> : <Navigate to="/login" />;
+  if (isLoading || !isSuccess) {
+    return <Spinner />;
+  }
+
+  return user && isSuccess ? <Outlet /> : <Navigate to="/login" />;
 }
 
 export default Protect;

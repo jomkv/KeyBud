@@ -4,13 +4,13 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
 import { toast } from "react-toastify";
 
 import Spinner from "../Spinner";
-import { useLoginMutation } from "../../state/slices/usersApiSlice";
-import { setCredentials } from "../../state/slices/authSlice";
-import { AppDispatch, RootState } from "../../state/store";
+import { useLoginMutation } from "../../state/slices/authApiSlice";
+import { IUser } from "../../@types/userType";
+import GoogleSigninButton from "./GoogleSigninButton";
+import { useUserContext } from "../../context/UserContext";
 
 const schema = z.object({
   usernameOrEmail: z.string().nonempty("This field is required"),
@@ -23,10 +23,10 @@ interface IForm {
 }
 
 function LoginForm() {
-  const { userInfo } = useSelector((state: RootState) => state.auth);
+  const { user } = useUserContext();
   const [login, { isLoading, isSuccess }] = useLoginMutation();
+  const { setUser } = useUserContext();
 
-  const dispatch = useDispatch<AppDispatch>();
   const navigate = useNavigate();
 
   const form = useForm<IForm>({
@@ -41,10 +41,10 @@ function LoginForm() {
   const { errors } = formState;
 
   useEffect(() => {
-    if (userInfo) {
+    if (user) {
       navigate("/");
     }
-  }, [navigate, userInfo]);
+  }, [navigate, user]);
 
   useEffect(() => {
     if (isSuccess) {
@@ -55,7 +55,10 @@ function LoginForm() {
   const onSubmit = async (data: IForm) => {
     try {
       const res: any = await login(data).unwrap();
-      dispatch(setCredentials({ ...res.user }));
+      const user = res.user as IUser;
+
+      if (setUser) setUser(user);
+
       navigate("/");
       toast.success("Login successful");
     } catch (error: any) {
@@ -89,7 +92,7 @@ function LoginForm() {
         </Form.Control.Feedback>
       </Form.Group>
 
-      <Form.Group className="mb-3">
+      <Form.Group className="mb-4">
         <Form.Label>Password</Form.Label>
         <Form.Control
           type="password"
@@ -112,15 +115,26 @@ function LoginForm() {
           }}
           disabled={isLoading}
         >
-          {isLoading ? <Spinner /> : "SUBMIT"}
+          {isLoading ? <Spinner /> : "LOGIN"}
         </Button>
       </Form.Group>
-
       <div className="text-center w-100">
         <p className="fs-6 fw-light">
           Don't have an account? <a href="/signup">Signup</a>
         </p>
       </div>
+
+      <div className="text-center w-100 mt-5 mb-1">
+        <hr className="w-100" />
+        <span
+          className="position-relative fw-bold"
+          style={{ top: "-30px", background: "#d1cdc4", padding: "0 10px" }}
+        >
+          OR
+        </span>
+      </div>
+
+      <GoogleSigninButton />
     </Form>
   );
 }

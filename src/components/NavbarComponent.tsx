@@ -3,18 +3,14 @@ import Form from "react-bootstrap/Form";
 import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
 import { Link, useNavigate, useSearchParams } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
 import { toast } from "react-toastify";
-
-import { AppDispatch, RootState } from "../state/store";
-import { clearCredentials } from "../state/slices/authSlice";
-import { useLogoutMutation } from "../state/slices/usersApiSlice";
 import { useEffect, useState } from "react";
 
-function NavbarComponent() {
-  const dispatch = useDispatch<AppDispatch>();
+import { useLogoutMutation } from "../state/slices/authApiSlice";
+import { useUserContext } from "../context/UserContext";
 
-  const { userInfo: user } = useSelector((state: RootState) => state.auth);
+function NavbarComponent() {
+  const { user, setUser } = useUserContext();
   const [logout] = useLogoutMutation();
   const navigate = useNavigate();
   const [searchParams, setSearchParams] = useSearchParams();
@@ -23,7 +19,7 @@ function NavbarComponent() {
   const handleLogout = async () => {
     try {
       await logout().unwrap();
-      dispatch(clearCredentials());
+      if (setUser) setUser(null);
       navigate("/login");
       toast.success("Logged out");
     } catch (error: any) {
@@ -83,7 +79,7 @@ function NavbarComponent() {
             )}
             {user && (
               <Link
-                to={`/profile/${user.id}`}
+                to={`/profile/${user._id}`}
                 className="me-3"
                 style={{
                   color: "white",

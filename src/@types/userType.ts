@@ -1,11 +1,12 @@
 import IPhoto from "./photoType";
 
 interface IUser {
+  id: string;
   _id?: string;
-  id?: string;
-  username: string;
+  username?: string;
+  switchType: string;
+  password?: string;
   email: string;
-  switchType?: string;
   icon?: IPhoto;
 }
 

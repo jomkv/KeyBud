@@ -10,26 +10,6 @@ import { IPost } from "../../@types/postType";
 
 export const usersApiSlice = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
-    login: builder.mutation({
-      query: (userCredentials: IUserCredentials) => ({
-        url: `${USERS_URL}/login`,
-        method: "POST",
-        body: userCredentials,
-      }),
-    }),
-    logout: builder.mutation<any, void>({
-      query: () => ({
-        url: `${USERS_URL}/logout`,
-        method: "POST",
-      }),
-    }),
-    register: builder.mutation<any, IUserPayload>({
-      query: (userCredentials: IUserPayload) => ({
-        url: `${USERS_URL}/register`,
-        method: "POST",
-        body: userCredentials,
-      }),
-    }),
     getUserLikes: builder.query<IPost[], string>({
       query: (userId: string) => ({
         url: `${USERS_URL}/${userId}/likes`,
@@ -69,12 +49,10 @@ export const usersApiSlice = apiSlice.injectEndpoints({
 });
 
 export const {
-  useLoginMutation,
-  useLogoutMutation,
-  useRegisterMutation,
   useGetProfileQuery,
   useGetUserLikesQuery,
   useGetUserPostsQuery,
   useGetUsernamesAndIdsQuery,
   useGetMeQuery,
+  useLazyGetMeQuery,
 } = usersApiSlice;
