@@ -5,9 +5,8 @@ import {
   useContext,
   PropsWithChildren,
 } from "react";
-import { useSelector } from "react-redux";
-import { RootState } from "../state/store";
 import { io, Socket } from "socket.io-client";
+import { useUserContext } from "./UserContext";
 
 interface SocketContextType {
   socket: Socket | null;
@@ -21,7 +20,7 @@ export const useSocketContext = () => {
 
 function SocketContextProvider({ children }: PropsWithChildren<unknown>) {
   const [socket, setSocket] = useState<Socket | null>(null);
-  const user = useSelector((state: RootState) => state.auth).userInfo;
+  const { user } = useUserContext();
 
   useEffect(() => {
     if (user) {

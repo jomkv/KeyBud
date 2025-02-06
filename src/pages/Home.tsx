@@ -1,17 +1,15 @@
 import NavbarComponent from "../components/NavbarComponent";
 import PostCard from "../components/home/PostCard";
 import CreatePostWidget from "../components/CreatePostWidget";
-import { RootState } from "../state/store";
-import { useSelector } from "react-redux";
 import { IPost } from "../@types/postType";
 import { useGetPostsQuery } from "../state/slices/postsApiSlice";
 import CardSkeleton from "../components/post_card/CardSkeleton";
-
 import Container from "react-bootstrap/Container";
 import { Col, Row } from "react-bootstrap";
+import { useUserContext } from "../context/UserContext";
 
 function Home() {
-  const { userInfo: user } = useSelector((state: RootState) => state.auth);
+  const { user } = useUserContext();
 
   const { data: posts, isLoading } = useGetPostsQuery();
 

@@ -1,13 +1,12 @@
 import Card from "react-bootstrap/Card";
 import { Button } from "react-bootstrap";
-import { useSelector } from "react-redux";
 import { toast } from "react-toastify";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-import { RootState } from "../../state/store";
 import Spinner from "../Spinner";
 import { useLikePostMutation } from "../../state/slices/postsApiSlice";
+import { useUserContext } from "../../context/UserContext";
 
 interface CardFooterProps {
   postId: string;
@@ -31,7 +30,7 @@ const CardFooter: React.FC<CardFooterProps> = ({
 
   const navigate = useNavigate();
 
-  const { userInfo: user } = useSelector((state: RootState) => state.auth);
+  const { user } = useUserContext();
 
   const [likePost, { isLoading: isLikeLoading }] = useLikePostMutation();
 

@@ -7,7 +7,6 @@ import Container from "react-bootstrap/Container";
 import { useParams, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import Skeleton from "react-loading-skeleton";
-import { useSelector } from "react-redux";
 
 // * Local Imports
 import NavbarComponent from "../components/NavbarComponent";
@@ -15,7 +14,7 @@ import Posts from "../components/profile/Posts";
 import Likes from "../components/profile/Likes";
 import definedOrRedirect from "../utils/definedOrRedirect";
 import { useGetProfileQuery } from "../state/slices/usersApiSlice";
-import { RootState } from "../state/store";
+import { useUserContext } from "../context/UserContext";
 
 function Profile() {
   const [tab, setTab] = useState<string>("posts");
@@ -27,7 +26,7 @@ function Profile() {
   definedOrRedirect(id);
 
   const { data: userData, isLoading, isError } = useGetProfileQuery(id);
-  const { userInfo: user } = useSelector((state: RootState) => state.auth);
+  const { user } = useUserContext();
 
   useEffect(() => {
     if (isError) {
@@ -90,7 +89,7 @@ function Profile() {
                   </p>
                 </Col>
               </Row>
-              {user?.id === userData?._id && (
+              {user?._id === userData?._id && (
                 <div className="w-100 d-flex justify-content-end">
                   <Button
                     style={{

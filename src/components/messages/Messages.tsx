@@ -1,28 +1,24 @@
 import { Row } from "react-bootstrap";
 import { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 
 import MessageOut from "./MessageOut";
 import MessageIn from "./MessageIn";
 import { IMessage } from "../../@types/messageType";
-import {
-  useGetConversationQuery,
-  useLazyGetConversationQuery,
-} from "../../state/slices/messagesApiSlice";
-import { RootState } from "../../state/store";
-import { IUserState } from "../../@types/userType";
+import { useLazyGetConversationQuery } from "../../state/slices/messagesApiSlice";
+import { IUser } from "../../@types/userType";
 import { useSocketContext } from "../../context/SocketContext";
+import { useUserContext } from "../../context/UserContext";
 
 interface IProps {
   convoId: string | null | undefined;
   scrollToBottom: () => void;
 }
 
-const isSender = (message: IMessage, user: IUserState) => {
+const isSender = (message: IMessage, user: IUser | null) => {
   try {
-    return message.senderId === user.userInfo?.id;
+    return message.senderId === user?._id;
   } catch (error) {
     return false;
   }
@@ -30,7 +26,7 @@ const isSender = (message: IMessage, user: IUserState) => {
 
 const Messages: React.FC<IProps> = ({ convoId, scrollToBottom }) => {
   const [messages, setMessages] = useState<IMessage[]>([]);
-  const user = useSelector((state: RootState) => state.auth);
+  const { user } = useUserContext();
   const navigate = useNavigate();
   const { socket } = useSocketContext();
 

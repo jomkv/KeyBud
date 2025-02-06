@@ -37,12 +37,12 @@ function EditProfile() {
   const { register, handleSubmit, formState, reset, setValue } = form;
   const { errors } = formState;
 
-  // useEffect(() => {
-  //   if (isSuccess && me) {
-  //     setValue("username", me.username);
-  //     setValue("switchType", me.switchType || "");
-  //   }
-  // }, [isSuccess, me]);
+  useEffect(() => {
+    if (isSuccess && me) {
+      setValue("username", me.username || "");
+      setValue("switchType", me.switchType || "");
+    }
+  }, [isSuccess, me]);
 
   return (
     <div className="bg-light">

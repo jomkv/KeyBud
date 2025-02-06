@@ -5,16 +5,15 @@ import { Link } from "react-router-dom";
 
 import { IComment } from "../../@types/commentType";
 import formatDate from "../../utils/formatDate";
-import { useSelector } from "react-redux";
-import { RootState } from "../../state/store";
 import CommentOption from "./CommentOption";
+import { useUserContext } from "../../context/UserContext";
 
 interface CommentProps {
   comment: IComment;
 }
 
 const CommentCard: React.FC<CommentProps> = ({ comment }) => {
-  const { userInfo: user } = useSelector((state: RootState) => state.auth);
+  const { user } = useUserContext();
 
   return (
     <ListGroup.Item className="bg-secondary">
@@ -55,7 +54,7 @@ const CommentCard: React.FC<CommentProps> = ({ comment }) => {
               • {formatDate(comment.createdAt)}
             </p>
           </div>
-          {user && user.id && user.id === comment.ownerId._id && (
+          {user && user._id && user._id === comment.ownerId._id && (
             <CommentOption comment={comment} />
           )}
         </Col>

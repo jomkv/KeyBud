@@ -1,11 +1,10 @@
 import { Card } from "react-bootstrap";
 import { Link } from "react-router-dom";
-import { useSelector } from "react-redux";
 
 import formatDate from "../../utils/formatDate";
 import { IPost } from "../../@types/postType";
-import { RootState } from "../../state/store";
 import OptionButton from "./OptionButton";
+import { useUserContext } from "../../context/UserContext";
 
 interface ICardHeaderProps {
   post: IPost;
@@ -13,7 +12,7 @@ interface ICardHeaderProps {
 }
 
 const CardHeader: React.FC<ICardHeaderProps> = ({ post, isPostPage }) => {
-  const { userInfo: user } = useSelector((state: RootState) => state.auth);
+  const { user } = useUserContext();
 
   return (
     <Card.Header className="pt-3">
@@ -42,7 +41,7 @@ const CardHeader: React.FC<ICardHeaderProps> = ({ post, isPostPage }) => {
             • {formatDate(post.createdAt)} {post.isPinned ? "📌" : ""}
           </p>
         </div>
-        {user && user.id === post.ownerId._id && <OptionButton post={post} />}
+        {user && user._id === post.ownerId._id && <OptionButton post={post} />}
       </div>
       {isPostPage ? (
         <Card.Title

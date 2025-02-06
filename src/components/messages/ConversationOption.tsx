@@ -6,6 +6,7 @@ import { IConvo } from "../../@types/messageType";
 import { setConversation } from "../../state/slices/conversationSlice";
 import { RootState } from "../../state/store";
 import { IUser } from "../../@types/userType";
+import { useUserContext } from "../../context/UserContext";
 
 interface IOptionProps {
   conversation: IConvo;
@@ -19,7 +20,7 @@ const ConversationOption: React.FC<IOptionProps> = ({ conversation }) => {
   const selectedConversation = useSelector(
     (state: RootState) => state.conversation
   );
-  const user = useSelector((state: RootState) => state.auth.userInfo);
+  const { user } = useUserContext();
   const dispatch = useDispatch();
   const [isSelected, setIsSelected] = useState(false);
   const [recipient, setRecipient] = useState<IUser | null>(null);
@@ -31,7 +32,10 @@ const ConversationOption: React.FC<IOptionProps> = ({ conversation }) => {
 
     dispatch(
       setConversation({
-        recipient: { recipientId: recipient._id, username: recipient.username },
+        recipient: {
+          recipientId: recipient._id,
+          username: recipient.username as string,
+        },
         messages: conversation.messages,
         convoId: conversation._id,
       })
@@ -39,11 +43,14 @@ const ConversationOption: React.FC<IOptionProps> = ({ conversation }) => {
   };
 
   useEffect(() => {
-    if (!user?.id) {
+    if (!user?._id) {
       return;
     }
 
-    const rec: IUser | null = findRecipient(conversation.participants, user.id);
+    const rec: IUser | null = findRecipient(
+      conversation.participants,
+      user._id
+    );
 
     if (rec) setRecipient(rec);
   }, []);

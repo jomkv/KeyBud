@@ -6,6 +6,7 @@ import SendMessageForm from "./SendMessageForm";
 import { RootState } from "../../state/store";
 import Messages from "./Messages";
 import NewConversationForm from "./NewConversationForm";
+import { useUserContext } from "../../context/UserContext";
 
 function Conversation() {
   const [recipientName, setRecipientName] = useState<string>("");
@@ -14,7 +15,7 @@ function Conversation() {
     (state: RootState) => state.conversation
   );
 
-  const user = useSelector((state: RootState) => state.auth);
+  const { user } = useUserContext();
 
   useEffect(() => {
     if (selectedConversation.isSet && selectedConversation.recipient) {
