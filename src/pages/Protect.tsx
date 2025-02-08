@@ -3,7 +3,11 @@ import { useUserContext } from "../context/UserContext";
 import Spinner from "../components/Spinner";
 
 function Protect() {
-  const { user, isLoading, isSuccess } = useUserContext();
+  const { user, isLoading, isSuccess, isError } = useUserContext();
+
+  if (isError) {
+    return <Navigate to="/login" />;
+  }
 
   if (isLoading || !isSuccess) {
     return <Spinner />;

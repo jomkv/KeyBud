@@ -13,6 +13,7 @@ interface UserContextType {
   setUser: ((user: IUser | null) => void) | null;
   isLoading: boolean;
   isSuccess: boolean;
+  isError: boolean;
 }
 
 const UserContext = createContext<UserContextType>({
@@ -20,6 +21,7 @@ const UserContext = createContext<UserContextType>({
   setUser: () => {},
   isLoading: true,
   isSuccess: false,
+  isError: false,
 });
 
 const useUserContext = () => {
@@ -30,8 +32,10 @@ function UserProvider({ children }: PropsWithChildren<unknown>) {
   const [user, setUser] = useState<IUser | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(true);
 
-  const [getMe, { data: res, isSuccess, isLoading: isQueryLoading }] =
-    useLazyGetMeQuery();
+  const [
+    getMe,
+    { data: res, isSuccess, isLoading: isQueryLoading, isError, error },
+  ] = useLazyGetMeQuery();
 
   useEffect(() => {
     getMe();
@@ -45,7 +49,9 @@ function UserProvider({ children }: PropsWithChildren<unknown>) {
   }, [res, isSuccess, isQueryLoading]);
 
   return (
-    <UserContext.Provider value={{ user, setUser, isLoading, isSuccess }}>
+    <UserContext.Provider
+      value={{ user, setUser, isLoading, isSuccess, isError }}
+    >
       {children}
     </UserContext.Provider>
   );

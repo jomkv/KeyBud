@@ -15,7 +15,7 @@ const RequireInfo = ({ children }: { children: JSX.Element }) => {
     }
   }, [user, isLoading, isSuccess, navigate]);
 
-  if (isLoading || !isSuccess) {
+  if (isLoading && !isSuccess) {
     return <Spinner />;
   }
 
