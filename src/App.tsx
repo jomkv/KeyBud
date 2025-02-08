@@ -33,7 +33,6 @@ function App() {
             <Route path="/post/:id" element={<Post />} />
             <Route path="/profile/:id" element={<Profile />} />
             <Route path="/search" element={<Search />} />
-            <Route path="/set-info" element={<SetInfo />} />
 
             {/* Protected Routes */}
             <Route element={<Protect />}>
@@ -41,6 +40,7 @@ function App() {
               <Route path="/edit-post/:id" element={<EditPost />} />
               <Route path="/messages" element={<Messages />} />
               <Route path="/edit-profile" element={<EditProfile />} />
+              <Route path="/set-info" element={<SetInfo />} />
             </Route>
           </Routes>
           <ToastContainer />
