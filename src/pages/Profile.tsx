@@ -64,10 +64,12 @@ function Profile() {
                   />
                 ) : (
                   <img
-                    src="/images/user_icon.png"
+                    src={userData?.icon || "/images/user_icon.png"}
                     className="rounded-circle me-3"
                     style={{
+                      height: "5rem",
                       width: "5rem",
+                      objectFit: "cover",
                     }}
                     alt="Icon"
                   />
