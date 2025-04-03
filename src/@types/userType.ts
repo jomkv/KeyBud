@@ -7,7 +7,7 @@ interface IUser {
   switchType: string;
   password?: string;
   email: string;
-  icon?: IPhoto;
+  icon?: string;
   usernameEditedAt?: string;
 }
 

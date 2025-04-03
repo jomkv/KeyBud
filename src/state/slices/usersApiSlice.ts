@@ -45,14 +45,7 @@ export const usersApiSlice = apiSlice.injectEndpoints({
       }),
       transformResponse: (response: { user: IUser }) => response.user,
     }),
-    editProfile: builder.mutation<
-      IUser,
-      {
-        username: string;
-        switchType: string;
-        icon?: File;
-      }
-    >({
+    editProfile: builder.mutation<IUser, FormData>({
       query: (formData) => ({
         url: USERS_URL,
         method: "PUT",

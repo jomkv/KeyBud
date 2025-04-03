@@ -1,4 +1,5 @@
 import IPhoto from "./photoType";
+import { IUser } from "./userType";
 
 export interface IPost {
   _id: string;
@@ -6,10 +7,7 @@ export interface IPost {
   description: string;
   likeCount: number;
   isLiked: boolean;
-  ownerId: {
-    _id: string;
-    username: string;
-  };
+  ownerId: IUser;
   isEditted: boolean;
   images: IPhoto[];
   createdAt: string;
