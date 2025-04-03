@@ -19,7 +19,7 @@ const CardHeader: React.FC<ICardHeaderProps> = ({ post, isPostPage }) => {
       <div className="d-flex align-items-center justify-content-between">
         <div className="d-flex align-items-center">
           <img
-            src="/images/user_icon.png"
+            src={post.ownerId.icon || "/images/user_icon.png"}
             alt="icon"
             className="rounded-circle me-2"
             style={{
