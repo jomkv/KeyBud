@@ -24,7 +24,7 @@ const UserCard: React.FC<ICardHeaderProps> = ({ user }) => {
     >
       <div className="d-flex align-items-center">
         <img
-          src="/images/user_icon.png"
+          src={user.icon || "/images/user_icon.png"}
           className="rounded-circle me-3"
           style={{
             width: "5rem",
