@@ -265,15 +265,19 @@ const PostForm: React.FC<IPostFormProps> = ({
                 className="w-100 h-100 rounded"
               />
               <span
-                className="bg-primary rounded-circle"
+                className="bg-danger"
                 style={{
                   position: "absolute",
+                  height: "1.5rem",
+                  width: "1.5rem",
                   top: 0,
                   right: 0,
-                  marginRight: "0.9rem",
+                  marginRight: "0.2rem",
                   marginTop: "0.2rem",
-                  padding: "0.2rem 0.4rem",
+                  padding: "0rem 0.34rem",
                   cursor: "pointer",
+                  borderRadius: "50%",
+                  color: "white",
                 }}
                 onClick={() => handleUploadDelete(index)}
               >
