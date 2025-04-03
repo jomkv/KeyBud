@@ -19,7 +19,7 @@ function Search() {
     try {
       await search(query).unwrap();
     } catch (error) {
-      console.log(error);
+      //console.log(error);
     }
   };
 
@@ -28,7 +28,7 @@ function Search() {
   }, [searchParams.get("search")]);
 
   useEffect(() => {
-    console.log(results);
+    //console.log(results);
   }, [results]);
 
   return (
@@ -37,72 +37,88 @@ function Search() {
 
       <Container className="mb-3 mt-3">
         <Row>
-          <Col xs={12} md={12} lg={5} className="d-flex align-items-end">
+          <Col xs={12} md={12} lg={3} className="d-flex align-items-end">
             <p className="mb-0 fs-4">Search results</p>
           </Col>
-          <Col xs={0} md={0} lg={2} />
+          <Col xs={0} md={0} lg={1} />
           <Col
             xs={12}
             md={12}
-            lg={5}
+            lg={8}
             className="d-flex justify-content-center justify-content-lg-end align-items-end"
           >
-            <Row xs={2} sm={2} className="mt-2">
+            <Row className="mt-2">
               <Col>
                 {tab === "posts" ? (
                   <Button
-                    className="fs-3 rounded-5 p-4 pt-2 pb-2 bg-secondary"
+                    className="fs-4 rounded-5 p-4 pt-2 pb-2 bg-secondary"
                     style={{
                       color: "white",
                       borderColor: "white",
+                      whiteSpace: "nowrap",
                     }}
                     onClick={() => {
                       setTab("posts");
                     }}
                   >
-                    Posts
+                    Posts{" "}
+                    {results?.posts && (
+                      <span className="fs-5">({results.posts.length})</span>
+                    )}
                   </Button>
                 ) : (
                   <Button
-                    className="fs-3 rounded-5 p-4 pt-2 pb-2"
+                    className="fs-4 rounded-5 p-4 pt-2 pb-2"
                     style={{
                       backgroundColor: "transparent",
                       borderColor: "transparent",
+                      whiteSpace: "nowrap",
                     }}
                     onClick={() => {
                       setTab("posts");
                     }}
                   >
-                    Posts
+                    Posts{" "}
+                    {results?.posts && (
+                      <span className="fs-5">({results.posts.length})</span>
+                    )}
                   </Button>
                 )}
               </Col>
               <Col>
                 {tab === "users" ? (
                   <Button
-                    className="fs-3 rounded-5 p-4 pt-2 pb-2 bg-secondary"
+                    className="fs-4 rounded-5 p-4 pt-2 pb-2 bg-secondary"
                     style={{
                       color: "white",
                       borderColor: "white",
+                      whiteSpace: "nowrap",
                     }}
                     onClick={() => {
                       setTab("users");
                     }}
                   >
-                    Users
+                    Users{" "}
+                    {results?.users && (
+                      <span className="fs-5">({results.users.length})</span>
+                    )}
                   </Button>
                 ) : (
                   <Button
-                    className="fs-3 rounded-5 p-4 pt-2 pb-2"
+                    className="fs-4 rounded-5 p-4 pt-2 pb-2"
                     style={{
                       backgroundColor: "transparent",
                       borderColor: "transparent",
+                      whiteSpace: "nowrap",
                     }}
                     onClick={() => {
                       setTab("users");
                     }}
                   >
-                    Users
+                    Users{" "}
+                    {results?.users && (
+                      <span className="fs-5">({results.users.length})</span>
+                    )}
                   </Button>
                 )}
               </Col>
