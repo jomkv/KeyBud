@@ -13,7 +13,12 @@ interface IPostsProps {
 }
 
 const Likes: React.FC<IPostsProps> = ({ userId }) => {
-  const { data: likedPosts, isLoading, isError } = useGetUserLikesQuery(userId);
+  const {
+    data: likedPosts,
+    isLoading,
+    isError,
+    isSuccess,
+  } = useGetUserLikesQuery(userId);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -33,7 +38,7 @@ const Likes: React.FC<IPostsProps> = ({ userId }) => {
               <CardSkeleton />
             </Col>
           ))}
-      {likedPosts && likedPosts.length === 0 && (
+      {isSuccess && likedPosts && likedPosts.length === 0 && (
         <Col xs={12} sm={12}>
           <NoResults />
         </Col>

@@ -15,7 +15,12 @@ interface IPostsProps {
 
 const Posts: React.FC<IPostsProps> = ({ userId }) => {
   const [posts, setPosts] = useState<IPost[]>([]);
-  const { data: userPosts, isLoading, isError } = useGetUserPostsQuery(userId);
+  const {
+    data: userPosts,
+    isLoading,
+    isError,
+    isSuccess,
+  } = useGetUserPostsQuery(userId);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -48,7 +53,7 @@ const Posts: React.FC<IPostsProps> = ({ userId }) => {
               <CardSkeleton />
             </Col>
           ))}
-      {posts && posts.length === 0 && (
+      {isSuccess && posts && posts.length === 0 && (
         <Col xs={12} sm={12}>
           <NoResults />
         </Col>
