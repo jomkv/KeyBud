@@ -18,12 +18,12 @@ function Protect() {
     return <Navigate to="/login" />;
   }
 
-  if (
-    !user.username ||
-    (!user.switchType && location.pathname !== "/set-info")
-  ) {
-    return <Navigate to="/set-info" />;
-  }
+  // if (
+  //   !user.username ||
+  //   (!user.switchType && location.pathname !== "/set-info")
+  // ) {
+  //   return <Navigate to="/set-info" />;
+  // }
 
   return <Outlet />;
 }
