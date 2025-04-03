@@ -32,7 +32,7 @@ const CommentCard: React.FC<CommentProps> = ({ comment }) => {
         >
           <div className="d-flex align-items-center">
             <img
-              src="/images/user_icon.png"
+              src={comment.ownerId.icon || "/images/user_icon.png"}
               alt="icon"
               className="rounded-circle me-2"
               style={{
