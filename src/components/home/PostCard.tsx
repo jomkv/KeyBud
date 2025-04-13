@@ -12,8 +12,8 @@ interface PostProps {
 const PostCard: React.FC<PostProps> = ({ post }) => {
   return (
     <Row className="justify-content-center gy-4 mt-1">
-      <Col lg={6} md={9} sm={11}>
-        <Card post={post} />
+      <Col md={12} sm={12}>
+        <Card post={post} imageHeight="25rem" />
       </Col>
     </Row>
   );

@@ -22,7 +22,7 @@ function Home() {
             .fill(0)
             .map((_, index) => (
               <Row className="justify-content-center gy-4 mt-1" key={index}>
-                <Col lg={6} md={9} sm={11}>
+                <Col md={12} sm={12}>
                   <CardSkeleton />
                 </Col>
               </Row>
