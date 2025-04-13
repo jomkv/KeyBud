@@ -48,7 +48,7 @@ function EditProfile() {
     resolver: zodResolver(schema),
   });
 
-  const { register, handleSubmit, formState, setValue } = form;
+  const { register, handleSubmit, formState, setValue, setError } = form;
   const { errors } = formState;
 
   useEffect(() => {
@@ -83,10 +83,13 @@ function EditProfile() {
 
       if (setUser) setUser(user);
       toast.success("Profile updated");
-      navigate("/");
-    } catch (error) {
-      navigate(`/profile/${user?._id}`);
-      toast.warn("Something went wrong, please try again later");
+      navigate(`/profile/${user._id}`);
+    } catch (error: any) {
+      if (error?.data?.message?.toLowerCase().includes("username")) {
+        setError("username", { message: error.data.message });
+      } else {
+        toast.warn("Something went wrong, please try again later");
+      }
     }
   };
 

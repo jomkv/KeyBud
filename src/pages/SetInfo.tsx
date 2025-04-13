@@ -44,7 +44,7 @@ function SetInfo() {
     resolver: zodResolver(schema),
   });
 
-  const { register, handleSubmit, formState, reset, setValue } = form;
+  const { register, handleSubmit, formState, setValue, setError } = form;
   const { errors } = formState;
 
   useEffect(() => {
@@ -76,9 +76,12 @@ function SetInfo() {
       if (setUser) setUser(user);
       toast.success("Information set");
       navigate("/");
-    } catch (error) {
-      toast.warn("Something went wrong, please try again later");
-      reset();
+    } catch (error: any) {
+      if (error?.data?.message?.toLowerCase().includes("username")) {
+        setError("username", { message: error.data.message });
+      } else {
+        toast.warn("Something went wrong, please try again later");
+      }
     }
   };
 
