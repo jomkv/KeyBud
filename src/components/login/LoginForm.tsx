@@ -65,9 +65,11 @@ function LoginForm() {
         navigate("/");
       }
 
-      toast.success("Login successful");
+      toast.success("Login successful.");
     } catch (error: any) {
-      toast.warn(error.data.message || "An error occurred");
+      toast.warn(
+        error.data.message || "Failed to login, please try again later."
+      );
     }
   };
 

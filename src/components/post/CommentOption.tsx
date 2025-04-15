@@ -17,9 +17,9 @@ const CommentOption: React.FC<IOptionButtonProps> = ({ comment }) => {
     try {
       await deleteComment(comment._id).unwrap();
       navigate(0); // refresh
-      toast.success("Comment deleted successfully");
+      toast.success("Comment deleted successfully.");
     } catch (error) {
-      toast.warn("Something went wrong, please try again later");
+      toast.warn("Failed to delete comment, please try again later.");
     }
   };
 

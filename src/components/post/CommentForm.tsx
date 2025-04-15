@@ -50,9 +50,11 @@ const CommentForm: React.FC<CommentFormProps> = ({ postId, isCommentInit }) => {
     try {
       await createComment(data).unwrap();
       navigate(0); // reload page
-      toast.success("Comment added successfully");
     } catch (error: any) {
-      toast.warn(error?.data?.message || "An error occurred");
+      toast.warn(
+        error?.data?.message ||
+          "Failed to send comment, please try again later."
+      );
     }
   };
 

@@ -31,7 +31,6 @@ function Profile() {
   useEffect(() => {
     if (isError) {
       navigate("/");
-      toast.warn("User not found");
     }
   }, [isError, navigate]);
 

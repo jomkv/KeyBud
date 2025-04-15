@@ -39,7 +39,6 @@ function Post() {
   useEffect(() => {
     if (isPostError) {
       navigate("/");
-      toast.warn("Post not found");
     }
   }, [isPostError, navigate]);
 

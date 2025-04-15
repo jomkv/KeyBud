@@ -68,7 +68,7 @@ const PostForm: React.FC<IPostFormProps> = ({
     }
 
     if (images.length + files.length > 4) {
-      toast.warn("You can only upload a maximum of 4 images");
+      toast.warn("You can only upload a maximum of 4 images.");
       return;
     }
 
@@ -77,13 +77,13 @@ const PostForm: React.FC<IPostFormProps> = ({
 
       // check if file is an image
       if (file.type.split("/")[0] !== "image") {
-        toast.warn("A non-image file was selected");
+        toast.warn("A non-image file was selected.");
         continue;
       }
 
       // if file size too big
       if (file.size > 10485760) {
-        toast.warn("File size too large, maximum is 10MB");
+        toast.warn("File size too large, maximum is 10MB.");
         continue;
       }
 

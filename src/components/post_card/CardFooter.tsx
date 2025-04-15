@@ -36,7 +36,7 @@ const CardFooter: React.FC<CardFooterProps> = ({
 
   const handleShare = () => {
     navigator.clipboard.writeText(`${window.location.origin}/post/${postId}`);
-    toast.info("Link copied to clipboard");
+    toast.info("Post link copied to clipboard.");
   };
 
   const handleComment = () => {
@@ -46,7 +46,7 @@ const CardFooter: React.FC<CardFooterProps> = ({
   const handleLike = async () => {
     try {
       if (!user) {
-        toast.error("Please login to like this post");
+        toast.error("Please login to like this post.");
         return;
       }
 
@@ -60,7 +60,9 @@ const CardFooter: React.FC<CardFooterProps> = ({
 
       setIsLiked(!isLiked);
     } catch (error: any) {
-      toast.warn(error?.data?.message || "An error occurred");
+      toast.warn(
+        error?.data?.message || "Failed to like post, please try again later."
+      );
     }
   };
 

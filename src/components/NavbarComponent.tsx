@@ -21,9 +21,9 @@ function NavbarComponent() {
       await logout().unwrap();
       if (setUser) setUser(null);
       navigate("/login");
-      toast.success("Logged out");
+      toast.success("Logged out.");
     } catch (error: any) {
-      toast.warn(error?.data?.message || "An error occurred");
+      toast.warn(error?.data?.message || "Failed to logout.");
     }
   };
 

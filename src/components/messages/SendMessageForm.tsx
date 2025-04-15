@@ -50,10 +50,9 @@ function SendMessageForm() {
       };
 
       await sendMessage(data).unwrap();
-      toast.success("Message sent");
       setButtonIcon("bi-send");
     } catch (error) {
-      toast.warn("Failed to send message");
+      toast.warn("Failed to send message, please try again later.");
     }
 
     reset();

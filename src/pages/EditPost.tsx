@@ -34,10 +34,9 @@ function EditPost() {
   const onSubmit = async (data: FormData) => {
     try {
       await editPost({ post: data, postId: id }).unwrap();
-      toast.success("Post edit successfully");
       navigate(`/post/${id}`);
     } catch (error) {
-      toast.warn("An error occured while editing post");
+      toast.warn("Failed to edit post, please try again later.");
       navigate("/");
     }
   };

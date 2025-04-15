@@ -74,13 +74,13 @@ function SetInfo() {
       const user = await editProfile(data).unwrap();
 
       if (setUser) setUser(user);
-      toast.success("Information set");
+      toast.success("Information set.");
       navigate("/");
     } catch (error: any) {
       if (error?.data?.message?.toLowerCase().includes("username")) {
         setError("username", { message: error.data.message });
       } else {
-        toast.warn("Something went wrong, please try again later");
+        toast.warn("Something went wrong, please try again later.");
       }
     }
   };
@@ -91,12 +91,12 @@ function SetInfo() {
 
   const updateImages = (files: FileList | null) => {
     if (!files) {
-      toast.warn("Something went wrong, please try again");
+      toast.warn("Something went wrong, please try again.");
       return;
     }
 
     if (files.length > 1) {
-      toast.warn("You can only upload a maximum of 1 image");
+      toast.warn("You can only upload a maximum of 1 image.");
       return;
     }
 
@@ -104,13 +104,13 @@ function SetInfo() {
 
     // check if file is an image
     if (file.type.split("/")[0] !== "image") {
-      toast.warn("A non-image file was selected");
+      toast.warn("A non-image file was selected.");
       return;
     }
 
     // if file size too big
     if (file.size > 10485760) {
-      toast.warn("File size too large, maximum is 10MB");
+      toast.warn("File size too large, maximum is 10MB.");
       return;
     }
 

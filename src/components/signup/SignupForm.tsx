@@ -64,9 +64,11 @@ function SignupForm() {
     try {
       await registerMutation(data).unwrap();
       navigate("/login");
-      toast.success("Signup successful");
+      toast.success("Signup successful.");
     } catch (error: any) {
-      toast.warn(error?.data?.message || "An error occurred");
+      toast.warn(
+        error?.data?.message || "Failed to signup, please try again later."
+      );
     }
   };
 

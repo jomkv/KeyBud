@@ -26,7 +26,6 @@ const Posts: React.FC<IPostsProps> = ({ userId }) => {
   useEffect(() => {
     if (isError) {
       navigate("/");
-      toast.warn("User not found");
     }
   }, [isError, navigate]);
 

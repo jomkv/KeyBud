@@ -22,7 +22,7 @@ const Comments: React.FC<CommentProps> = ({ postId, isComment }) => {
   useEffect(() => {
     if (isError) {
       navigate("/");
-      toast.error("An error occurred");
+      toast.error("Something went wrong, please try again later.");
     }
   }, [isError, navigate]);
 

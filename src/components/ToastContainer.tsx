@@ -4,16 +4,16 @@ import "react-toastify/dist/ReactToastify.css";
 function ToastContainer() {
   return (
     <ToastifyContainer
-      position="top-center"
+      position="bottom-right"
       autoClose={5000}
       hideProgressBar={false}
       newestOnTop={false}
       closeOnClick
       rtl={false}
-      pauseOnFocusLoss
-      draggable
-      pauseOnHover
-      theme="light"
+      pauseOnFocusLoss={false}
+      draggable={false}
+      pauseOnHover={false}
+      theme="dark"
     />
   );
 }

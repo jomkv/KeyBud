@@ -35,18 +35,17 @@ const OptionButton: React.FC<IOptionButtonProps> = ({ post }) => {
   const handleDeleteClick = async () => {
     try {
       await deletePost(post._id).unwrap();
-      toast.success("Post deleted successfully");
+      toast.success("Post deleted successfully.");
     } catch (error) {
-      toast.warn("Something went wrong, please try again later");
+      toast.warn("Something went wrong, please try again later.");
     }
   };
 
   const handlePinClick = async () => {
     try {
       await pinPost(post._id).unwrap();
-      toast.success(`Post ${post.isPinned ? "unpin" : "pin"} successful`);
     } catch (error) {
-      toast.warn("Something went wrong, please try again later");
+      toast.warn("Something went wrong, please try again later.");
     }
   };
 

@@ -14,9 +14,8 @@ function CreatePost() {
     try {
       const res = await createPost(data).unwrap();
       navigate(`/post/${res.post?.postId}`);
-      toast.success("Post created successfully");
     } catch (error) {
-      toast.warn("An error occured while creating post");
+      toast.warn("An error occured while creating post.");
     }
   };
 

@@ -62,10 +62,9 @@ function NewConversationForm() {
       };
 
       await sendMessage(data).unwrap();
-      toast.success("Message sent");
       dispatch(resetState());
     } catch (error) {
-      toast.warn("Failed to send message");
+      toast.warn("Failed to send message, please try again later.");
     }
 
     reset();
