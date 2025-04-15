@@ -27,7 +27,9 @@ const UserCard: React.FC<ICardHeaderProps> = ({ user }) => {
           src={user.icon || "/images/user_icon.png"}
           className="rounded-circle me-3"
           style={{
+            height: "5rem",
             width: "5rem",
+            objectFit: "cover",
           }}
           alt="Icon"
         />
