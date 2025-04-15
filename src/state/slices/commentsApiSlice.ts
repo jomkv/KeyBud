@@ -10,6 +10,7 @@ const commentsApiSlice = apiSlice.injectEndpoints({
         method: "POST",
         body: { comment: data.comment },
       }),
+      invalidatesTags: ["Comment", "Post"],
     }),
     editComment: builder.mutation<any, ICommentInput>({
       query: (data: ICommentInput) => ({
@@ -17,12 +18,14 @@ const commentsApiSlice = apiSlice.injectEndpoints({
         method: "PUT",
         body: { comment: data.comment },
       }),
+      invalidatesTags: ["Comment"],
     }),
     deleteComment: builder.mutation<any, string>({
       query: (commentId) => ({
         url: `${COMMENTS_URL}/${commentId}`,
         method: "DELETE",
       }),
+      invalidatesTags: ["Comment", "Post"],
     }),
     getPostComments: builder.query<IComment[], string>({
       query: (postId: string) => ({
@@ -32,6 +35,7 @@ const commentsApiSlice = apiSlice.injectEndpoints({
       keepUnusedDataFor: 0,
       transformResponse: (response: { comments: IComment[] }) =>
         response.comments,
+      providesTags: ["Comment"],
     }),
   }),
 });

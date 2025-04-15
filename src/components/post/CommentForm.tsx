@@ -6,7 +6,6 @@ import { z } from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { toast } from "react-toastify";
-import { useNavigate } from "react-router-dom";
 
 import { useCreateCommentMutation } from "../../state/slices/commentsApiSlice";
 import { ICommentInput } from "../../@types/commentType";
@@ -28,7 +27,6 @@ interface CommentFormProps {
 const CommentForm: React.FC<CommentFormProps> = ({ postId, isCommentInit }) => {
   const [isComment, setIsComment] = useState<boolean>(isCommentInit);
 
-  const navigate = useNavigate();
   const [createComment, { isLoading }] = useCreateCommentMutation();
 
   const form = useForm<IForm>({
@@ -38,7 +36,7 @@ const CommentForm: React.FC<CommentFormProps> = ({ postId, isCommentInit }) => {
     resolver: zodResolver(schema),
   });
 
-  const { register, handleSubmit, formState } = form;
+  const { register, handleSubmit, formState, reset } = form;
   const { errors } = formState;
 
   const onSubmit = async (formData: IForm) => {
@@ -49,7 +47,8 @@ const CommentForm: React.FC<CommentFormProps> = ({ postId, isCommentInit }) => {
 
     try {
       await createComment(data).unwrap();
-      navigate(0); // reload page
+      setIsComment(false);
+      reset();
     } catch (error: any) {
       toast.warn(
         error?.data?.message ||

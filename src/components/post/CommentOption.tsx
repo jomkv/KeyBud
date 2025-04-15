@@ -1,6 +1,6 @@
 import { Button, OverlayTrigger, Popover } from "react-bootstrap";
-import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
+import { useState } from "react";
 
 import { useDeleteCommentMutation } from "../../state/slices/commentsApiSlice";
 import { IComment } from "../../@types/commentType";
@@ -11,13 +11,12 @@ interface IOptionButtonProps {
 
 const CommentOption: React.FC<IOptionButtonProps> = ({ comment }) => {
   const [deleteComment, { isLoading }] = useDeleteCommentMutation();
-  const navigate = useNavigate();
+  const [showPopover, setShowPopover] = useState(false);
 
   const handleDeleteClick = async () => {
     try {
       await deleteComment(comment._id).unwrap();
-      navigate(0); // refresh
-      toast.success("Comment deleted successfully.");
+      setShowPopover(false);
     } catch (error) {
       toast.warn("Failed to delete comment, please try again later.");
     }
@@ -52,6 +51,8 @@ const CommentOption: React.FC<IOptionButtonProps> = ({ comment }) => {
       placement="bottom"
       overlay={popover}
       rootClose
+      show={showPopover}
+      onToggle={(nextShow) => setShowPopover(nextShow)}
     >
       <Button
         className="m-0 p-0 fs-3"
