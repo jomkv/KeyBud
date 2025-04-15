@@ -1,5 +1,5 @@
 import { Button, Container } from "react-bootstrap";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { useDispatch } from "react-redux";
@@ -8,16 +8,24 @@ import ConversationOption from "./ConversationOption";
 import { useGetConversationsQuery } from "../../state/slices/messagesApiSlice";
 import OptionSkeleton from "./OptionSkeleton";
 import { createNew } from "../../state/slices/conversationSlice";
+import { IConvo } from "../../@types/messageType";
+import { useSocketContext } from "../../context/SocketContext";
+import { useUserContext } from "../../context/UserContext";
 
 const ConversationSelector: React.FC = () => {
+  const [conversations, setConversations] = useState<IConvo[]>([]);
+
   const {
-    data: conversations,
+    data: conversationsRes,
     isError,
     isLoading,
+    isSuccess,
   } = useGetConversationsQuery();
 
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const { newConversationEvent, setNewConversationEvent } = useSocketContext();
+  const { user } = useUserContext();
 
   useEffect(() => {
     if (isError) {
@@ -26,8 +34,52 @@ const ConversationSelector: React.FC = () => {
     }
   }, [isError, navigate]);
 
+  useEffect(() => {
+    if (isSuccess && conversationsRes) {
+      setConversations(conversationsRes);
+    }
+  }, [conversationsRes, isSuccess]);
+
+  useEffect(() => {
+    if (!user || !newConversationEvent) return;
+
+    const participantIds = newConversationEvent.participants.map(
+      (participant) => participant._id
+    );
+
+    if (!participantIds.includes(user._id)) return;
+
+    const conversationExists = conversations.some(
+      (conversation) => conversation._id === newConversationEvent._id
+    );
+
+    if (!conversationExists) {
+      setConversations((prev) => [...prev, newConversationEvent]);
+    }
+
+    setNewConversationEvent(null);
+  }, [newConversationEvent]);
+
   const handleCreateNew = () => {
     dispatch(createNew());
+  };
+
+  const renderConversationOptions = () => {
+    if (isLoading) {
+      return (
+        <>
+          <OptionSkeleton />
+          <OptionSkeleton />
+          <OptionSkeleton />
+        </>
+      );
+    }
+
+    if (isSuccess && conversations.length > 0) {
+      return conversations.map((conversation, index) => (
+        <ConversationOption key={index} conversation={conversation} />
+      ));
+    }
   };
 
   return (
@@ -62,18 +114,7 @@ const ConversationSelector: React.FC = () => {
           Create new
         </Button>
         {/* <SearchConversation /> */}
-        {isLoading && (
-          <>
-            <OptionSkeleton />
-            <OptionSkeleton />
-            <OptionSkeleton />
-          </>
-        )}
-        {conversations &&
-          conversations.length > 0 &&
-          conversations.map((conversation, index) => (
-            <ConversationOption key={index} conversation={conversation} />
-          ))}
+        {renderConversationOptions()}
       </Container>
     </div>
   );

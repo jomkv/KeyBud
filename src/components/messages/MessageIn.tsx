@@ -3,15 +3,16 @@ import { Col } from "react-bootstrap";
 
 interface IProps {
   message: string;
+  icon: string | null;
   showIcon?: boolean;
 }
 
-const MessageIn: React.FC<IProps> = ({ message, showIcon }) => {
+const MessageIn: React.FC<IProps> = ({ message, showIcon, icon }) => {
   return (
     <>
       <Col lg={6} md={7} sm={8} xs={8} className="d-flex">
         <img
-          src="images/user_icon.png"
+          src={icon || "images/user_icon.png"}
           alt="icon"
           className="rounded-circle me-0 p-2 align-self-end"
           style={{

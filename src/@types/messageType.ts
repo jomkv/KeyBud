@@ -26,6 +26,11 @@ export interface IConvoState {
   isSet?: boolean;
 }
 
+export interface INewMessageEvent {
+  newMessage: IMessage;
+  conversationId: string;
+}
+
 export interface IMessageInput {
   // TODO
 }

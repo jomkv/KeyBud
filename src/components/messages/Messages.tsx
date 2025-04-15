@@ -5,7 +5,7 @@ import { toast } from "react-toastify";
 
 import MessageOut from "./MessageOut";
 import MessageIn from "./MessageIn";
-import { IMessage } from "../../@types/messageType";
+import { IConvo, IMessage } from "../../@types/messageType";
 import { useLazyGetConversationQuery } from "../../state/slices/messagesApiSlice";
 import { IUser } from "../../@types/userType";
 import { useSocketContext } from "../../context/SocketContext";
@@ -24,11 +24,16 @@ const isSender = (message: IMessage, user: IUser | null) => {
   }
 };
 
+const getSender = (convo: IConvo, userId: string): IUser | null => {
+  const sender = convo.participants.find((user: IUser) => user._id !== userId);
+  return sender || null;
+};
+
 const Messages: React.FC<IProps> = ({ convoId, scrollToBottom }) => {
   const [messages, setMessages] = useState<IMessage[]>([]);
   const { user } = useUserContext();
   const navigate = useNavigate();
-  const { socket } = useSocketContext();
+  const { newMessageEvent } = useSocketContext();
 
   const [
     getConversation,
@@ -63,16 +68,10 @@ const Messages: React.FC<IProps> = ({ convoId, scrollToBottom }) => {
   }, [messages, conversation]);
 
   useEffect(() => {
-    if (socket) {
-      socket.on("newMessage", (data: IMessage) => {
-        setMessages((prev) => [...prev, data]);
-      });
-
-      return () => {
-        socket.off("newMessage");
-      };
+    if (newMessageEvent && convoId === newMessageEvent.conversationId) {
+      setMessages((prev) => [...prev, newMessageEvent.newMessage]);
     }
-  }, [socket, messages, setMessages]);
+  }, [newMessageEvent]);
 
   const renderMessages = () => {
     return messages.map((message: IMessage, i: number) => {
@@ -85,9 +84,15 @@ const Messages: React.FC<IProps> = ({ convoId, scrollToBottom }) => {
         } else if (isSender(messages[i + 1], user)) {
           showIcon = true;
         }
+        const sender = getSender(conversation!, user?._id!);
 
         return (
-          <MessageIn key={i} message={message.message} showIcon={showIcon} />
+          <MessageIn
+            key={i}
+            icon={sender && sender.icon ? sender.icon : null}
+            message={message.message}
+            showIcon={showIcon}
+          />
         );
       }
     });
