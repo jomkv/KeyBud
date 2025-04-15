@@ -11,6 +11,7 @@ export const postsApiSlice = apiSlice.injectEndpoints({
       }),
       keepUnusedDataFor: 0,
       transformResponse: (response: { posts: IPost[] }) => response.posts,
+      providesTags: ["Post"],
     }),
     getPost: builder.query<IPost, string>({
       query: (postId: string) => ({
@@ -19,6 +20,7 @@ export const postsApiSlice = apiSlice.injectEndpoints({
       }),
       keepUnusedDataFor: 0,
       transformResponse: (response: { post: IPost }) => response.post,
+      providesTags: ["Post"],
     }),
     likePost: builder.mutation<any, string>({
       query: (postId: string) => ({
@@ -39,6 +41,7 @@ export const postsApiSlice = apiSlice.injectEndpoints({
         url: `${POSTS_URL}/${postId}/pin`,
         method: "POST",
       }),
+      invalidatesTags: ["Post"],
     }),
     editPost: builder.mutation<any, { post: FormData; postId: string }>({
       query: ({ post, postId }) => ({
@@ -47,12 +50,14 @@ export const postsApiSlice = apiSlice.injectEndpoints({
         body: post,
         formData: true,
       }),
+      invalidatesTags: ["Post"],
     }),
     deletePost: builder.mutation<any, string>({
       query: (postId: string) => ({
         url: `${POSTS_URL}/${postId}`,
         method: "DELETE",
       }),
+      invalidatesTags: ["Post"],
     }),
   }),
 });

@@ -4,13 +4,16 @@ import PostForm from "../components/post_form/PostForm";
 
 import { Container } from "react-bootstrap";
 import { toast } from "react-toastify";
+import { useNavigate } from "react-router-dom";
 
 function CreatePost() {
   const [createPost, { isLoading }] = useCreatePostMutation();
+  const navigate = useNavigate();
 
   const onSubmit = async (data: FormData) => {
     try {
-      await createPost(data).unwrap();
+      const res = await createPost(data).unwrap();
+      navigate(`/post/${res.post?.postId}`);
       toast.success("Post created successfully");
     } catch (error) {
       toast.warn("An error occured while creating post");

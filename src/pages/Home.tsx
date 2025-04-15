@@ -7,11 +7,30 @@ import CardSkeleton from "../components/post_card/CardSkeleton";
 import Container from "react-bootstrap/Container";
 import { Col, Row } from "react-bootstrap";
 import { useUserContext } from "../context/UserContext";
+import NoResults from "../components/NoResults";
 
 function Home() {
   const { user } = useUserContext();
 
   const { data: posts, isLoading } = useGetPostsQuery();
+
+  const renderPosts = () => {
+    if (isLoading) return null;
+
+    if (!posts || posts.length === 0) {
+      return (
+        <Row className="justify-content-center gy-4 mt-1">
+          <Col xs={12} sm={12}>
+            <NoResults />
+          </Col>
+        </Row>
+      );
+    }
+
+    return posts?.map((post: IPost, index: number) => (
+      <PostCard key={index} post={post} />
+    ));
+  };
 
   return (
     <div className="bg-light">
@@ -27,11 +46,7 @@ function Home() {
                 </Col>
               </Row>
             ))}
-        {posts &&
-          posts.length !== 0 &&
-          posts.map((post: IPost, index: number) => (
-            <PostCard key={index} post={post} />
-          ))}
+        {renderPosts()}
       </Container>
       {user && <CreatePostWidget />}
     </div>

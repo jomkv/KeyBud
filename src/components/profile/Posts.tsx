@@ -43,6 +43,24 @@ const Posts: React.FC<IPostsProps> = ({ userId }) => {
     setPosts(sortedPosts);
   }, [userPosts]);
 
+  const renderPosts = () => {
+    if (isLoading) return null;
+
+    if (!posts || posts.length === 0) {
+      return (
+        <Col xs={12} sm={12}>
+          <NoResults />
+        </Col>
+      );
+    }
+
+    return posts?.map((post: IPost, index: number) => (
+      <Col key={post._id} md={12} sm={12} className="mb-4">
+        <Card key={post._id} post={post} imageHeight="25rem" />
+      </Col>
+    ));
+  };
+
   return (
     <>
       {isLoading &&
@@ -53,17 +71,7 @@ const Posts: React.FC<IPostsProps> = ({ userId }) => {
               <CardSkeleton />
             </Col>
           ))}
-      {isSuccess && posts && posts.length === 0 && (
-        <Col xs={12} sm={12}>
-          <NoResults />
-        </Col>
-      )}
-      {posts &&
-        posts.map((post) => (
-          <Col key={post._id} md={12} sm={12} className="mb-4">
-            <Card key={post._id} post={post} imageHeight="25rem" />
-          </Col>
-        ))}
+      {renderPosts()}
     </>
   );
 };

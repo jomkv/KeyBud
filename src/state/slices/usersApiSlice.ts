@@ -37,6 +37,7 @@ export const usersApiSlice = apiSlice.injectEndpoints({
         method: "GET",
       }),
       transformResponse: (response: { user: IUser }) => response.user,
+      providesTags: ["User"],
     }),
     getMe: builder.query<IUser, void>({
       query: () => ({
@@ -53,6 +54,7 @@ export const usersApiSlice = apiSlice.injectEndpoints({
         body: formData,
       }),
       transformResponse: (response: { user: IUser }) => response.user,
+      invalidatesTags: ["User"],
     }),
   }),
 });
