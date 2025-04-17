@@ -40,13 +40,20 @@ const CardFooter: React.FC<CardFooterProps> = ({
   };
 
   const handleComment = () => {
+    if (!user) {
+      navigate("/login");
+      // toast.error("Please login to comment on this post.");
+      return;
+    }
+
     navigate(`/post/${postId}?comment=true`);
   };
 
   const handleLike = async () => {
     try {
       if (!user) {
-        toast.error("Please login to like this post.");
+        navigate("/login");
+        // toast.error("Please login to like this post.");
         return;
       }
 
@@ -68,56 +75,52 @@ const CardFooter: React.FC<CardFooterProps> = ({
 
   return (
     <Card.Footer className="d-flex align-items-center ps-0">
-      {user && (
-        <>
-          <div className="d-flex align-items-center fs-5 ps-2">
-            <Button
-              className="pe-1"
+      <div className="d-flex align-items-center fs-5 ps-2">
+        <Button
+          className="pe-1"
+          style={{
+            backgroundColor: "transparent",
+            borderColor: "transparent",
+          }}
+          onClick={handleLike}
+          disabled={isLoading || isLikeLoading}
+        >
+          {isLoading || isLikeLoading ? (
+            <Spinner />
+          ) : (
+            <i
+              className={`bi ${isLiked ? "bi-star-fill" : "bi-star"} h2`}
               style={{
-                backgroundColor: "transparent",
-                borderColor: "transparent",
+                color: "#8c52ff",
               }}
-              onClick={handleLike}
-              disabled={isLoading || isLikeLoading}
-            >
-              {isLoading || isLikeLoading ? (
-                <Spinner />
-              ) : (
-                <i
-                  className={`bi ${isLiked ? "bi-star-fill" : "bi-star"} h2`}
-                  style={{
-                    color: "#8c52ff",
-                  }}
-                />
-              )}
-            </Button>
-            {likeCount > 0 && <p className="h-100 p-0 m-0 me-2">{likeCount}</p>}
-          </div>
+            />
+          )}
+        </Button>
+        {likeCount > 0 && <p className="h-100 p-0 m-0 me-2">{likeCount}</p>}
+      </div>
 
-          <div className="d-flex align-items-center fs-5">
-            <Button
-              className="pe-1"
-              style={{
-                backgroundColor: "transparent",
-                borderColor: "transparent",
-              }}
-              onMouseOver={() => setIsCommentHover(true)}
-              onMouseLeave={() => setIsCommentHover(false)}
-              onClick={handleComment}
-            >
-              <i
-                className={`bi bi-chat${isCommentHover ? "-fill" : ""} h2`}
-                style={{
-                  color: "#8c52ff",
-                }}
-              ></i>
-            </Button>
-            {commentCount > 0 && (
-              <p className="h-100 p-0 m-0 me-2">{commentCount}</p>
-            )}
-          </div>
-        </>
-      )}
+      <div className="d-flex align-items-center fs-5">
+        <Button
+          className="pe-1"
+          style={{
+            backgroundColor: "transparent",
+            borderColor: "transparent",
+          }}
+          onMouseOver={() => setIsCommentHover(true)}
+          onMouseLeave={() => setIsCommentHover(false)}
+          onClick={handleComment}
+        >
+          <i
+            className={`bi bi-chat${isCommentHover ? "-fill" : ""} h2`}
+            style={{
+              color: "#8c52ff",
+            }}
+          ></i>
+        </Button>
+        {commentCount > 0 && (
+          <p className="h-100 p-0 m-0 me-2">{commentCount}</p>
+        )}
+      </div>
 
       <Button
         style={{
