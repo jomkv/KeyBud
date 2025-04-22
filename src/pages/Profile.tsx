@@ -25,7 +25,7 @@ function Profile() {
 
   definedOrRedirect(id);
 
-  const { data: userData, isLoading, isError } = useGetProfileQuery(id);
+  const { data: profileData, isLoading, isError } = useGetProfileQuery(id);
   const { user } = useUserContext();
 
   useEffect(() => {
@@ -63,7 +63,7 @@ function Profile() {
                   />
                 ) : (
                   <img
-                    src={userData?.icon || "/images/user_icon.png"}
+                    src={profileData?.user.icon || "/images/user_icon.png"}
                     className="rounded-circle me-3"
                     style={{
                       height: "5rem",
@@ -77,7 +77,11 @@ function Profile() {
               <Row xs={1} sm={1}>
                 <Col>
                   <p className="fs-3 fw-bold m-0">
-                    {isLoading ? <Skeleton width={100} /> : userData?.username}
+                    {isLoading ? (
+                      <Skeleton width={100} />
+                    ) : (
+                      profileData?.user.username
+                    )}
                   </p>
                 </Col>
                 <Col>
@@ -85,12 +89,12 @@ function Profile() {
                     {isLoading ? (
                       <Skeleton width={100} />
                     ) : (
-                      userData?.switchType || "Tactile"
+                      profileData?.user.switchType || "Tactile"
                     )}
                   </p>
                 </Col>
               </Row>
-              {user?._id === userData?._id && (
+              {user?._id === profileData?.user._id && (
                 <div className="w-100 d-flex justify-content-end">
                   <Button
                     style={{
@@ -127,12 +131,13 @@ function Profile() {
                     style={{
                       color: "white",
                       borderColor: "white",
+                      whiteSpace: "nowrap",
                     }}
                     onClick={() => {
                       setTab("posts");
                     }}
                   >
-                    Posts
+                    Posts {profileData && `(${profileData.posts.length})`}
                   </Button>
                 ) : (
                   <Button
@@ -140,12 +145,13 @@ function Profile() {
                     style={{
                       backgroundColor: "transparent",
                       borderColor: "transparent",
+                      whiteSpace: "nowrap",
                     }}
                     onClick={() => {
                       setTab("posts");
                     }}
                   >
-                    Posts
+                    Posts {profileData && `(${profileData.posts.length})`}
                   </Button>
                 )}
               </Col>
@@ -156,12 +162,13 @@ function Profile() {
                     style={{
                       color: "white",
                       borderColor: "white",
+                      whiteSpace: "nowrap",
                     }}
                     onClick={() => {
                       setTab("likes");
                     }}
                   >
-                    Likes
+                    Likes {profileData && `(${profileData.likes.length})`}
                   </Button>
                 ) : (
                   <Button
@@ -169,12 +176,13 @@ function Profile() {
                     style={{
                       backgroundColor: "transparent",
                       borderColor: "transparent",
+                      whiteSpace: "nowrap",
                     }}
                     onClick={() => {
                       setTab("likes");
                     }}
                   >
-                    Likes
+                    Likes {profileData && `(${profileData.likes.length})`}
                   </Button>
                 )}
               </Col>
@@ -182,8 +190,12 @@ function Profile() {
           </Col>
         </Row>
         <Row className="justify-content-center mt-3">
-          {tab === "posts" && <Posts userId={id} />}
-          {tab === "likes" && <Likes userId={id} />}
+          {profileData && tab === "posts" && (
+            <Posts isLoading={isLoading} posts={profileData.posts} />
+          )}
+          {profileData && tab === "likes" && (
+            <Likes isLoading={isLoading} likes={profileData.likes} />
+          )}
         </Row>
       </Container>
     </div>

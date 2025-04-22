@@ -1,47 +1,16 @@
 import { Col } from "react-bootstrap";
-import { useNavigate } from "react-router-dom";
-import { useEffect, useState } from "react";
-import { toast } from "react-toastify";
 
 import Card from "../post_card/Card";
-import { useGetUserPostsQuery } from "../../state/slices/usersApiSlice";
 import CardSkeleton from "../post_card/CardSkeleton";
 import { IPost } from "../../@types/postType";
 import NoResults from "../NoResults";
 
 interface IPostsProps {
-  userId: string;
+  isLoading: boolean;
+  posts: IPost[];
 }
 
-const Posts: React.FC<IPostsProps> = ({ userId }) => {
-  const [posts, setPosts] = useState<IPost[]>([]);
-  const {
-    data: userPosts,
-    isLoading,
-    isError,
-    isSuccess,
-  } = useGetUserPostsQuery(userId);
-  const navigate = useNavigate();
-
-  useEffect(() => {
-    if (isError) {
-      navigate("/");
-    }
-  }, [isError, navigate]);
-
-  useEffect(() => {
-    if (!userPosts) return;
-
-    const postsCopy = [...userPosts];
-
-    // Sort posts so that pinned posts are at the top
-    const sortedPosts: IPost[] = postsCopy.sort(
-      (a, b) => (b.isPinned ? 1 : 0) - (a.isPinned ? 1 : 0)
-    );
-
-    setPosts(sortedPosts);
-  }, [userPosts]);
-
+const Posts: React.FC<IPostsProps> = ({ isLoading, posts }) => {
   const renderPosts = () => {
     if (isLoading) return null;
 
