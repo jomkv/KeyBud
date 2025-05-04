@@ -115,8 +115,10 @@ function NewConversationForm() {
           style={{
             width: "14rem",
             height: "3rem",
+            color: "white",
           }}
           type="submit"
+          className="fw-bold"
           disabled={isLoading || isSubmitting}
         >
           {isSubmitting ? <Spinner /> : "Submit"}
