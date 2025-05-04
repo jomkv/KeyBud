@@ -22,7 +22,14 @@ const Posts: React.FC<IPostsProps> = ({ isLoading, posts }) => {
       );
     }
 
-    return posts?.map((post: IPost, index: number) => (
+    // Sort posts so that pinned posts are at the top
+    const sortedPosts = [...posts].sort((a, b) => {
+      if (a.isPinned && !b.isPinned) return -1; // a is pinned, b is not
+      if (!a.isPinned && b.isPinned) return 1; // b is pinned, a is not
+      return 0; // Both are either pinned or not
+    });
+
+    return sortedPosts.map((post: IPost, index: number) => (
       <Col key={post._id} md={12} sm={12} className="mb-4">
         <Card key={post._id} post={post} imageHeight="25rem" />
       </Col>
