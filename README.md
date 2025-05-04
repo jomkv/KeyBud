@@ -16,7 +16,7 @@
   </p>
 <br/>
 
-## Notable Feature
+## Notable Features
 
 * Real-time messaging
 * Google OAuth 2.0
