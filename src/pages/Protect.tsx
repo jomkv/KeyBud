@@ -1,6 +1,7 @@
 import { Navigate, Outlet, useLocation } from "react-router-dom";
 import { useUserContext } from "../context/UserContext";
-import Spinner from "../components/Spinner";
+import { Spinner } from "react-bootstrap";
+import FullscreenSpinner from "../components/FullscreenSpinner";
 
 function Protect() {
   const { user, isLoading, isSuccess, isError } = useUserContext();
@@ -11,7 +12,7 @@ function Protect() {
   }
 
   if (isLoading || !isSuccess) {
-    return <Spinner />;
+    return <FullscreenSpinner />;
   }
 
   if (!user) {

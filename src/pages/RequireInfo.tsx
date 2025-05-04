@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { useUserContext } from "../context/UserContext";
 import { useLocation, useNavigate } from "react-router-dom";
-import Spinner from "../components/Spinner";
+import FullscreenSpinner from "../components/FullscreenSpinner";
 
 const RequireInfo = ({ children }: { children: JSX.Element }) => {
   const { user, isLoading, isSuccess } = useUserContext();
@@ -21,7 +21,7 @@ const RequireInfo = ({ children }: { children: JSX.Element }) => {
   }, [user, isLoading, isSuccess, navigate]);
 
   if (isLoading && !isSuccess) {
-    return <Spinner />;
+    return <FullscreenSpinner />;
   }
 
   return children;
