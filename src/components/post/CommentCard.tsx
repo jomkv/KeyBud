@@ -34,9 +34,11 @@ const CommentCard: React.FC<CommentProps> = ({ comment }) => {
             <img
               src={comment.ownerId.icon || "/images/user_icon.png"}
               alt="icon"
-              className="rounded-circle me-2"
+              className="rounded-circle me-3"
               style={{
-                height: "25px",
+                height: "1.7rem",
+                width: "1.7rem",
+                objectFit: "cover",
               }}
             />
             <p className="m-0 p-0 fs-5">
