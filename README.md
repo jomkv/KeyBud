@@ -19,6 +19,7 @@
 ## Notable Feature
 
 * Real-time messaging
+* Google OAuth 2.0
 
 ## Technologies Used
 
