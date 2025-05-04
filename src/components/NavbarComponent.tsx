@@ -57,6 +57,7 @@ function NavbarComponent() {
           aria-controls="navbarScroll"
           style={{
             color: "white",
+            borderColor: "#8c52ff",
           }}
         />
         <Navbar.Collapse id="navbarScroll">
@@ -91,7 +92,7 @@ function NavbarComponent() {
             )}
             {user && (
               <button
-                className="p-0 m-0"
+                className="p-0 m-0 align-self-start"
                 style={{
                   color: "white",
                   textDecoration: "none",
