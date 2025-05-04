@@ -84,7 +84,7 @@ function LoginForm() {
       onSubmit={handleSubmit(onSubmit)}
       noValidate
     >
-      <p className="fs-1 fw-bold">Login</p>
+      <p className="fs-2 fw-bold">Login</p>
 
       <Form.Group className="mb-3">
         <Form.Label>Username / Email</Form.Label>

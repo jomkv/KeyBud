@@ -8,6 +8,7 @@ import { toast } from "react-toastify";
 
 import { useRegisterMutation } from "../../state/slices/authApiSlice";
 import { useUserContext } from "../../context/UserContext";
+import GoogleSignupButton from "./GoogleSignupButton";
 
 const schema = z
   .object({
@@ -89,7 +90,7 @@ function SignupForm() {
         onSubmit={handleSubmit(onSubmit)}
         noValidate
       >
-        <p className="fs-1 fw-bold">Signup</p>
+        <p className="fs-2 fw-bold">Signup</p>
 
         <Form.Group className="mb-3">
           <Form.Label>Email *</Form.Label>
@@ -175,6 +176,18 @@ function SignupForm() {
             Already have an account? <a href="/login">Login</a>
           </p>
         </div>
+
+        <div className="text-center w-100 mt-5 mb-1">
+          <hr className="w-100" />
+          <span
+            className="position-relative fw-bold"
+            style={{ top: "-30px", background: "#d1cdc4", padding: "0 10px" }}
+          >
+            OR
+          </span>
+        </div>
+
+        <GoogleSignupButton />
       </Form>
     </>
   );

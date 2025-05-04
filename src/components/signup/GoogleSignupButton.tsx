@@ -1,10 +1,14 @@
-import React from "react";
-
 function GoogleSignupButton({ ...props }) {
+  const handleClick = () => {
+    window.location.href = `${process.env.REACT_APP_API_URL}/auth/login-google`;
+  };
+
   return (
     <button
       {...props}
       className="gsi-material-button w-100 pt-4 pb-4 pe-5 ps-5 fs-6"
+      type="button"
+      onClick={handleClick}
     >
       <div className="gsi-material-button-state"></div>
       <div className="gsi-material-button-content-wrapper">
