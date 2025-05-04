@@ -106,12 +106,20 @@ const ConversationSelector: React.FC = () => {
         }}
       >
         <Button
-          className="w-100 fs-5 fw-semibold mb-3"
+          className="w-100 fs-5 fw-semibold mb-3 p-0 d-none justify-content-center align-items-center d-lg-flex"
           variant="light"
           style={{ height: "4rem" }}
           onClick={handleCreateNew}
         >
           Create new
+        </Button>
+        <Button
+          className="w-100 fs-5 fw-semibold mb-3 p-0 d-flex justify-content-center align-items-center d-lg-none"
+          variant="light"
+          style={{ height: "4rem" }}
+          onClick={handleCreateNew}
+        >
+          <i className="bi bi-plus fs-1 fw-bolder p-0 m-0" />
         </Button>
         {/* <SearchConversation /> */}
         {renderConversationOptions()}
