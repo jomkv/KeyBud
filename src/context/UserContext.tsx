@@ -31,10 +31,17 @@ const useUserContext = () => {
 function UserProvider({ children }: PropsWithChildren<unknown>) {
   const [user, setUser] = useState<IUser | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(true);
+  const [isError, setIsError] = useState<boolean>(false);
 
   const [
     getMe,
-    { data: res, isSuccess, isLoading: isQueryLoading, isError, error },
+    {
+      data: res,
+      isSuccess,
+      isLoading: isQueryLoading,
+      isError: isQueryError,
+      error,
+    },
   ] = useLazyGetMeQuery();
 
   useEffect(() => {
@@ -47,6 +54,16 @@ function UserProvider({ children }: PropsWithChildren<unknown>) {
     }
     setIsLoading(isQueryLoading);
   }, [res, isSuccess, isQueryLoading]);
+
+  useEffect(() => {
+    if (user) {
+      setIsError(false);
+    }
+  }, [user]);
+
+  useEffect(() => {
+    setIsError(isQueryError);
+  }, [isQueryError]);
 
   return (
     <UserContext.Provider

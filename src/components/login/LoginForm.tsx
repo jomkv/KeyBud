@@ -54,10 +54,12 @@ function LoginForm() {
 
   const onSubmit = async (data: IForm) => {
     try {
-      const res: any = await login(data).unwrap();
+      const res = await login(data).unwrap();
       const user = res.user as IUser;
 
-      if (setUser) setUser(user);
+      if (setUser) {
+        setUser(user);
+      }
 
       if (!user.username || !user.switchType) {
         navigate("/set-info");

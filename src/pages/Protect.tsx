@@ -11,7 +11,7 @@ function Protect() {
     return <Navigate to="/login" />;
   }
 
-  if (isLoading || !isSuccess) {
+  if (isLoading) {
     return <FullscreenSpinner />;
   }
 

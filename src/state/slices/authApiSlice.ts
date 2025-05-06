@@ -1,10 +1,10 @@
-import { IUserCredentials, IUserPayload } from "../../@types/userType";
+import { IUser, IUserCredentials, IUserPayload } from "../../@types/userType";
 import { apiSlice } from "./apiSlice";
 import { AUTH_URL } from "../constants";
 
 export const authApiSlice = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
-    login: builder.mutation({
+    login: builder.mutation<{ user: IUser }, IUserCredentials>({
       query: (userCredentials: IUserCredentials) => ({
         url: `${AUTH_URL}/login`,
         method: "POST",
