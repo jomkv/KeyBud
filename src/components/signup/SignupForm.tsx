@@ -377,7 +377,7 @@ function SignupForm() {
                   <span>Resend code in {cooldown} seconds</span>
                 ) : (
                   <>
-                    Didn't get the code?{" "}
+                    Didn't get the code? Check your spam folder or{" "}
                     <button
                       type="button"
                       className="btn btn-link p-0"
