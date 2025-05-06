@@ -24,8 +24,34 @@ export const authApiSlice = apiSlice.injectEndpoints({
         body: userCredentials,
       }),
     }),
+    verify: builder.mutation<
+      any,
+      { username: string; email: string; verificationCode: string }
+    >({
+      query: (userCredentials: {
+        username: string;
+        email: string;
+        verificationCode: string;
+      }) => ({
+        url: `${AUTH_URL}/verify`,
+        method: "POST",
+        body: userCredentials,
+      }),
+    }),
+    resend: builder.mutation<any, { email: string }>({
+      query: (userCredentials: { email: string }) => ({
+        url: `${AUTH_URL}/resend`,
+        method: "POST",
+        body: userCredentials,
+      }),
+    }),
   }),
 });
 
-export const { useLoginMutation, useLogoutMutation, useRegisterMutation } =
-  authApiSlice;
+export const {
+  useLoginMutation,
+  useLogoutMutation,
+  useRegisterMutation,
+  useVerifyMutation,
+  useResendMutation,
+} = authApiSlice;
