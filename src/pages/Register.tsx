@@ -8,7 +8,9 @@ function Register() {
       className="w-100 h-100 d-flex justify-content-evenly align-items-center "
       style={{
         backgroundColor: "#1F1F1F",
-        overflowY: "scroll",
+        width: "100vw",
+        minHeight: "100vh",
+        overflowY: "auto",
       }}
     >
       <Link to="/">
@@ -19,7 +21,7 @@ function Register() {
         />
       </Link>
 
-      <div className="h-100 d-flex align-items-center">
+      <div className="h-100 d-flex align-items-center p-5 p-lg-0">
         <SignupForm />
       </div>
     </div>

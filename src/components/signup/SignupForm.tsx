@@ -179,236 +179,232 @@ function SignupForm() {
   }, [navigate, user]);
 
   return (
-    <>
-      <Form
-        className="p-5 rounded bg-light"
-        style={{
-          color: "#1f1f1f",
-          width: "450px",
-        }}
-        onSubmit={handleSubmit(onSubmit)}
-        noValidate
-      >
-        <ProgressBar now={step * 50} variant="primary" className="mb-3" />
-        {step === 1 && (
-          <>
-            <p className="fs-2 fw-bold">Signup</p>
+    <Form
+      className="p-5 pt-4 pb-4 m-5 m-lg-0 rounded bg-light"
+      style={{
+        color: "#1f1f1f",
+        width: "450px",
+      }}
+      onSubmit={handleSubmit(onSubmit)}
+      noValidate
+    >
+      <ProgressBar now={step * 50} variant="primary" className="mb-3" />
+      {step === 1 && (
+        <>
+          <p className="fs-2 fw-bold">Signup</p>
 
-            <Form.Group className="mb-3">
-              <Form.Label>Email *</Form.Label>
-              <Form.Control
-                type="email"
-                id="email"
-                isInvalid={errors.email?.message ? true : false}
-                {...register("email")}
-              />
-              <Form.Control.Feedback type="invalid">
-                {errors.email?.message}
-              </Form.Control.Feedback>
-            </Form.Group>
+          <Form.Group className="mb-3">
+            <Form.Label>Email *</Form.Label>
+            <Form.Control
+              type="email"
+              id="email"
+              isInvalid={errors.email?.message ? true : false}
+              {...register("email")}
+            />
+            <Form.Control.Feedback type="invalid">
+              {errors.email?.message}
+            </Form.Control.Feedback>
+          </Form.Group>
 
-            <Form.Group className="mb-3">
-              <Form.Label>Username *</Form.Label>
-              <Form.Control
-                type="text"
-                id="username"
-                isInvalid={errors.username?.message ? true : false}
-                {...register("username")}
-              />
-              <Form.Control.Feedback type="invalid">
-                {errors.username?.message}
-              </Form.Control.Feedback>
-            </Form.Group>
+          <Form.Group className="mb-3">
+            <Form.Label>Username *</Form.Label>
+            <Form.Control
+              type="text"
+              id="username"
+              isInvalid={errors.username?.message ? true : false}
+              {...register("username")}
+            />
+            <Form.Control.Feedback type="invalid">
+              {errors.username?.message}
+            </Form.Control.Feedback>
+          </Form.Group>
 
-            <Form.Group className="mb-3">
-              <Form.Label>Switch Type *</Form.Label>
-              <Form.Select
-                {...register("switchType")}
-                isInvalid={errors.switchType?.message ? true : false}
-              >
-                <option value="">Select</option>
-                <option value="Linear">Linear</option>
-                <option value="Tactile">Tactile</option>
-                <option value="Clicky">Clicky</option>
-              </Form.Select>
-              <Form.Control.Feedback type="invalid">
-                {errors.switchType?.message}
-              </Form.Control.Feedback>
-            </Form.Group>
+          <Form.Group className="mb-3">
+            <Form.Label>Switch Type *</Form.Label>
+            <Form.Select
+              {...register("switchType")}
+              isInvalid={errors.switchType?.message ? true : false}
+            >
+              <option value="">Select</option>
+              <option value="Linear">Linear</option>
+              <option value="Tactile">Tactile</option>
+              <option value="Clicky">Clicky</option>
+            </Form.Select>
+            <Form.Control.Feedback type="invalid">
+              {errors.switchType?.message}
+            </Form.Control.Feedback>
+          </Form.Group>
 
-            <Form.Group className="mb-3">
-              <Form.Label>Password *</Form.Label>
-              <Form.Control
-                type="password"
-                id="password"
-                isInvalid={errors.password?.message ? true : false}
-                {...register("password")}
-              />
-              <Form.Control.Feedback type="invalid">
-                {errors.password?.message}
-              </Form.Control.Feedback>
-            </Form.Group>
+          <Form.Group className="mb-3">
+            <Form.Label>Password *</Form.Label>
+            <Form.Control
+              type="password"
+              id="password"
+              isInvalid={errors.password?.message ? true : false}
+              {...register("password")}
+            />
+            <Form.Control.Feedback type="invalid">
+              {errors.password?.message}
+            </Form.Control.Feedback>
+          </Form.Group>
 
-            <Form.Group className="mb-3">
-              <Form.Label>Confirm Password *</Form.Label>
-              <Form.Control
-                type="password"
-                id="confirm"
-                isInvalid={errors.confirm?.message ? true : false}
-                {...register("confirm")}
-              />
-              <Form.Control.Feedback type="invalid">
-                {errors.confirm?.message}
-              </Form.Control.Feedback>
-            </Form.Group>
+          <Form.Group className="mb-3">
+            <Form.Label>Confirm Password *</Form.Label>
+            <Form.Control
+              type="password"
+              id="confirm"
+              isInvalid={errors.confirm?.message ? true : false}
+              {...register("confirm")}
+            />
+            <Form.Control.Feedback type="invalid">
+              {errors.confirm?.message}
+            </Form.Control.Feedback>
+          </Form.Group>
 
-            <Form.Group className="mb-3">
-              <Button
-                variant="primary"
-                className="btn btn-primary w-100 p-3 fw-bold"
-                style={{ color: "white" }}
-                type="button"
-                onClick={onProceed}
-                disabled={isVerifying}
-              >
-                {isVerifying ? <Spinner /> : "SUBMIT"}
-              </Button>
-            </Form.Group>
+          <Form.Group className="mb-3">
+            <Button
+              variant="primary"
+              className="btn btn-primary w-100 p-3 fw-bold"
+              style={{ color: "white" }}
+              type="button"
+              onClick={onProceed}
+              disabled={isVerifying}
+            >
+              {isVerifying ? <Spinner /> : "SUBMIT"}
+            </Button>
+          </Form.Group>
 
-            <div className="text-center w-100">
-              <p className="fs-6 fw-light">
-                Already have an account? <a href="/login">Login</a>
-              </p>
-            </div>
-
-            <div className="text-center w-100 mt-5 mb-1">
-              <hr className="w-100" />
-              <span
-                className="position-relative fw-bold"
-                style={{
-                  top: "-30px",
-                  background: "#d1cdc4",
-                  padding: "0 10px",
-                }}
-              >
-                OR
-              </span>
-            </div>
-
-            <GoogleSignupButton />
-          </>
-        )}
-
-        {step === 2 && (
-          <>
-            <p className="fs-2 fw-bold mb-0">Authentication</p>
-            <p className="fs-6">
-              Please enter the code we emailed you{" "}
-              <span className="fw-bold">{getValues("email")}</span>
+          <div className="text-center w-100">
+            <p className="fs-6 fw-light">
+              Already have an account? <a href="/login">Login</a>
             </p>
+          </div>
 
-            <Form.Group className="mb-4 mt-4">
-              <div
-                className="d-flex w-100 justify-content-between"
-                onPaste={(e) => {
-                  e.preventDefault();
-                  const pasteData = e.clipboardData.getData("text").slice(0, 6); // Get up to 6 characters from the clipboard
-                  const currentCode = pasteData
-                    .split("")
-                    .map((char) => char.toUpperCase());
-                  setValue("verificationCode", currentCode.join(""));
+          <div className="text-center w-100 mt-5 mb-1">
+            <hr className="w-100" />
+            <span
+              className="position-relative fw-bold"
+              style={{
+                top: "-30px",
+                background: "#d1cdc4",
+                padding: "0 10px",
+              }}
+            >
+              OR
+            </span>
+          </div>
 
-                  // Automatically populate the input boxes
-                  currentCode.forEach((char, index) => {
-                    const input = document.getElementById(
-                      `verificationCode-${index}`
-                    );
-                    if (input) (input as HTMLInputElement).value = char;
-                  });
-                }}
-              >
-                {Array(6)
-                  .fill(0)
-                  .map((_, index) => (
-                    <Form.Control
-                      key={index}
-                      id={`verificationCode-${index}`}
-                      type="text"
-                      maxLength={1}
-                      className="text-center"
-                      style={{
-                        width: "100%",
-                        maxWidth: "3rem",
-                        height: "3.3rem",
-                        fontSize: "1.5rem",
-                        borderColor: errors.verificationCode
-                          ? "red"
-                          : undefined,
-                      }}
-                      value={verificationCode[index] || ""}
-                      onChange={(e) =>
-                        handleVerificationCodeChange(index, e.target.value)
-                      }
-                      onKeyDown={(e) => handleVerificationCodeKeyDown(index, e)}
-                    />
-                  ))}
-              </div>
-              <Form.Control.Feedback type="invalid">
-                {errors.verificationCode?.message}
-              </Form.Control.Feedback>
-              <Form.Text id="passwordHelpBlock" muted>
-                {isResending ? (
-                  <div
-                    className="d-flex align-items-center"
+          <GoogleSignupButton />
+        </>
+      )}
+
+      {step === 2 && (
+        <>
+          <p className="fs-2 fw-bold mb-0">Authentication</p>
+          <p className="fs-6">
+            Please enter the code we emailed you{" "}
+            <span className="fw-bold">{getValues("email")}</span>
+          </p>
+
+          <Form.Group className="mb-4 mt-4">
+            <div
+              className="d-flex w-100 justify-content-between"
+              onPaste={(e) => {
+                e.preventDefault();
+                const pasteData = e.clipboardData.getData("text").slice(0, 6); // Get up to 6 characters from the clipboard
+                const currentCode = pasteData
+                  .split("")
+                  .map((char) => char.toUpperCase());
+                setValue("verificationCode", currentCode.join(""));
+
+                // Automatically populate the input boxes
+                currentCode.forEach((char, index) => {
+                  const input = document.getElementById(
+                    `verificationCode-${index}`
+                  );
+                  if (input) (input as HTMLInputElement).value = char;
+                });
+              }}
+            >
+              {Array(6)
+                .fill(0)
+                .map((_, index) => (
+                  <Form.Control
+                    key={index}
+                    id={`verificationCode-${index}`}
+                    type="text"
+                    maxLength={1}
+                    className="text-center"
                     style={{
-                      marginTop: "0.25rem",
+                      width: "100%",
+                      maxWidth: "3rem",
+                      height: "3.3rem",
+                      fontSize: "1.5rem",
+                      borderColor: errors.verificationCode ? "red" : undefined,
                     }}
+                    value={verificationCode[index] || ""}
+                    onChange={(e) =>
+                      handleVerificationCodeChange(index, e.target.value)
+                    }
+                    onKeyDown={(e) => handleVerificationCodeKeyDown(index, e)}
+                  />
+                ))}
+            </div>
+            <Form.Control.Feedback type="invalid">
+              {errors.verificationCode?.message}
+            </Form.Control.Feedback>
+            <Form.Text id="passwordHelpBlock" muted>
+              {isResending ? (
+                <div
+                  className="d-flex align-items-center"
+                  style={{
+                    marginTop: "0.25rem",
+                  }}
+                >
+                  <Spinner
+                    animation="border"
+                    size="sm"
+                    role="status"
+                    className="me-2"
+                    style={{ color: "#007bff" }}
+                  />
+                  <span>Resending code...</span>
+                </div>
+              ) : cooldown > 0 ? (
+                <span>Resend code in {cooldown} seconds</span>
+              ) : (
+                <>
+                  Didn't get the code? Check your spam folder or{" "}
+                  <button
+                    type="button"
+                    className="btn btn-link p-0"
+                    style={{
+                      textDecoration: "underline",
+                      color: "#007bff",
+                    }}
+                    onClick={handleResendCode}
                   >
-                    <Spinner
-                      animation="border"
-                      size="sm"
-                      role="status"
-                      className="me-2"
-                      style={{ color: "#007bff" }}
-                    />
-                    <span>Resending code...</span>
-                  </div>
-                ) : cooldown > 0 ? (
-                  <span>Resend code in {cooldown} seconds</span>
-                ) : (
-                  <>
-                    Didn't get the code? Check your spam folder or{" "}
-                    <button
-                      type="button"
-                      className="btn btn-link p-0"
-                      style={{
-                        textDecoration: "underline",
-                        color: "#007bff",
-                      }}
-                      onClick={handleResendCode}
-                    >
-                      Resend code
-                    </button>
-                  </>
-                )}
-              </Form.Text>
-            </Form.Group>
+                    Resend code
+                  </button>
+                </>
+              )}
+            </Form.Text>
+          </Form.Group>
 
-            <Form.Group className="mb-3">
-              <Button
-                variant="primary"
-                className="btn btn-primary w-100 p-3 fw-bold"
-                style={{ color: "white" }}
-                type="submit"
-                disabled={isSubmitting}
-              >
-                {isSubmitting ? <Spinner /> : "SUBMIT"}
-              </Button>
-            </Form.Group>
-          </>
-        )}
-      </Form>
-    </>
+          <Form.Group className="mb-3">
+            <Button
+              variant="primary"
+              className="btn btn-primary w-100 p-3 fw-bold"
+              style={{ color: "white" }}
+              type="submit"
+              disabled={isSubmitting}
+            >
+              {isSubmitting ? <Spinner /> : "SUBMIT"}
+            </Button>
+          </Form.Group>
+        </>
+      )}
+    </Form>
   );
 }
 
