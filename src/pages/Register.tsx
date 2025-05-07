@@ -8,17 +8,20 @@ function Register() {
       className="w-100 h-100 d-flex justify-content-evenly align-items-center "
       style={{
         backgroundColor: "#1F1F1F",
+        overflowY: "scroll",
       }}
     >
       <Link to="/">
         <img
-          className="d-none d-md-block"
+          className="d-none d-lg-block"
           alt="logo"
           src="/images/Logo with Phrase.svg"
         />
       </Link>
 
-      <SignupForm />
+      <div className="h-100 d-flex align-items-center">
+        <SignupForm />
+      </div>
     </div>
   );
 }
