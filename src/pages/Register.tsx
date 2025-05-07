@@ -21,7 +21,7 @@ function Register() {
         />
       </Link>
 
-      <div className="h-100 d-flex align-items-center p-5 p-lg-0">
+      <div className="h-100 d-flex align-items-center p-5">
         <SignupForm />
       </div>
     </div>

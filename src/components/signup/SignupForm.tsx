@@ -183,7 +183,9 @@ function SignupForm() {
       className="p-5 pt-4 pb-4 m-5 m-lg-0 rounded bg-light"
       style={{
         color: "#1f1f1f",
-        width: "450px",
+        width: "25rem",
+        maxHeight: "100vh",
+        overflow: "auto",
       }}
       onSubmit={handleSubmit(onSubmit)}
       noValidate
@@ -191,9 +193,9 @@ function SignupForm() {
       <ProgressBar now={step * 50} variant="primary" className="mb-3" />
       {step === 1 && (
         <>
-          <p className="fs-2 fw-bold">Signup</p>
+          <p className="fs-3 fw-bold mb-1">Signup</p>
 
-          <Form.Group className="mb-3">
+          <Form.Group className="mb-2">
             <Form.Label>Email *</Form.Label>
             <Form.Control
               type="email"
@@ -206,7 +208,7 @@ function SignupForm() {
             </Form.Control.Feedback>
           </Form.Group>
 
-          <Form.Group className="mb-3">
+          <Form.Group className="mb-2">
             <Form.Label>Username *</Form.Label>
             <Form.Control
               type="text"
@@ -219,7 +221,7 @@ function SignupForm() {
             </Form.Control.Feedback>
           </Form.Group>
 
-          <Form.Group className="mb-3">
+          <Form.Group className="mb-2">
             <Form.Label>Switch Type *</Form.Label>
             <Form.Select
               {...register("switchType")}
@@ -235,7 +237,7 @@ function SignupForm() {
             </Form.Control.Feedback>
           </Form.Group>
 
-          <Form.Group className="mb-3">
+          <Form.Group className="mb-2">
             <Form.Label>Password *</Form.Label>
             <Form.Control
               type="password"
@@ -261,7 +263,7 @@ function SignupForm() {
             </Form.Control.Feedback>
           </Form.Group>
 
-          <Form.Group className="mb-3">
+          <Form.Group className="mb-2">
             <Button
               variant="primary"
               className="btn btn-primary w-100 p-3 fw-bold"
@@ -274,13 +276,32 @@ function SignupForm() {
             </Button>
           </Form.Group>
 
-          <div className="text-center w-100">
+          <div className=" w-100">
             <p className="fs-6 fw-light">
               Already have an account? <a href="/login">Login</a>
             </p>
           </div>
 
-          <div className="text-center w-100 mt-5 mb-1">
+          <h5
+            style={{
+              width: "100%",
+              textAlign: "center",
+              borderBottom: "1px solid #000",
+              lineHeight: "0.1em",
+              margin: "30px 0",
+            }}
+          >
+            <span
+              style={{
+                padding: "0 10px",
+                backgroundColor: "#d0ccc4",
+              }}
+            >
+              OR
+            </span>
+          </h5>
+
+          {/* <div className="text-center w-100 mt-4 mb-0">
             <hr className="w-100" />
             <span
               className="position-relative fw-bold"
@@ -292,7 +313,7 @@ function SignupForm() {
             >
               OR
             </span>
-          </div>
+          </div> */}
 
           <GoogleSignupButton />
         </>

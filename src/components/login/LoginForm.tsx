@@ -77,11 +77,11 @@ function LoginForm() {
 
   return (
     <Form
-      className="p-5 rounded"
+      className="p-5 pt-4 pb-4 rounded"
       style={{
         backgroundColor: "#d1cdc4",
         color: "#1f1f1f",
-        width: "450px",
+        width: "25rem",
       }}
       onSubmit={handleSubmit(onSubmit)}
       noValidate
@@ -127,13 +127,32 @@ function LoginForm() {
           {isLoading ? <Spinner /> : "LOGIN"}
         </Button>
       </Form.Group>
-      <div className="text-center w-100">
+      <div className="w-100">
         <p className="fs-6 fw-light">
           Don't have an account? <a href="/signup">Signup</a>
         </p>
       </div>
 
-      <div className="text-center w-100 mt-5 mb-1">
+      <h5
+        style={{
+          width: "100%",
+          textAlign: "center",
+          borderBottom: "1px solid #000",
+          lineHeight: "0.1em",
+          margin: "30px 0",
+        }}
+      >
+        <span
+          style={{
+            padding: "0 10px",
+            backgroundColor: "#d0ccc4",
+          }}
+        >
+          OR
+        </span>
+      </h5>
+
+      {/* <div className="text-center w-100 mt-5 mb-1">
         <hr className="w-100" />
         <span
           className="position-relative fw-bold"
@@ -141,7 +160,7 @@ function LoginForm() {
         >
           OR
         </span>
-      </div>
+      </div> */}
 
       <GoogleSigninButton />
     </Form>
