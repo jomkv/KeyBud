@@ -201,7 +201,7 @@ function SetInfo() {
               {...register("switchType")}
               isInvalid={errors.switchType?.message ? true : false}
             >
-              <option>Choose a switch type</option>
+              <option value="">Choose a switch type</option>
               <option value="Linear">Linear</option>
               <option value="Tactile">Tactile</option>
               <option value="Clicky">Clicky</option>
