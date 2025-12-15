@@ -86,9 +86,9 @@ function LoginForm() {
       onSubmit={handleSubmit(onSubmit)}
       noValidate
     >
-      <p className="fs-2 fw-bold">Login</p>
+      <p className="fs-4 fw-bold">Welcome to KeyBud</p>
 
-      <Form.Group className="mb-3">
+      {/* <Form.Group className="mb-3">
         <Form.Label>Username / Email</Form.Label>
         <Form.Control
           type="text"
@@ -150,7 +150,7 @@ function LoginForm() {
         >
           OR
         </span>
-      </h5>
+      </h5> */}
 
       {/* <div className="text-center w-100 mt-5 mb-1">
         <hr className="w-100" />

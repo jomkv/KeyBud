@@ -29,7 +29,7 @@ function App() {
             {/* Public Routes */}
             <Route path="/" element={<Home />} />
             <Route path="/login" element={<Login />} />
-            <Route path="/signup" element={<Register />} />
+            {/* <Route path="/signup" element={<Register />} /> */}
             <Route path="/post/:id" element={<Post />} />
             <Route path="/profile/:id" element={<Profile />} />
             <Route path="/search" element={<Search />} />

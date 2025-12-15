@@ -116,7 +116,7 @@ function NavbarComponent() {
                 Login
               </Link>
             )}
-            {!user && (
+            {/* {!user && (
               <Link
                 to="/signup"
                 className="me-3"
@@ -127,7 +127,7 @@ function NavbarComponent() {
               >
                 Signup
               </Link>
-            )}
+            )} */}
           </Nav>
           <Form className="d-flex" onSubmit={handleSubmit}>
             <Form.Control
